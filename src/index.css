@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,800;0,900;1,800;1,900&family=Inter:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Montserrat", sans-serif;
+
+  --color-surface: #09151a;
+  --color-surface-dim: #09151a;
+  --color-surface-bright: #2f3b41;
+  --color-surface-container-lowest: #041015;
+  --color-surface-container-low: #111d23;
+  --color-surface-container: #152127;
+  --color-surface-container-high: #202c32;
+  --color-surface-container-highest: #2a363d;
+  --color-on-surface: #d7e4ec;
+  --color-on-surface-variant: #e4beba;
+  --color-inverse-surface: #d7e4ec;
+  --color-inverse-on-surface: #263238;
+  --color-outline: #ab8985;
+  --color-outline-variant: #5b403d;
+  --color-surface-tint: #ffb3ac;
+  --color-primary: #ffb3ac;
+  --color-on-primary: #680008;
+  --color-primary-container: #d32f2f;
+  --color-on-primary-container: #fff2f0;
+  --color-inverse-primary: #ba1a20;
+  --color-secondary: #c8c6c5;
+  --color-on-secondary: #313030;
+  --color-secondary-container: #4a4949;
+  --color-on-secondary-container: #bab8b7;
+  --color-tertiary: #c6c6c7;
+  --color-on-tertiary: #2f3131;
+  --color-tertiary-container: #6e7070;
+  --color-on-tertiary-container: #f4f4f4;
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+  --color-background: #09151a;
+  --color-on-background: #d7e4ec;
+  --color-surface-variant: #2a363d;
+
+  --spacing-gutter: 1.5rem;
+  --width-container-max: 80rem;
+}
+
+@utility px-gutter {
+  padding-left: var(--spacing-gutter);
+  padding-right: var(--spacing-gutter);
+}
+
+@utility max-w-container-max {
+  max-width: var(--width-container-max);
+}
+
+@layer base {
+  body {
+    @apply bg-background text-on-surface font-sans antialiased;
+  }
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+.grit-texture {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+/* Custom transitions and states */
+.anchor-link {
+  @apply font-display text-xs font-bold uppercase tracking-widest text-on-surface transition-colors hover:text-primary relative cursor-pointer;
+}
+
+.anchor-link.active {
+  @apply text-primary border-b-2 border-primary pb-1;
+}
+
+.btn-primary {
+  @apply bg-primary-container text-on-primary-container font-display font-bold uppercase py-4 px-8 tracking-tighter italic transition-all hover:brightness-110 active:scale-95 shadow-lg cursor-pointer;
+}
+
+.btn-outline {
+  @apply border-2 border-outline-variant text-on-surface font-display font-bold uppercase py-4 px-8 tracking-tighter italic transition-all hover:bg-surface-container-highest active:scale-95 cursor-pointer;
+}
+
+.section-title {
+  @apply font-display text-4xl md:text-5xl font-extrabold uppercase italic border-l-8 border-primary-container pl-6 mb-12;
+}
+
+.card-dark {
+  @apply bg-surface-container border border-outline-variant/30 transition-all duration-300;
+}
