@@ -79,11 +79,11 @@
 }
 
 .btn-primary {
-  @apply bg-primary-container text-on-primary-container font-display font-bold uppercase py-4 px-8 tracking-tighter italic transition-all hover:brightness-110 active:scale-95 shadow-lg cursor-pointer;
+  @apply bg-primary-container text-on-primary-container font-display font-bold uppercase py-3 px-6 tracking-tighter italic transition-all hover:brightness-110 active:scale-95 shadow-lg cursor-pointer;
 }
 
 .btn-outline {
-  @apply border-2 border-outline-variant text-on-surface font-display font-bold uppercase py-4 px-8 tracking-tighter italic transition-all hover:bg-surface-container-highest active:scale-95 cursor-pointer;
+  @apply border-2 border-outline-variant text-on-surface font-display font-bold uppercase py-3 px-6 tracking-tighter italic transition-all hover:bg-surface-container-highest active:scale-95 cursor-pointer;
 }
 
 .section-title {
