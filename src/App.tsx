@@ -390,7 +390,7 @@ export default function App() {
             </a>
             <a href="#" className="hover:opacity-80 transition-opacity hidden sm:block">
               <img 
-                src="/demo-everest-landing-ai/vk.png" 
+                src="https://lh3.googleusercontent.com/aida/ADBb0ujjFcpHVGNwA4ey5SWFy1XKbNTItRqRTacZZZxuNPO5RLCiDJqhpZPxqHlMSs_DGuc_-vJ0Xsma_1gpdO7BsQ2WQ-SB7BmkyRonClcf6X-N0FAej0CZAflCgXEmUE1rInkqOxrqRZhB-WaPZ42iXjHE_WP3lGOMW1Ldtqsoj1tWdc-wgnCbi6TpCiupE1iwXZQphV06r7MO5jDxGgNsyTJoKZACY2S52rDQRoRXX8MeK0yfZo3BTNm4y4E" 
                 alt="VK" 
                 className="h-8 w-8 rounded-lg"
                 referrerPolicy="no-referrer"
@@ -819,7 +819,7 @@ export default function App() {
               <div className="flex justify-center md:justify-start">
                 <a href="#" className="hover:opacity-80 transition-opacity">
                   <img 
-                    src="/demo-everest-landing-ai/vk.png" 
+                    src="https://lh3.googleusercontent.com/aida/ADBb0ujjFcpHVGNwA4ey5SWFy1XKbNTItRqRTacZZZxuNPO5RLCiDJqhpZPxqHlMSs_DGuc_-vJ0Xsma_1gpdO7BsQ2WQ-SB7BmkyRonClcf6X-N0FAej0CZAflCgXEmUE1rInkqOxrqRZhB-WaPZ42iXjHE_WP3lGOMW1Ldtqsoj1tWdc-wgnCbi6TpCiupE1iwXZQphV06r7MO5jDxGgNsyTJoKZACY2S52rDQRoRXX8MeK0yfZo3BTNm4y4E"  
                     alt="VK" 
                     className="h-10 w-10 rounded-lg"
                   />
