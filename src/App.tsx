@@ -120,7 +120,7 @@ const PROGRAMS: Program[] = [
     name: 'Кудо',
     target: 'Для детей / Для взрослых',
     description: 'Современное полноконтактное боевое искусство, сочетающее в себе карате, дзюдо и тайский бокс. Особенности — защитный шлем и возможность использовать как ударную, так и борцовскую технику.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCq6WEVFPG4SP1XSiWtZjDbTkyMQn0ilKVwdGWpXY1wNTZ1tLtbYv98Dwb0Snmz8OsPLbR9ZEkP5NG4CMDonZXD_v-T0yFGLpVGgp0UUwPT2nvVF7n3WG3y64mg9kPbRRN6QgpxPdiCwRuITGEHXQw2pmysUZRbXhAY3csCqii14QW50XoonfnOGEFXi6ecJM3K3WFmn4xOAZgL150TnU7xt4H3KtVxzktSnrYDh8byRC7JS5fHEO6yfROGXobKosj3isGyANKQ3gzq',
+    image: '/demo-everest-landing-ai/kudo.png',
   },
   {
     id: 'grappling',
@@ -391,7 +391,7 @@ export default function App() {
             </a>
             <a href="#" className="hover:opacity-80 transition-opacity hidden sm:block">
               <img 
-                src="https://lh3.googleusercontent.com/aida/ADBb0ujjFcpHVGNwA4ey5SWFy1XKbNTItRqRTacZZZxuNPO5RLCiDJqhpZPxqHlMSs_DGuc_-vJ0Xsma_1gpdO7BsQ2WQ-SB7BmkyRonClcf6X-N0FAej0CZAflCgXEmUE1rInkqOxrqRZhB-WaPZ42iXjHE_WP3lGOMW1Ldtqsoj1tWdc-wgnCbi6TpCiupE1iwXZQphV06r7MO5jDxGgNsyTJoKZACY2S52rDQRoRXX8MeK0yfZo3BTNm4y4E" 
+                src="/demo-everest-landing-ai/vk.png" 
                 alt="VK" 
                 className="h-8 w-8 rounded-lg"
                 referrerPolicy="no-referrer"
@@ -452,7 +452,7 @@ export default function App() {
         <section className="relative min-h-screen flex items-center pt-24">
           <div className="absolute inset-0 z-0 overflow-hidden">
             <img 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA046Pdpw7o5BuYQ8-1D2pDhy0sdJy6tYK6ZifIdKKhL4qy8qP8GK08Opu7Eb-GjmzApmnxvDwirw_blS5_7VKmdluIIh5bk1J-9hKgHjtI01JUghe0M6eMCBb_J3itdzHkBRhuLqUZ-uhRToeEnA8iTbrZXRQtWJHuwB1oodjDjTtmrV-Wird6YjdQLqh-1AJbyTHtP7aoST_6oTCX-qmhK4_PXl-fTky9zQHOgLoGhZ-3wgbWsQCaHEK_VVGuvzFOxEfyJ2nFwYdf" 
+              src="/demo-everest-landing-ai/hero.png" 
               alt="BJJ Combat"
               className="w-full h-full object-cover grayscale brightness-50"
               referrerPolicy="no-referrer"
@@ -619,7 +619,7 @@ export default function App() {
         {/* --- Reviews Section --- */}
         <section id="reviews" className="py-32 px-gutter max-w-container-max mx-auto overflow-hidden scroll-mt-24">
         <div className="flex flex-col lg:flex-row justify-between items-center lg:items-end mb-12 gap-8 text-center lg:text-left">
-            <h2 className="section-title mb-0">Отзывы на Яндекс.Картах</h2>
+            <h2 className="section-title mb-0 text-[32px]">Отзывы на Яндекс.Картах</h2>
             <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 bg-surface-container p-4 border border-outline-variant/30 shrink-0 max-w-full">
               <div className="flex gap-1 text-yellow-500">
                 {[...Array(5)].map((_, i) => <Star key={i} size={20} fill="currentColor" />)}
@@ -820,7 +820,7 @@ export default function App() {
               <div className="flex justify-center md:justify-start">
                 <a href="#" className="hover:opacity-80 transition-opacity">
                   <img 
-                    src="https://lh3.googleusercontent.com/aida/ADBb0ujjFcpHVGNwA4ey5SWFy1XKbNTItRqRTacZZZxuNPO5RLCiDJqhpZPxqHlMSs_DGuc_-vJ0Xsma_1gpdO7BsQ2WQ-SB7BmkyRonClcf6X-N0FAej0CZAflCgXEmUE1rInkqOxrqRZhB-WaPZ42iXjHE_WP3lGOMW1Ldtqsoj1tWdc-wgnCbi6TpCiupE1iwXZQphV06r7MO5jDxGgNsyTJoKZACY2S52rDQRoRXX8MeK0yfZo3BTNm4y4E" 
+                    src="/demo-everest-landing-ai/vk.png" 
                     alt="VK" 
                     className="h-10 w-10 rounded-lg"
                   />
@@ -910,7 +910,7 @@ export default function App() {
           <header className="p-4 md:p-6 bg-surface-container border-b border-outline-variant flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Calendar size={32} className="text-primary-container" />
-              <h2 className="font-display text-sm md:text-lg font-extrabold uppercase italic">
+              <h2 className="font-display text-sm md:text-lg font-extrabold uppercase italic w-[218px]">
                 Расписание: {selectedProgram ? selectedProgram.name : 'Все тренировки'}
               </h2>
             </div>
