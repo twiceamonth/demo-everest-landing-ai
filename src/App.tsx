@@ -451,7 +451,7 @@ export default function App() {
         <section className="relative min-h-screen flex items-center pt-24">
           <div className="absolute inset-0 z-0 overflow-hidden">
             <img 
-              src="/demo-everest-landing-ai/hero.png" 
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA046Pdpw7o5BuYQ8-1D2pDhy0sdJy6tYK6ZifIdKKhL4qy8qP8GK08Opu7Eb-GjmzApmnxvDwirw_blS5_7VKmdluIIh5bk1J-9hKgHjtI01JUghe0M6eMCBb_J3itdzHkBRhuLqUZ-uhRToeEnA8iTbrZXRQtWJHuwB1oodjDjTtmrV-Wird6YjdQLqh-1AJbyTHtP7aoST_6oTCX-qmhK4_PXl-fTky9zQHOgLoGhZ-3wgbWsQCaHEK_VVGuvzFOxEfyJ2nFwYdf"  
               alt="BJJ Combat"
               className="w-full h-full object-cover grayscale brightness-50"
               referrerPolicy="no-referrer"
