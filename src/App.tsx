@@ -57,7 +57,7 @@ const COACHES: Coach[] = [
     rank: '2 Дан JKA / 1 Кю ФКР',
     title: 'Тренер по Кудо / МС России',
     bio: 'Вице-президент Федерации Кудо Томской области. Высшее экономическое образование ТГУ ЭФ. Специалист по спортивной подготовке по виду спорта. Мастер спорта России. Судья 1й категории. 2 Дан - JKA. 1 кю - ФКР',
-    image: 'https://twiceamonth.github.io/demo-everest-landing-ai/public/1.png',
+    image: '/demo-everest-landing-ai/public/1.png',
     achievements: [
       'Мастер спорта России',
       'Мастер 2го Дана JKA',
@@ -75,7 +75,7 @@ const COACHES: Coach[] = [
     rank: 'Черный пояс 5 дан',
     title: 'Директор центра / Старший тренер по боевому джиу-джитсу',
     bio: 'Образование высшее, ТГПУ факультет физической культуры. Тренерский стаж с 2003 года. Тренирует детей, юношей и взрослых. Основатель региональной общественной организации "Федерация боевого дзю-дзютцу" Томской Области. Черный пояс 5 дан. Педагог 1 категории.',
-    image: '/2.png',
+    image: '/demo-everest-landing-ai/2.png',
     achievements: [
       'Основатель Федерации боевого дзю-дзютцу ТО',
       'Черный пояс 5 дан',
@@ -93,7 +93,7 @@ const COACHES: Coach[] = [
     rank: 'Сборная Томской Области',
     title: 'Тренер по боевому джиу-джитсу',
     bio: 'Помощник главного тренера спортивного Центра "Эверест". Входит в состав сборной Томской области. Тренирует детей с 7 лет. Призер кубка России по боевому джиу-джитсу, многократный чемпион Сибири.',
-    image: '/3.png',
+    image: '/demo-everest-landing-ai/3.png',
     achievements: [
       'Призер кубка России',
       'Многократный чемпион Сибири',
@@ -113,7 +113,7 @@ const PROGRAMS: Program[] = [
     name: 'Боевое джиу-джитсу',
     target: 'Для детей / Для взрослых',
     description: 'Система самозащиты и рукопашного боя, вобравшая в себя лучшие приемы из борьбы, ударов и болевых воздействий. Обучение включает технику бросков, удушающих и болевых приемов на руки и ноги.',
-    image: '/jj.png',
+    image: '/demo-everest-landing-ai/jj.png',
   },
   {
     id: 'kudo',
@@ -127,7 +127,7 @@ const PROGRAMS: Program[] = [
     name: 'Грэпплинг',
     target: 'Для детей / Для взрослых',
     description: 'Вид спортивного единоборства, совмещающий технику всех борцовских дисциплин с минимальными ограничениями по использованию болевых и удушающих приемов. В отличие от БЖЖ, здесь не используется кимоно, что делает схватки более динамичными и скоростными.',
-    image: '/grappling.png', // Grappling action
+    image: '/demo-everest-landing-ai/grappling.png', // Grappling action
   }
 ];
 
@@ -373,7 +373,7 @@ export default function App() {
             }}
           >
             <img 
-              src="/logo.png" 
+              src="/demo-everest-landing-ai/logo.png" 
               alt="ЭВЕРЕСТ" 
               className="h-12 md:h-16 w-auto group-hover:brightness-110 transition-all"
               referrerPolicy="no-referrer"
@@ -422,7 +422,7 @@ export default function App() {
               }}
             >
               <img 
-                src="/logo.png" 
+                src="/demo-everest-landing-ai/logo.png" 
                 alt="ЭВЕРЕСТ" 
                 className="h-12 w-auto"
                 referrerPolicy="no-referrer"
@@ -518,7 +518,7 @@ export default function App() {
               <div className="absolute -top-4 -left-4 w-24 h-24 border-t-8 border-l-8 border-primary-container" />
               <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-8 border-r-8 border-primary-container" />
               <img 
-                src="/about-us.png" 
+                src="/demo-everest-landing-ai/about-us.png" 
                 alt="Academy interior"
                 className="w-full brightness-100 transition-all duration-700 shadow-2xl"
                 referrerPolicy="no-referrer"
@@ -772,7 +772,7 @@ export default function App() {
           <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
             <div className="shrink-0">
               <img 
-                src="/logo.png" 
+                src="/demo-everest-landing-ai/logo.png" 
                 alt="ЭВЕРЕСТ" 
                 className="h-16 w-auto mb-6"
                 referrerPolicy="no-referrer"
