@@ -120,8 +120,7 @@ const PROGRAMS: Program[] = [
     name: 'Кудо',
     target: 'Для детей / Для взрослых',
     description: 'Современное полноконтактное боевое искусство, сочетающее в себе карате, дзюдо и тайский бокс. Особенности — защитный шлем и возможность использовать как ударную, так и борцовскую технику.',
-    image: '/demo-everest-landing-ai/kudo.png',
-  },
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCq6WEVFPG4SP1XSiWtZjDbTkyMQn0ilKVwdGWpXY1wNTZ1tLtbYv98Dwb0Snmz8OsPLbR9ZEkP5NG4CMDonZXD_v-T0yFGLpVGgp0UUwPT2nvVF7n3WG3y64mg9kPbRRN6QgpxPdiCwRuITGEHXQw2pmysUZRbXhAY3csCqii14QW50XoonfnOGEFXi6ecJM3K3WFmn4xOAZgL150TnU7xt4H3KtVxzktSnrYDh8byRC7JS5fHEO6yfROGXobKosj3isGyANKQ3gzq',  },
   {
     id: 'grappling',
     name: 'Грэпплинг',
