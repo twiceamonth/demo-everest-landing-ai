@@ -659,7 +659,7 @@ export default function App() {
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
-                <span className="relative z-10">Общая версия</span>
+                <span className="relative z-10">Для всех</span>
               </button>
               
               <button 
