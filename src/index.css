@@ -87,9 +87,20 @@
 }
 
 .section-title {
-  @apply font-display text-4xl md:text-5xl font-extrabold uppercase italic border-l-8 border-primary-container pl-6 mb-12;
+  @apply font-display text-3xl md:text-5xl font-extrabold uppercase italic border-l-8 border-primary-container pl-4 md:pl-6 mb-6 md:mb-12;
 }
 
 .card-dark {
   @apply bg-surface-container border border-outline-variant/30 transition-all duration-300;
 }
+
+/* VK logo custom image coloring and interaction */
+.vk-link .vk-icon {
+  filter: brightness(0) saturate(100%) invert(85%) sepia(21%) saturate(1476%) hue-rotate(302deg) brightness(101%) contrast(101%);
+  transition: filter 0.3s ease;
+}
+
+.vk-link:hover .vk-icon {
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+

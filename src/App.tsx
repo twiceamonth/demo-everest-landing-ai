@@ -16,7 +16,10 @@ import {
   Target,
   Zap,
   Shield,
-  Dumbbell
+  Dumbbell,
+  Heart,
+  Compass,
+  Gift
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -113,20 +116,21 @@ const PROGRAMS: Program[] = [
     name: 'Боевое джиу-джитсу',
     target: 'Для детей / Для взрослых',
     description: 'Система самозащиты и рукопашного боя, вобравшая в себя лучшие приемы из борьбы, ударов и болевых воздействий. Обучение включает технику бросков, удушающих и болевых приемов на руки и ноги.',
-    image: '/demo-everest-landing-ai/jj.png',
+    image: '/demo-everest-landing-ai/bjj.jpg',
   },
   {
     id: 'kudo',
     name: 'Кудо',
     target: 'Для детей / Для взрослых',
     description: 'Современное полноконтактное боевое искусство, сочетающее в себе карате, дзюдо и тайский бокс. Особенности — защитный шлем и возможность использовать как ударную, так и борцовскую технику.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCq6WEVFPG4SP1XSiWtZjDbTkyMQn0ilKVwdGWpXY1wNTZ1tLtbYv98Dwb0Snmz8OsPLbR9ZEkP5NG4CMDonZXD_v-T0yFGLpVGgp0UUwPT2nvVF7n3WG3y64mg9kPbRRN6QgpxPdiCwRuITGEHXQw2pmysUZRbXhAY3csCqii14QW50XoonfnOGEFXi6ecJM3K3WFmn4xOAZgL150TnU7xt4H3KtVxzktSnrYDh8byRC7JS5fHEO6yfROGXobKosj3isGyANKQ3gzq',  },
+    image: '/demo-everest-landing-ai/kudo.jpg',
+  },
   {
     id: 'grappling',
     name: 'Грэпплинг',
     target: 'Для детей / Для взрослых',
     description: 'Вид спортивного единоборства, совмещающий технику всех борцовских дисциплин с минимальными ограничениями по использованию болевых и удушающих приемов. В отличие от БЖЖ, здесь не используется кимоно, что делает схватки более динамичными и скоростными.',
-    image: '/demo-everest-landing-ai/grappling.png', // Grappling action
+    image: '/demo-everest-landing-ai/greppling.jpg', // Grappling action
   }
 ];
 
@@ -142,11 +146,213 @@ const SCHEDULE: ScheduleItem[] = [
   { id: '9', day: 'Сб', time: '14:00', title: 'Sparring Session', coach: 'М. Волков', type: 'sparring' },
 ];
 
-const REVIEWS = [
-  { id: '1', name: 'Дмитрий Соколов', date: '15 января 2024', rating: 5, text: 'Отличный клуб! Тренеры — профессионалы своего дела. Атмосфера рабочая, дисциплина на высоте. Рекомендую всем, кто хочет научиться реально бороться.' },
-  { id: '2', name: 'Анна Новикова', date: '2 февраля 2024', rating: 5, text: 'Сын занимается в детской группе уже год. Очень довольны результатом: стал более собранным, уверенным в себе. Тренеры находят подход к каждому ребенку.' },
-  { id: '3', name: 'Михаил Волков', date: '21 марта 2024', rating: 5, text: 'Хороший зал, есть все необходимое. Тренировки интенсивные. Нравится, что много времени уделяется технике, а не просто "физухе".' },
+const REVIEWS_MAP = {
+  general: [
+    { id: '1', name: 'Дмитрий Соколов', date: '15 января 2024', rating: 5, text: 'Отличный клуб! Тренеры — профессионалы своего дела. Атмосфера рабочая, дисциплина на высоте. Рекомендую всем, кто хочет научиться реально бороться.' },
+    { id: '2', name: 'Анна Новикова', date: '2 февраля 2024', rating: 5, text: 'Сын занимается в детской группе уже год. Очень довольны результатом: стал более собранным, уверенным в себе. Тренеры находят подход к каждому ребенку.' },
+    { id: '3', name: 'Михаил Волков', date: '21 марта 2024', rating: 5, text: 'Хороший зал, есть все необходимое. Тренировки интенсивные. Нравится, что много времени уделяется технике, а не просто "физухе".' },
+  ],
+  parents: [
+    { id: 'p1', name: 'Мария Староверова', date: '10 марта 2024', rating: 5, text: 'Привели сына в 5 лет на Кудо. Сначала переживала за безопасность, но здесь все продумано: классные шлемы с масками, мягкий ковер, тренер ни на секунду не оставляет детей. Сын в восторге, стал послушнее дома.' },
+    { id: 'p2', name: 'Ольга Кузнецова', date: '18 апреля 2024', rating: 5, text: 'Дочь занимается джиу-джитсу в Эвересте. Очень чуткий подход тренеров, нет давления, только поддержка и здоровая дисциплина. Ребенок идет на каждую тренировку с огромной радостью!' },
+    { id: 'p3', name: 'Анна Новикова', date: '2 февраля 2024', rating: 5, text: 'Сын занимается в детской группе уже год. Очень довольны результатом: стал более собранным, уверенным в себе. Тренеры находят подход к каждому ребенку.' },
+  ],
+  men: [
+    { id: 'm1', name: 'Константин Резнов', date: '12 февраля 2024', rating: 5, text: 'Хожу на грэпплинг и кудо вечером после работы. Лучшая разрядка после сидения за компьютером. Тренировки жесткие, качественные, без жалости к себе, но и без травм. Ребята на ковре отличные.' },
+    { id: 'm2', name: 'Дмитрий Соколов', date: '15 января 2024', rating: 5, text: 'Отличный клуб! Тренеры — профессионалы своего дела. Атмосфера рабочая, дисциплина на высоте. Рекомендую всем, кто хочет научиться реально бороться.' },
+    { id: 'm3', name: 'Игорь Акимов', date: '5 марта 2024', rating: 5, text: 'Тренируюсь у Андрея Алексеевича. Человек с огромным опытом, ставит реальную прикладную технику. Каждая тренировка — это вызов себе, здоровье и выносливость заметно улучшились.' },
+  ]
+};
+
+const BENEFITS_MAP = {
+  general: [
+    { title: 'Уверенность', desc: 'Побеждайте внутренние страхи и сомнения, становясь сильнее с каждой тренировкой.', icon: <Check size={40} /> },
+    { title: 'Дисциплина', desc: 'Регулярные тренировки закаляют характер и приучают к порядку во всех сферах жизни.', icon: <Shield size={40} /> },
+    { title: 'Сила', desc: 'Развивайте силу своего тела под руководством профессиональных тренеров.', icon: <Dumbbell size={40} /> },
+    { title: 'Техника', desc: 'Овладейте искусством рычагов и контроля, позволяющим побеждать более крупных противников.', icon: <Zap size={40} /> },
+    { title: 'Дух', desc: 'Обретите ментальную устойчивость, которая приходит через преодоление трудностей на татами.', icon: <Target size={40} /> },
+    { title: 'Сообщество', desc: 'Станьте частью сплоченного братства сильных людей, всегда готовых поддержать.', icon: <Users size={40} /> },
+  ],
+  parents: [
+    { title: 'Безопасность', desc: 'Программа тренировок адаптирована под возраст детей. Каждая группа тренируется под руководством опытного наставника на мягком татами с акцентом на страховку при падениях.', icon: <Shield size={40} /> },
+    { title: 'Дисциплина', desc: 'Учим уважать тренера, соперников и родителей. Ребенок научится концентрироваться и слушать руководства с первых занятий.', icon: <Target size={40} /> },
+    { title: 'Развитие', desc: 'Развитие гибкости, координации, ловкости и силы без вреда для неокрепших суставов и позвоночника.', icon: <Dumbbell size={40} /> },
+    { title: 'Уверенность', desc: 'Ребенок сможет постоять за себя, перестанет бояться конфликтов и обретет здоровую самооценку в кругу друзей.', icon: <Zap size={40} /> },
+    { title: 'Энергия', desc: 'Убираем излишнюю гиперактивность, перенаправляя энергию в упорные и созидательные тренировки.', icon: <Users size={40} /> },
+    { title: 'Характер', desc: 'Учим преодолевать трудности, не сдаваться при первых неудачах и достигать поставленных спортивных и жизненных целей.', icon: <Award size={40} /> },
+  ],
+  men: [
+    { title: 'Сброс стресса', desc: 'Лучший способ «перегрузить» голову после тяжелого офисного дня — это жесткая, функциональная тренировка на татами.', icon: <Zap size={40} /> },
+    { title: 'Прикладные навыки', desc: 'Реальная самооборона, эффективная бросковая и ударная техника, применимые в любой непредвиденной ситуации.', icon: <Shield size={40} /> },
+    { title: 'Мужской коллектив', desc: 'Окружение сильных духом, стремящихся к развитию мужчин. Дружеская, уважительная атмосфера и поддержка.', icon: <Users size={40} /> },
+    { title: 'Функциональная сила', desc: 'Проработка всех мышечных групп, развитие выносливости, координации и взрывной силы борца.', icon: <Dumbbell size={40} /> },
+    { title: 'Характер и воля', desc: 'Преонелейте свои пределы, закалите ментальную стойкость в спаррингах и регулярных вызовах.', icon: <Target size={40} /> },
+    { title: 'Гибкость тела', desc: 'Регулярная суставная разминка и растяжка сохранят здоровье вашей спины и суставов до преклонных лет.', icon: <Check size={40} /> },
+  ]
+};
+
+const AUDIENCE_HERO_MAP = {
+  general: {
+    bgImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA046Pdpw7o5BuYQ8-1D2pDhy0sdJy6tYK6ZifIdKKhL4qy8qP8GK08Opu7Eb-GjmzApmnxvDwirw_blS5_7VKmdluIIh5bk1J-9hKgHjtI01JUghe0M6eMCBb_J3itdzHkBRhuLqUZ-uhRToeEnA8iTbrZXRQtWJHuwB1oodjDjTtmrV-Wird6YjdQLqh-1AJbyTHtP7aoST_6oTCX-qmhK4_PXl-fTky9zQHOgLoGhZ-3wgbWsQCaHEK_VVGuvzFOxEfyJ2nFwYdf',
+    badge: 'Первая тренировка бесплатно!',
+    subBadge: 'БОЕВОЕ ДЖИУ-ДЖИТСУ • КУДО • ГРЭППЛИНГ',
+    ctaText: 'ЗАПИСАТЬСЯ НА ТРЕНИРОВКУ',
+    titleText: (
+      <>
+        ПУТЬ <br className="sm:hidden" /> К&nbsp;ВЕРШИНЕ <br className="sm:hidden" /> МАСТЕРСТВА
+      </>
+    ),
+    description: null
+  },
+  parents: {
+    bgImage: '/demo-everest-landing-ai/hero_parents.jpg',
+    badge: 'Безопасность • Дисциплина • Здоровье',
+    subBadge: 'КУДО И ДЖИУ-ДЖИТСУ ДЛЯ ДЕТЕЙ ОТ 4 ЛЕТ',
+    ctaText: 'ЗАПИСАТЬ РЕБЕНКА',
+    titleText: (
+      <>
+        ВОСПИТАНИЕ <br className="sm:hidden" /> ХАРАКТЕРА <br className="sm:hidden" /> И СИЛЫ
+      </>
+    ),
+    description: 'Развиваем дисциплину, уверенность в себе и физическую выносливость с самого детства в безопасном формате тренировок с заботливыми наставниками.'
+  },
+  men: {
+    bgImage: '/demo-everest-landing-ai/hero_men.jpg',
+    badge: 'Снятие стресса • Сильный коллектив',
+    subBadge: 'БОЕВОЕ ДЖИУ-ДЖИТСУ • КУДО • ГРЭППЛИНГ',
+    ctaText: 'НАЧАТЬ ТРЕНИРОВКИ',
+    titleText: (
+      <>
+        БОЕВАЯ <br className="sm:hidden" /> ЭФФЕКТИВНОСТЬ <br className="sm:hidden" /> И СИЛА
+      </>
+    ),
+    description: 'Интенсивные тренировки, реальная техника самообороны и сильная мужская атмосфера. Выйди на новый пик выносливости и ментальной стойкости.'
+  }
+};
+
+const AUDIENCE_STATS_MAP = {
+  general: [
+    { value: '3', label: 'Вида спорта' },
+    { value: '462', label: 'Наград' },
+    { value: '3', label: 'Тренера' },
+    { value: '951', label: 'Воспитанников' },
+  ],
+  parents: [
+    { value: '2', label: 'Детские секции' },
+    { value: '23', label: 'года опыт воспитания детей' },
+    { value: '0%', label: 'Травматизма на татами' },
+    { value: '600+', label: 'Счастливых семей' },
+  ],
+  men: [
+    { value: '3', label: 'Боевые дисциплины' },
+    { value: '100%', label: 'Психологической разрядки' },
+    { value: '3', label: 'Опытных наставника в зале' },
+    { value: '200+', label: 'Мужчин в клубе' },
+  ]
+};
+
+const AUDIENCE_PROGRAMS_MAP = {
+  general: PROGRAMS,
+  parents: [
+    {
+      id: 'bjj',
+      name: 'Боевое джиу-джитсу для детей',
+      target: 'Младшая (4+) и старшая группы',
+      description: 'Безопасное введение детей в мир борьбы. Основы самостраховки, мягкая гимнастика, развитие силы и гибкости без вреда для спины. Ребенок научится думать тактически и владеть своим телом.',
+      image: '/demo-everest-landing-ai/bjj.jpg'
+    },
+    {
+      id: 'kudo',
+      name: 'Кудо для детей',
+      target: 'Группы 4-6 лет и 7+ лет',
+      description: 'Динамичное боевое искусство в защитных шлемах NEO HEAD GEAR с защитными пластиковыми забралами, минимизирующими любой риск травм. Воспитываем командный дух, мужскую и спортивную дисциплину, уважение к старшим.',
+      image: '/demo-everest-landing-ai/kudo.jpg'
+    },
+    {
+      id: 'grappling',
+      name: 'Детский грэпплинг',
+      target: 'Для детей от 7 лет',
+      description: 'Увлекательная скоростная борьба без кимоно. Учит ловкости, выносливости и быстрой реакции в игровом формате. Развивает невероятную координацию и упорство у ребенка.',
+      image: '/demo-everest-landing-ai/greppling.jpg'
+    }
+  ],
+  men: [
+    {
+      id: 'bjj',
+      name: 'Боевое джиу-джитсу',
+      target: 'Для мужчин / Новички и профи',
+      description: 'Прикладная система самообороны и рукопашного боя. Болевые и удушающие приемы, бросковая техника, контроль оппонента в партере. Идеально подходит для обретения уверенности и боевой техники на любой случай жизни.',
+      image: '/demo-everest-landing-ai/bjj.jpg'
+    },
+    {
+      id: 'kudo',
+      name: 'Кудо',
+      target: 'Реальное полноконтактное кудо',
+      description: 'Максимально приближенное к жизни боевое искусство. Сочетает мощную ударную технику руками и ногами, подножки, подсечки, борьбу в партере. Защитный шлем с забралом позволяет драться в полную силу с минимальной вероятностью синяков для офисной работы.',
+      image: '/demo-everest-landing-ai/kudo.jpg'
+    },
+    {
+      id: 'grappling',
+      name: 'Грэпплинг',
+      target: 'Для мужчин любого уровня',
+      description: 'Функциональный борцовский тренинг. Никаких кимоно — быстрая, силовая борьба на татами на основе болевых и удушающих. Развивает железную спину, стальной хват и безграничную кардио-выносливость.',
+      image: '/demo-everest-landing-ai/greppling.jpg'
+    }
+  ]
+};
+
+const AUDIENCE_PRICING_MAP = {
+  general: [
+    { id: 'single', name: 'Разовое занятие', price: '700', period: 'за 1 тренировку в группе', items: ['Занятие в общей группе по расписанию', 'Любая дисциплина на выбор', 'Инструктаж тренера и разбор ошибок'] },
+    { id: 'unlimit', name: 'Абонемент на месяц', price: '4500', period: 'в месяц (групповые)', items: ['Все дисциплины без ограничений по посещениям', 'Развитие выносливости и техники', 'Поддержка наставника в общем чате'] },
+    { id: 'personal', name: 'Индивидуально', price: '1600', period: 'за 1 персональную тренировку', items: ['100% внимания личного тренера', 'Индивидуальная программа и удобный график', 'Быстрый и безопасный прогресс на ковре'] },
+  ],
+  parents: [
+    { id: 'single', name: 'Разовое детское', price: '700', period: 'за 1 тренировку в группе', items: ['Групповое занятие с детьми своего возраста', 'Оценка координации и интереса ребенка', 'Безопасное вливание в дружную команду'] },
+    { id: 'unlimit', name: 'Детский абонемент', price: '4500', period: 'в месяц (групповые)', items: ['Посещение Кудо или Джиу-Джитсу (3 раза в неделю)', 'Заморозка абонемента по медицинской справке', 'Участие в детских турнирах и аттестациях'] },
+    { id: 'personal', name: 'Индивидуально (Дети)', price: '1600', period: 'за 1 персональную тренировку', items: ['Штучный разбор детской техники и моторики', 'Особенно чуткий и осторожный подход', 'Максимальная безопасность под присмотром'] },
+  ],
+  men: [
+    { id: 'single', name: 'Разовый бойцовский', price: '700', period: 'за 1 тренировку в группе', items: ['Бойцовская тренировка в группе мужчин', 'Кудо, Джиу-Джитсу или Грэпплинг', 'Проверка сил на ковре в полную нагрузку'] },
+    { id: 'unlimit', name: 'Безлимит на месяц', price: '4500', period: 'в месяц (групповые)', items: ['Доступ ко всем группам и расписаниям', '3 тренировки в неделю с возможностью отработок', 'Развитие выносливости и мужской силы'] },
+    { id: 'personal', name: 'Индивидуальная работа', price: '1600', period: 'за 1 персональную тренировку', items: ['1 на 1 со старшим мастером', 'Постановка нокаутирующих ударов и захватов', 'Гибкий график до или после вашей работы'] },
+  ]
+};
+
+const FAQ_LIST = [
+  { q: 'Что нужно взять на первую тренировку?', a: 'Удобную спортивную форму (футболку и спортивные штаны/шорты без замков и опасной фурнитуры), сменную обувь (сланцы, чтобы дойти от раздевалки до ковра), бутылку воды и душевые принадлежности (если планируете принять душ). Сами тренировки проходят босиком на специальном покрытии (татами).' },
+  { q: 'Как проходит занятие?', a: 'Каждое занятие длится от 60 до 90 минут и состоит из нескольких обязательных этапов: интенсивная разминка и суставная гимнастика, отработка элементов страховки при падении (самостраховка), изучение и отработка технических приемов в парах, учебные спарринги (для опытных спортсменов) и заминка в конце для восстановления дыхания.' },
+  { q: 'Можно ли приходить, если никогда не занимался единоборствами?', a: 'Да, конечно! Большая часть наших учеников изначально приходит к нам без какого-либо спортивного опыта. Программа тренировок выстроена так, чтобы нагрузка увеличивалась постепенно, а все базовые элементы самостраховки и приемов подробно разбирались с самого нуля.' },
+  { q: 'Есть ли занятия для взрослых новичков?', a: 'Да, у нас работают специальные взрослые группы начального уровня. В них занимаются люди разного возраста и уровня физической подготовки, поэтому вы будете чувствовать себя максимально комфортно на тренировках с первого дня.' },
+  { q: 'Если заболел и пропустил тренировку, возможен ли перерасчет?', a: 'Да, при пропуске занятий по болезни мы делаем перерасчет стоимости или продлеваем действие абонемента (заморозка). Для этого достаточно предоставить медицинскую справку или предупредить администратора.' },
+  { q: 'Сколько раз в неделю нужно заниматься для видимого результата?', a: 'Оптимальный режим для большинства учеников — 3 раза в неделю. Это позволяет эффективно осваивать технику, укреплять тело и выносливость, успевая при этом полностью восстанавливаться. На начальном этапе можно заниматься 2 раза в неделю.' },
+  { q: 'Как выбрать направление единоборств?', a: 'Выбор зависит от ваших целей. Если вы хотите сделать акцент на бросковой технике, болевых и удушающих приемах на ковре без ударов — вам отлично подойдет спортивное джиу-джитсу. Если вам интересна универсальная полноконтактная система, сочетающая удары, броски и борьбу в шлеме — выбирайте кудо. Мы рекомендуем сходить на пробное занятие по обоим направлениям, чтобы определиться.' },
+  { q: 'Нужна ли справка от врача?', a: 'Да, здоровье и безопасность наших учеников — главный приоритет. Для регулярных занятий требуется медицинская справка (от терапевта для взрослых и от педиатра для детей) об отсутствии противопоказаний к физическим нагрузкам.' },
+  { q: 'С какого возраста можно приводить детей?', a: 'Мы принимаем детей в секции кудо и джиу-джитсу с 4-х лет. Для младших групп тренировки проходят в игровой форме с упором на развитие координации, ловкости, общей физической подготовки и игровой дисциплины.' },
+  { q: 'Есть ли скидки для нескольких детей?', a: 'Да, у нас действует семейная скидка. Если секцию посещают двое или более детей из одной семьи, мы предоставляем специальную скидку на абонементы. Подробную информацию вам с радостью предоставит администратор.' },
+  { q: 'Как часто проходят тренировки?', a: 'Тренировки в группах проходят по расписанию от 2 до 4 раз в неделю. Большинство детских и взрослых групп занимаются 3 раза в неделю в удобное вечернее время.' },
 ];
+
+const AUDIENCE_FAQ_MAP = {
+  general: FAQ_LIST,
+  parents: [
+    FAQ_LIST[8], // С какого возраста можно приводить детей?
+    FAQ_LIST[0], // Что нужно взять на первую тренировку?
+    FAQ_LIST[7], // Нужна ли справка от врача?
+    FAQ_LIST[9], // Есть ли скидки для нескольких детей?
+    FAQ_LIST[4], // Если заболел и пропустил тренировку, возможен ли перерасчет?
+    FAQ_LIST[10], // Как часто проходят тренировки?
+  ],
+  men: [
+    FAQ_LIST[2], // Можно ли приходить, если никогда не занимался единоборствами?
+    FAQ_LIST[3], // Есть ли занятия для взрослых новичков?
+    FAQ_LIST[1], // Как проходит занятие?
+    FAQ_LIST[6], // Как выбрать направление единоборств?
+    FAQ_LIST[5], // Сколько раз в неделю нужно заниматься для видимого результата?
+    FAQ_LIST[4], // Если заболел... перерасчет?
+    FAQ_LIST[7], // Справка?
+  ]
+};
 
 const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 const TIMES = ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00'];
@@ -264,6 +470,43 @@ const RegistrationForm = ({ coachName, onSuccess }: { coachName?: string; onSucc
 };
 
 export default function App() {
+  const [audience, setAudience] = useState<'general' | 'parents' | 'men'>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const urlAudience = params.get('audience');
+      if (urlAudience === 'general' || urlAudience === 'parents' || urlAudience === 'men') {
+        return urlAudience;
+      }
+    }
+    return 'general';
+  });
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    const urlAudience = params.get('audience') || 'general';
+    if (urlAudience !== audience) {
+      if (audience === 'general') {
+        url.searchParams.delete('audience');
+      } else {
+        url.searchParams.set('audience', audience);
+      }
+      window.history.pushState({ audience }, '', url.toString());
+    }
+  }, [audience]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const urlAudience = params.get('audience') || 'general';
+      if (urlAudience === 'general' || urlAudience === 'parents' || urlAudience === 'men') {
+        setAudience(urlAudience);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   const [isNavScrolled, setIsNavScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [activeModal, setActiveModal] = useState<'none' | 'registration' | 'coach' | 'schedule'>('none');
@@ -384,21 +627,69 @@ export default function App() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <a href="tel:+79990000000" className="hidden sm:flex items-center gap-2 text-on-surface hover:text-primary transition-colors text-sm font-bold">
+            <a href="tel:+73822256465" className="hidden sm:flex items-center gap-2 text-on-surface hover:text-primary transition-colors text-sm font-bold">
               <Phone size={18} className="text-primary-container" />
-              +7 (999) 000-00-00
+              +7 (3822) 25-64-65
             </a>
-            <a href="#" className="hover:opacity-80 transition-opacity hidden sm:block">
+            <a href="https://vk.com/everest_tomsk" target="_blank" rel="noopener noreferrer" className="vk-link hidden sm:flex items-center justify-center shrink-0 w-8 h-8" aria-label="VK">
               <img 
-                src="https://lh3.googleusercontent.com/aida/ADBb0ujjFcpHVGNwA4ey5SWFy1XKbNTItRqRTacZZZxuNPO5RLCiDJqhpZPxqHlMSs_DGuc_-vJ0Xsma_1gpdO7BsQ2WQ-SB7BmkyRonClcf6X-N0FAej0CZAflCgXEmUE1rInkqOxrqRZhB-WaPZ42iXjHE_WP3lGOMW1Ldtqsoj1tWdc-wgnCbi6TpCiupE1iwXZQphV06r7MO5jDxGgNsyTJoKZACY2S52rDQRoRXX8MeK0yfZo3BTNm4y4E" 
+                src="/demo-everest-landing-ai/vk.png" 
                 alt="VK" 
-                className="h-8 w-8 rounded-lg"
                 referrerPolicy="no-referrer"
               />
             </a>
             <button className="lg:hidden text-on-surface" onClick={() => setMobileMenuOpen(true)}>
               <Menu size={32} />
             </button>
+          </div>
+        </div>
+
+        {/* --- Audience Switcher (Desktop) --- */}
+        <div className="hidden lg:block mt-4 border-t border-outline-variant/10 pt-3">
+          <div className="max-w-container-max mx-auto flex justify-center">
+            <div className="bg-surface-container-low/85 backdrop-blur-xl p-1 rounded-full border border-outline-variant/30 flex items-center gap-1 shadow-lg">
+              <button 
+                onClick={() => setAudience('general')}
+                className={`relative px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${audience === 'general' ? 'text-white' : 'text-on-surface-variant hover:text-primary-container'}`}
+              >
+                {audience === 'general' && (
+                  <motion.div 
+                    layoutId="active-audience-pill" 
+                    className="absolute inset-0 bg-primary-container rounded-full z-0"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">Общая версия</span>
+              </button>
+              
+              <button 
+                onClick={() => setAudience('parents')}
+                className={`relative px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${audience === 'parents' ? 'text-white' : 'text-on-surface-variant hover:text-primary-container'}`}
+              >
+                {audience === 'parents' && (
+                  <motion.div 
+                    layoutId="active-audience-pill" 
+                    className="absolute inset-0 bg-primary-container rounded-full z-0"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">Для мам и детей</span>
+              </button>
+
+              <button 
+                onClick={() => setAudience('men')}
+                className={`relative px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${audience === 'men' ? 'text-white' : 'text-on-surface-variant hover:text-primary-container'}`}
+              >
+                {audience === 'men' && (
+                  <motion.div 
+                    layoutId="active-audience-pill" 
+                    className="absolute inset-0 bg-primary-container rounded-full z-0"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">Для взрослых мужчин</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -434,9 +725,9 @@ export default function App() {
               {renderNavLinks()}
             </nav>
             <div className="mt-auto pt-8 border-t border-outline-variant">
-              <a href="tel:+79990000000" className="flex items-center gap-4 text-xl font-bold mb-6">
+              <a href="tel:+73822256465" className="flex items-center gap-4 text-xl font-bold mb-6 text-on-surface hover:text-primary transition-colors">
                 <Phone size={24} className="text-primary-container" />
-                +7 (999) 000-00-00
+                +7 (3822) 25-64-65
               </a>
               <button onClick={() => { setMobileMenuOpen(false); openRegistration(); }} className="btn-primary w-full text-xl py-6">
                 Записаться
@@ -446,14 +737,15 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <main>
+      <main className="pb-28 lg:pb-0">
         {/* --- Hero Section --- */}
-        <section className="relative min-h-screen flex items-center pt-24">
+        <section className="relative min-h-screen flex items-center pt-24 lg:pt-40 md:pt-32 pb-12 lg:pb-16">
           <div className="absolute inset-0 z-0 overflow-hidden">
             <img 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA046Pdpw7o5BuYQ8-1D2pDhy0sdJy6tYK6ZifIdKKhL4qy8qP8GK08Opu7Eb-GjmzApmnxvDwirw_blS5_7VKmdluIIh5bk1J-9hKgHjtI01JUghe0M6eMCBb_J3itdzHkBRhuLqUZ-uhRToeEnA8iTbrZXRQtWJHuwB1oodjDjTtmrV-Wird6YjdQLqh-1AJbyTHtP7aoST_6oTCX-qmhK4_PXl-fTky9zQHOgLoGhZ-3wgbWsQCaHEK_VVGuvzFOxEfyJ2nFwYdf"  
-              alt="BJJ Combat"
-              className="w-full h-full object-cover grayscale brightness-50"
+              key={audience}
+              src={AUDIENCE_HERO_MAP[audience].bgImage} 
+              alt="Everest Combat Background"
+              className="w-full h-full object-cover grayscale brightness-[0.45] transition-all duration-1000"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
@@ -461,22 +753,44 @@ export default function App() {
           
           <div className="relative z-10 px-gutter max-w-container-max mx-auto w-full">
             <motion.div 
-              initial={{ x: -100, opacity: 0 }}
+              key={audience}
+              initial={{ x: -60, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              className="max-w-4xl"
+              transition={{ duration: 0.6 }}
+              className="max-w-5xl lg:max-w-6xl w-full"
             >
-              <h1 className="font-display text-[2.75rem] sm:text-7xl md:text-7xl lg:text-8xl text-on-surface mb-6 uppercase font-black leading-[0.9] tracking-tighter">
-                ЭВЕРЕСТ: <br />
-                <span className="text-primary-container italic">ПУТЬ К ВЕРШИНЕ МАСТЕРСТВА</span>
+              <h1 className="font-display text-[1.8rem] max-[320px]:text-[1.5rem] min-[360px]:text-[2rem] min-[400px]:text-[2.35rem] sm:text-6xl md:text-[4.75rem] lg:text-[4.75rem] xl:text-[5.5rem] text-on-surface mb-4 uppercase font-black leading-[0.9] tracking-tighter">
+                <img 
+                  src="/demo-everest-landing-ai/image2.svg" 
+                  alt="ЭВЕРЕСТ" 
+                  className="h-[4.5rem] sm:h-24 md:h-28 lg:h-32 w-auto object-contain mb-0 sm:mb-3 inline-block"
+                  style={{ filter: 'invert(91%) sepia(21%) saturate(225%) hue-rotate(163deg) brightness(98%) contrast(93%)' }}
+                  referrerPolicy="no-referrer"
+                />
+                <br />
+                <span className="text-primary-container italic">
+                  {AUDIENCE_HERO_MAP[audience].titleText}
+                </span>
               </h1>
-              <p className="text-primary font-display font-bold uppercase tracking-[0.4em] mb-12 text-[10px] md:text-sm">
-                Первая тренировка бесплатно!
+              
+              <p className="text-primary font-display font-bold uppercase tracking-[0.4em] mb-2 text-[10px] md:text-sm">
+                {AUDIENCE_HERO_MAP[audience].badge}
               </p>
-              <button onClick={() => openRegistration()} className="btn-primary text-[10px] min-[400px]:text-xs sm:text-lg md:text-xl px-1 sm:px-6 py-4 group max-w-full">
-                <span className="flex items-center justify-center gap-1 sm:gap-4 text-center whitespace-nowrap">
-                  <span>ЗАПИСАТЬСЯ НА ТРЕНИРОВКУ</span>
-                  <ArrowRight className="shrink-0 group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform h-3 w-3 sm:h-5 sm:w-5" />
+              
+              <p className="text-on-surface/80 font-display font-bold uppercase tracking-[0.2em] mb-4 text-[9px] md:text-xs">
+                {AUDIENCE_HERO_MAP[audience].subBadge}
+              </p>
+
+              {AUDIENCE_HERO_MAP[audience].description && (
+                <p className="text-on-surface-variant/95 text-body-md md:text-body-lg mb-6 max-w-4xl border-l-[3px] border-primary-container pl-4 normal-case font-medium leading-relaxed">
+                  {AUDIENCE_HERO_MAP[audience].description}
+                </p>
+              )}
+
+              <button onClick={() => openRegistration()} className="btn-primary text-[10px] min-[320px]:text-[11px] min-[360px]:text-sm sm:text-lg md:text-xl w-full sm:w-auto px-5 sm:px-8 py-3.5 group max-w-full">
+                <span className="flex items-center justify-center gap-1.5 sm:gap-4 text-center whitespace-nowrap">
+                  <span>{AUDIENCE_HERO_MAP[audience].ctaText}</span>
+                  <ArrowRight className="shrink-0 group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform h-3.5 w-3.5 sm:h-5 sm:w-5" />
                 </span>
               </button>
             </motion.div>
@@ -484,33 +798,28 @@ export default function App() {
         </section>
 
         {/* --- About Section --- */}
-        <section id="about" className="py-32 bg-surface-container relative overflow-hidden scroll-mt-24">
+        <section id="about" className="py-12 md:py-32 bg-surface-container relative overflow-hidden scroll-mt-24">
           <div className="grit-texture absolute inset-0 opacity-5" />
-          <div className="px-gutter max-w-container-max mx-auto flex flex-col lg:flex-row gap-20 items-center">
+          <div className="px-gutter max-w-container-max mx-auto flex flex-col lg:flex-row gap-8 lg:gap-20 items-center">
             <div className="flex-1">
               <h2 className="section-title">О нас</h2>
-              <div className="space-y-6 text-on-surface-variant text-body-lg">
-                <p>Спортивный клуб Эверест начал свое существование в 2003 г. За это время мы воспитали сотни атлетов, многие из которых стали мастерами спорта и чемпионами турниров.</p>
-                <p>Юридический статус под названием Центр физической культуры и спорта «Эверест» получил в 2017 г. Тренировки проводятся для детей и взрослых. Организованы секции боевого джиу-джитсу, кудо.</p>
-                <p>Проводятся соревнования и семинары по всей России, что позволяет нашим ученикам постоянно расти и обмениваться опытом с лучшими школами страны.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-8 md:mb-12">
+                <div>
+                  <div className="text-primary-container font-display text-5xl sm:text-6xl font-black italic">2003</div>
+                  <div className="text-xs uppercase font-bold tracking-widest mt-2 text-on-surface/80 leading-relaxed">Создание клуба</div>
+                </div>
+                <div>
+                  <div className="text-primary-container font-display text-5xl sm:text-6xl font-black italic">2017</div>
+                  <div className="text-xs uppercase font-bold tracking-widest mt-2 text-on-surface/80 leading-relaxed">Становление центром физической культуры и спорта</div>
+                </div>
               </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-                <div>
-                  <div className="text-primary-container font-display text-5xl font-black italic">3</div>
-                  <div className="text-xs uppercase font-bold tracking-widest mt-2">Вида спорта</div>
-                </div>
-                <div>
-                  <div className="text-primary-container font-display text-5xl font-black italic">462</div>
-                  <div className="text-xs uppercase font-bold tracking-widest mt-2">Наград</div>
-                </div>
-                <div>
-                  <div className="text-primary-container font-display text-5xl font-black italic">3</div>
-                  <div className="text-xs uppercase font-bold tracking-widest mt-2">Тренера</div>
-                </div>
-                <div>
-                  <div className="text-primary-container font-display text-5xl font-black italic">951</div>
-                  <div className="text-xs uppercase font-bold tracking-widest mt-2">Воспитанников</div>
-                </div>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 md:gap-x-12 md:gap-y-16 mt-8 md:mt-12 border-t border-outline-variant/30 pt-8 md:pt-12">
+                {AUDIENCE_STATS_MAP[audience].map((stat, i) => (
+                  <div key={i}>
+                    <div className="text-primary-container font-display text-4xl sm:text-5xl font-black italic">{stat.value}</div>
+                    <div className="text-[10px] sm:text-xs uppercase font-bold tracking-widest mt-2 leading-tight text-on-surface-variant">{stat.label}</div>
+                  </div>
+                ))}
               </div>
             </div>
             <div className="flex-1 relative">
@@ -527,21 +836,14 @@ export default function App() {
         </section>
 
         {/* --- Benefits Section --- */}
-        <section id="benefits" className="py-32 px-gutter max-w-container-max mx-auto scroll-mt-24">
+        <section id="benefits" className="py-12 md:py-32 px-gutter max-w-container-max mx-auto scroll-mt-24">
           <h2 className="section-title">Что дают тренировки</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { title: 'Уверенность', desc: 'Побеждайте внутренние страхи и сомнения, становясь сильнее с каждым новым поединком.', icon: <Check size={40} /> },
-              { title: 'Дисциплина', desc: 'Регулярные тренировки закаляют характер и приучают к порядку во всех сферах жизни.', icon: <Shield size={40} /> },
-              { title: 'Сила', desc: 'Развивайте функциональное и атлетичное тело борца под руководством профессионалов.', icon: <Dumbbell size={40} /> },
-              { title: 'Техника', desc: 'Овладейте искусством рычагов и контроля, позволяющим побеждать более крупных противников.', icon: <Zap size={40} /> },
-              { title: 'Дух', desc: 'Обретите ментальную устойчивость, которая приходит через преодоление трудностей на татами.', icon: <Target size={40} /> },
-              { title: 'Сообщество', desc: 'Станьте частью сплоченного братства сильных людей, всегда готовых поддержать.', icon: <Users size={40} /> },
-            ].map((item) => (
+            {BENEFITS_MAP[audience].map((item) => (
               <motion.div 
                 key={item.title}
                 whileHover={{ scale: 1.02 }}
-                className="card-dark p-8 group overflow-hidden relative"
+                className="card-dark p-6 min-[375px]:p-8 group overflow-hidden relative"
               >
                 <div className="absolute top-0 right-0 w-24 h-24 bg-primary-container/10 group-hover:bg-primary-container/20 transition-colors flex items-center justify-center -mr-4 -mt-4 rotate-12">
                   <span className="text-primary-container -rotate-12">{item.icon}</span>
@@ -554,12 +856,12 @@ export default function App() {
         </section>
 
         {/* --- Coaches Section --- */}
-        <section id="coaches" className="py-32 px-gutter max-w-container-max mx-auto scroll-mt-24">
+        <section id="coaches" className="py-12 md:py-32 px-gutter max-w-container-max mx-auto scroll-mt-24">
           <h2 className="section-title">Тренеры</h2>
-          <div className="flex flex-wrap justify-center gap-12">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-12">
             {COACHES.map((coach) => (
               <div key={coach.id} className="group cursor-pointer flex flex-col h-full w-full sm:w-[calc(50%-24px)] lg:w-[calc(33.333%-32px)] max-w-[400px]" onClick={() => openCoach(coach)}>
-                <div className="relative aspect-[3/4] overflow-hidden bg-surface-container-highest mb-6 shrink-0">
+                <div className="relative aspect-[3/4] overflow-hidden bg-surface-container-highest mb-4 md:mb-6 shrink-0">
                   <img 
                     src={coach.image} 
                     alt={coach.name}
@@ -582,27 +884,27 @@ export default function App() {
         </section>
 
         {/* --- Programs Section --- */}
-        <section id="programs" className="py-32 bg-surface-container relative scroll-mt-24">
+        <section id="programs" className="py-12 md:py-32 bg-surface-container relative scroll-mt-24">
           <div className="grit-texture absolute inset-0 opacity-5" />
           <div className="px-gutter max-w-container-max mx-auto">
             <h2 className="section-title">Наши виды спорта</h2>
-            <div className="space-y-24">
-              {PROGRAMS.map((program, idx) => (
-                <div key={program.id} className={`flex flex-col lg:flex-row gap-16 items-center ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-                  <div className="flex-1">
+            <div className="space-y-12 md:space-y-24">
+              {AUDIENCE_PROGRAMS_MAP[audience].map((program, idx) => (
+                <div key={program.id} className={`flex flex-col lg:flex-row gap-8 lg:gap-16 items-center ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+                  <div className="flex-1 w-full">
                     <img 
                       src={program.image} 
                       alt={program.name}
-                      className="w-full h-[400px] object-cover brightness-100 transition-all duration-700 shadow-2xl"
+                      className="w-full h-[250px] sm:h-[400px] object-cover brightness-100 transition-all duration-700 shadow-2xl"
                       referrerPolicy="no-referrer"
                     />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-display text-4xl md:text-5xl font-black uppercase text-primary-container italic mb-4">{program.name}</h3>
-                    <p className="text-primary font-bold uppercase tracking-[0.2em] mb-8">{program.target}</p>
-                    <p className="text-on-surface-variant text-body-lg mb-10 leading-relaxed">{program.description}</p>
+                    <h3 className="font-display text-3xl md:text-5xl font-black uppercase text-primary-container italic mb-2 md:mb-4">{program.name}</h3>
+                    <p className="text-primary font-bold uppercase tracking-[0.2em] mb-4 md:mb-8">{program.target}</p>
+                    <p className="text-on-surface-variant text-body-lg mb-6 md:mb-10 leading-relaxed">{program.description}</p>
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <button onClick={() => openSchedule(program)} className="btn-outline flex items-center justify-center gap-2">
+                      <button onClick={() => openSchedule(program as any)} className="btn-outline flex items-center justify-center gap-2">
                         <Calendar size={20} className="text-primary-container" />
                         Посмотреть расписание
                       </button>
@@ -616,8 +918,8 @@ export default function App() {
         </section>
 
         {/* --- Reviews Section --- */}
-        <section id="reviews" className="py-32 px-gutter max-w-container-max mx-auto overflow-hidden scroll-mt-24">
-        <div className="flex flex-col lg:flex-row justify-between items-center lg:items-end mb-12 gap-8 text-center lg:text-left">
+        <section id="reviews" className="py-12 md:py-32 px-gutter max-w-container-max mx-auto overflow-hidden scroll-mt-24">
+        <div className="flex flex-col lg:flex-row justify-between items-center lg:items-end mb-6 md:mb-12 gap-4 md:gap-8 text-center lg:text-left">
             <h2 className="section-title mb-0 text-[32px]">Отзывы на Яндекс.Картах</h2>
             <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 bg-surface-container p-4 border border-outline-variant/30 shrink-0 max-w-full">
               <div className="flex gap-1 text-yellow-500">
@@ -629,10 +931,10 @@ export default function App() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {REVIEWS.map((review) => (
-              <div key={review.id} className="bg-surface-container p-8 border border-outline-variant/20 hover:border-primary/40 transition-colors">
-                <div className="mb-6">
-                  <div className="mb-4">
+            {REVIEWS_MAP[audience].map((review) => (
+              <div key={review.id} className="bg-surface-container p-6 min-[375px]:p-8 border border-outline-variant/20 hover:border-primary/40 transition-colors">
+                <div className="mb-4 md:mb-6">
+                  <div className="mb-3 md:mb-4">
                     <h4 className="font-display font-bold text-lg mb-1">{review.name}</h4>
                     <div className="flex gap-0.5 text-yellow-500 mb-2">
                        {[...Array(review.rating)].map((_, i) => <Star key={i} size={12} fill="currentColor" />)}
@@ -648,34 +950,53 @@ export default function App() {
             ))}
           </div>
           
-          <div className="mt-12 text-center">
+          <div className="mt-6 md:mt-12 text-center">
             <button className="btn-outline">Читать все отзывы</button>
           </div>
         </section>
 
         {/* --- Pricing Section --- */}
-        <section id="pricing" className="py-32 px-gutter max-w-container-max mx-auto scroll-mt-24">
+        <section id="pricing" className="py-12 md:py-32 px-gutter max-w-container-max mx-auto scroll-mt-24">
           <h2 className="section-title">Абонементы</h2>
+
+          {/* --- Trial Promo Banner --- */}
+          <div className="mb-12 bg-primary-container/10 border border-primary-container/30 border-l-[6px] border-l-primary-container p-6 sm:p-8 rounded-r-2xl max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
+            <div className="flex items-center gap-4 sm:gap-6 text-left">
+              <div className="bg-primary-container text-white p-3.5 sm:p-4 rounded-full shrink-0 shadow-lg">
+                <Gift size={28} className="text-white animate-pulse" />
+              </div>
+              <div>
+                <h4 className="font-display font-black uppercase text-xl sm:text-2xl text-primary-container italic leading-tight">Первая тренировка бесплатно!</h4>
+                <p className="text-sm text-on-surface-variant/90 mt-1 max-w-2xl leading-normal">
+                  Для всех новых учеников пробное групповое занятие по любому направлению абсолютно бесплатно. Приходите, знакомьтесь с клубом и тренером без каких-либо затрат.
+                </p>
+              </div>
+            </div>
+            <button onClick={() => openRegistration()} className="btn-primary py-3 px-6 text-xs sm:text-sm shrink-0 whitespace-nowrap group">
+              <span className="flex items-center gap-2">
+                Записаться бесплатно <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </span>
+            </button>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {[
-              { id: 'trial', name: 'Разовое занятие', price: '700', period: 'за 1 тренировку', items: ['Знакомство с клубом', 'Любая дисциплина', 'Инструктаж тренера'] },
-              { id: 'unlimit', name: 'Безлимит на месяц', price: '4500', period: 'в месяц', items: ['Все дисциплины', 'Без ограничений', 'Спецпредложения'] },
-              { id: 'personal', name: 'Индивидуально', price: '1600', period: 'за 1 тренировку', items: ['Персональный график', '100% внимания тренера', 'Быстрый прогресс'] },
-            ].map((plan, idx) => (
+            {AUDIENCE_PRICING_MAP[audience].map((plan, idx) => (
               <div 
                 key={plan.id}
-                className={`flex flex-col p-8 md:p-12 text-center transition-all duration-300 ${idx === 1 ? 'bg-primary-container lg:scale-105 shadow-2xl relative z-10' : 'bg-surface-container border-t-8 border-primary-container lg:hover:-translate-y-2'}`}
+                className={`flex flex-col p-6 min-[375px]:p-8 md:p-12 text-center transition-all duration-300 ${idx === 1 ? 'bg-primary-container lg:scale-105 shadow-2xl relative z-10' : 'bg-surface-container border-t-8 border-primary-container lg:hover:-translate-y-2'}`}
               >
                 {idx === 1 && <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-on-surface text-background px-4 py-1 font-bold uppercase text-[10px] tracking-widest">Популярный</div>}
-                <h3 className={`font-display text-2xl uppercase font-black italic mb-8 ${idx === 1 ? 'text-white' : 'text-on-surface'}`}>{plan.name}</h3>
-                <div className="mb-8 flex flex-col items-center">
+                <h3 className={`font-display text-2xl uppercase font-black italic mb-4 md:mb-8 ${idx === 1 ? 'text-white' : 'text-on-surface'}`}>{plan.name}</h3>
+                <div className="mb-4 md:mb-8 flex flex-col items-center">
                   <div className="flex items-baseline gap-2">
-                    <span className={`text-6xl font-black italic ${idx === 1 ? 'text-white' : 'text-primary'}`}>{plan.price}</span>
-                    <span className={`uppercase font-bold text-sm ${idx === 1 ? 'text-white/80' : 'text-on-surface-variant'}`}>руб.</span>
+                    <span className={`font-black italic ${idx === 1 ? 'text-white' : 'text-primary'} ${plan.price.length > 5 ? 'text-4xl' : 'text-5xl sm:text-6xl'}`}>{plan.price}</span>
+                    {plan.price !== 'Бесплатно' && plan.price !== 'Скидка' && (
+                      <span className={`uppercase font-bold text-sm ${idx === 1 ? 'text-white/80' : 'text-on-surface-variant'}`}>руб.</span>
+                    )}
                   </div>
                   <span className={`text-[10px] uppercase font-bold tracking-[0.2em] mt-2 ${idx === 1 ? 'text-white/70' : 'text-primary'}`}>{plan.period}</span>
                 </div>
-                <ul className={`space-y-4 mb-12 flex-grow ${idx === 1 ? 'text-white/90' : 'text-on-surface-variant'}`}>
+                <ul className={`space-y-4 mb-6 md:mb-12 flex-grow ${idx === 1 ? 'text-white/90' : 'text-on-surface-variant'}`}>
                   {plan.items.map((item, i) => (
                     <li key={i} className="flex items-center justify-center gap-2">
                        <Check size={16} /> {item}
@@ -694,24 +1015,19 @@ export default function App() {
         </section>
 
         {/* --- FAQ Section --- */}
-        <section id="faq" className="py-32 bg-surface-container relative scroll-mt-24">
+        <section id="faq" className="py-12 md:py-32 bg-surface-container relative scroll-mt-24">
           <div className="grit-texture absolute inset-0 opacity-5" />
           <div className="px-gutter max-w-container-max mx-auto max-w-4xl">
             <h2 className="section-title text-center border-l-0 pl-0">Вопросы и ответы</h2>
             <div className="space-y-4">
-              {[
-                { q: 'Со скольки лет можно приводить детей?', a: 'Мы принимаем детей в секции с 4-х лет. Группы разделены по возрастам для максимальной безопасности и эффективности обучения.' },
-                { q: 'Что нужно взять на первую тренировку?', a: 'Удобную спортивную одежду (футболка и шорты без металлических замков), сменную обувь (тапочки) и душевые принадлежности.' },
-                { q: 'Нужна ли справка от врача?', a: 'Для допуска к тренировкам требуется справка об отсутствии противопоказаний к занятиям единоборствами.' },
-                { q: 'Есть ли занятия для взрослых новичков?', a: 'Да, у нас есть специальные группы начального уровня, где обучают базовой технике с нуля.' },
-              ].map((faq, i) => (
+              {AUDIENCE_FAQ_MAP[audience].map((faq, i) => (
                 <div key={i} className="bg-surface border border-outline-variant transition-all hover:border-primary">
                   <details className="group">
-                    <summary className="flex justify-between items-center p-8 cursor-pointer list-none font-display font-bold uppercase text-lg group-hover:text-primary transition-colors">
+                    <summary className="flex justify-between items-center p-5 md:p-8 cursor-pointer list-none font-display font-bold uppercase text-base md:text-lg group-hover:text-primary transition-colors">
                       {faq.q}
                       <ChevronDown size={24} className="group-open:rotate-180 transition-transform text-primary" />
                     </summary>
-                    <div className="px-8 pb-8 text-on-surface-variant leading-relaxed">
+                    <div className="px-5 pb-5 md:px-8 md:pb-8 text-on-surface-variant leading-relaxed text-sm md:text-base">
                       {faq.a}
                     </div>
                   </details>
@@ -722,9 +1038,9 @@ export default function App() {
         </section>
 
         {/* --- Locations Section --- */}
-        <section id="locations" className="py-32 px-gutter max-w-container-max mx-auto scroll-mt-24">
+        <section id="locations" className="py-12 md:py-32 px-gutter max-w-container-max mx-auto scroll-mt-24">
           <h2 className="section-title">Как нас найти</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
             {[
               { 
                 name: 'Филиал Радужный', 
@@ -740,7 +1056,7 @@ export default function App() {
               },
             ].map((loc, i) => (
               <div key={i} className="card-dark group">
-                <div className="h-80 overflow-hidden relative">
+                <div className="h-64 sm:h-80 overflow-hidden relative">
                   <iframe 
                     src={i === 0 
                       ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2197.834460786523!2d84.97864817754637!3d56.513233873289!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4326940a00000001%3A0xc3f6a2b8e5c4a5!2z0YPQuy4g0JvQtdC90YHQutCw0Y8sIDEyLCDQotC-0LzRgdC6LCDQotC-0LzRgdC60LDRjyDQvtCx0LsuLCA2MzQwMDE!5e0!3m2!1sru!2sru!4v1715431234567!5m2!1sru!2sru"
@@ -754,7 +1070,7 @@ export default function App() {
                     referrerPolicy="no-referrer-when-downgrade"
                   ></iframe>
                 </div>
-                <div className="p-8">
+                <div className="p-6 md:p-8">
                   <h3 className="font-display text-2xl uppercase font-black italic mb-2">{loc.name}</h3>
                   <p className="text-on-surface opacity-80 mb-1">{loc.addr}</p>
                   <p className="text-primary-container font-display text-xs font-bold uppercase tracking-widest">{loc.features}</p>
@@ -766,9 +1082,9 @@ export default function App() {
       </main>
 
       {/* --- Footer --- */}
-      <footer className="bg-surface-container-lowest border-t border-outline-variant py-20 px-gutter">
+      <footer className="bg-surface-container-lowest border-t border-outline-variant py-12 md:py-20 px-gutter">
         <div className="max-w-container-max mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-8 md:mb-16">
             <div className="shrink-0">
               <img 
                 src="/demo-everest-landing-ai/logo.png" 
@@ -780,13 +1096,13 @@ export default function App() {
               <p className="text-[10px] font-bold uppercase tracking-widest opacity-50">культуры и спорта «Эверест»</p>
             </div>
           
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-12 flex-grow text-left">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 md:gap-x-12 gap-y-8 md:gap-y-12 flex-grow text-left">
               <div className="space-y-4">
               <h4 className="font-display font-bold uppercase tracking-widest text-primary">Контакты</h4>
-              <p className="text-on-surface-variant flex items-center justify-center md:justify-start gap-2">
+              <a href="tel:+73822256465" className="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center md:justify-start gap-2">
                 <Phone size={16} className="text-primary-container" />
-                +7 (999) 000-00-00
-              </p>
+                +7 (3822) 25-64-65
+              </a>
               <div className="space-y-2">
                 <p className="text-on-surface-variant flex items-center justify-center md:justify-start gap-2">
                   <MapPin size={16} className="text-primary-container shrink-0" />
@@ -817,11 +1133,11 @@ export default function App() {
             <div className="space-y-4">
               <h4 className="font-display font-bold uppercase tracking-widest text-primary">Соцсети</h4>
               <div className="flex justify-center md:justify-start">
-                <a href="#" className="hover:opacity-80 transition-opacity">
+                <a href="https://vk.com/everest_tomsk" target="_blank" rel="noopener noreferrer" className="vk-link flex items-center justify-center shrink-0 w-10 h-10" aria-label="VK">
                   <img 
-                    src="https://lh3.googleusercontent.com/aida/ADBb0ujjFcpHVGNwA4ey5SWFy1XKbNTItRqRTacZZZxuNPO5RLCiDJqhpZPxqHlMSs_DGuc_-vJ0Xsma_1gpdO7BsQ2WQ-SB7BmkyRonClcf6X-N0FAej0CZAflCgXEmUE1rInkqOxrqRZhB-WaPZ42iXjHE_WP3lGOMW1Ldtqsoj1tWdc-wgnCbi6TpCiupE1iwXZQphV06r7MO5jDxGgNsyTJoKZACY2S52rDQRoRXX8MeK0yfZo3BTNm4y4E"  
+                    src="/demo-everest-landing-ai/vk.png" 
                     alt="VK" 
-                    className="h-10 w-10 rounded-lg"
+                    referrerPolicy="no-referrer"
                   />
                 </a>
               </div>
@@ -829,7 +1145,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="pt-12 border-t border-outline-variant w-full flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold uppercase tracking-widest opacity-50">
+        <div className="pt-6 md:pt-12 border-t border-outline-variant w-full flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold uppercase tracking-widest opacity-50">
             <span>© 2026 Центр физической культуры и спорта «Эверест»</span>
             <span>Сделано для чемпионов</span>
           </div>
@@ -894,9 +1210,12 @@ export default function App() {
                 </div>
 
                 <div className="mt-auto pt-8 relative z-10">
-                  <button onClick={() => setActiveModal('registration')} className="btn-primary w-full flex items-center justify-center gap-4">
-                    Записаться на тренировку
-                    <ArrowRight />
+                  <button 
+                    onClick={() => setActiveModal('registration')} 
+                    className="btn-primary w-full flex items-center justify-center gap-1.5 text-[10px] min-[320px]:text-xs min-[360px]:text-sm sm:text-base md:text-lg whitespace-nowrap px-2 min-[360px]:px-4 sm:px-6 py-3"
+                  >
+                    <span>Записаться на тренировку</span>
+                    <ArrowRight className="shrink-0 h-3.5 w-3.5 sm:h-5 sm:w-5" />
                   </button>
                 </div>
               </div>
@@ -999,12 +1318,42 @@ export default function App() {
                 <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Спарринг</span>
               </div>
             </div>
-            <button onClick={() => setActiveModal('registration')} className="btn-primary w-full md:w-auto px-6">
+            <button 
+              onClick={() => setActiveModal('registration')} 
+              className="btn-primary w-full md:w-auto text-[10px] min-[320px]:text-xs min-[360px]:text-sm sm:text-base px-3 sm:px-6 py-3 whitespace-nowrap"
+            >
               Записаться на тренировку
             </button>
           </footer>
         </div>
       </Modal>
+
+      {/* --- Floating Audience Switcher (Mobile Tab Bar) --- */}
+      <div className="lg:hidden fixed bottom-4 left-4 right-4 z-[90] bg-surface-container/90 backdrop-blur-xl rounded-2xl border border-outline-variant/30 py-2.5 px-4 shadow-2xl flex justify-around items-center">
+        <button 
+          onClick={() => setAudience('general')}
+          className={`flex flex-col items-center gap-1 transition-colors duration-200 ${audience === 'general' ? 'text-primary-container' : 'text-on-surface-variant'}`}
+        >
+          <Compass size={20} className={audience === 'general' ? 'stroke-[2.5px]' : 'stroke-[1.8px]'} />
+          <span className="text-[10px] font-bold uppercase tracking-wider">Общая</span>
+        </button>
+        
+        <button 
+          onClick={() => setAudience('parents')}
+          className={`flex flex-col items-center gap-1 transition-colors duration-200 ${audience === 'parents' ? 'text-primary-container' : 'text-on-surface-variant'}`}
+        >
+          <Heart size={20} className={audience === 'parents' ? 'stroke-[2.5px]' : 'stroke-[1.8px]'} />
+          <span className="text-[10px] font-bold uppercase tracking-wider">Мамам</span>
+        </button>
+
+        <button 
+          onClick={() => setAudience('men')}
+          className={`flex flex-col items-center gap-1 transition-colors duration-200 ${audience === 'men' ? 'text-primary-container' : 'text-on-surface-variant'}`}
+        >
+          <Dumbbell size={20} className={audience === 'men' ? 'stroke-[2.5px]' : 'stroke-[1.8px]'} />
+          <span className="text-[10px] font-bold uppercase tracking-wider">Мужчинам</span>
+        </button>
+      </div>
     </div>
   );
 }
