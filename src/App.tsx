@@ -174,20 +174,20 @@ const BENEFITS_MAP = {
     { title: 'Сообщество', desc: 'Станьте частью сплоченного братства сильных людей, всегда готовых поддержать.', icon: <Users size={40} /> },
   ],
   parents: [
-    { title: 'Безопасность', desc: 'Программа тренировок адаптирована под возраст детей. Каждая группа тренируется под руководством опытного наставника на мягком татами с акцентом на страховку при падениях.', icon: <Shield size={40} /> },
-    { title: 'Дисциплина', desc: 'Учим уважать тренера, соперников и родителей. Ребенок научится концентрироваться и слушать руководства с первых занятий.', icon: <Target size={40} /> },
-    { title: 'Развитие', desc: 'Развитие гибкости, координации, ловкости и силы без вреда для неокрепших суставов и позвоночника.', icon: <Dumbbell size={40} /> },
-    { title: 'Уверенность', desc: 'Ребенок сможет постоять за себя, перестанет бояться конфликтов и обретет здоровую самооценку в кругу друзей.', icon: <Zap size={40} /> },
-    { title: 'Энергия', desc: 'Убираем излишнюю гиперактивность, перенаправляя энергию в упорные и созидательные тренировки.', icon: <Users size={40} /> },
-    { title: 'Характер', desc: 'Учим преодолевать трудности, не сдаваться при первых неудачах и достигать поставленных спортивных и жизненных целей.', icon: <Award size={40} /> },
+    { title: 'УВЕРЕННОСТЬ', desc: 'Ваш ребенок победит свои внутренние страхи и сомнения, становясь сильнее с каждым занятием на татами.', icon: <Zap size={40} /> },
+    { title: 'ДИСЦИПЛИНА', desc: 'Регулярные тренировки закаляют характер вашего ребенка и приучают к порядку во всех сферах жизни.', icon: <Target size={40} /> },
+    { title: 'СИЛА', desc: 'Здесь ваш ребенок сможет развить сильное и выносливое тело под чутким руководством опытных инструкторов.', icon: <Dumbbell size={40} /> },
+    { title: 'ТЕХНИКА', desc: 'Ваш ребенок овладеет искусством рычагов и контроля, позволяющим защититься от противников.', icon: <Shield size={40} /> },
+    { title: 'ДУХ', desc: 'Ваш ребенок обретет ментальную устойчивость, которая приходит через преодоление трудностей.', icon: <Award size={40} /> },
+    { title: 'СООБЩЕСТВО', desc: 'Ваш ребенок станет частью сплоченного детского коллектива, всегда готового поддержать.', icon: <Users size={40} /> },
   ],
   men: [
-    { title: 'Сброс стресса', desc: 'Лучший способ «перегрузить» голову после тяжелого офисного дня — это жесткая, функциональная тренировка на татами.', icon: <Zap size={40} /> },
-    { title: 'Прикладные навыки', desc: 'Реальная самооборона, эффективная бросковая и ударная техника, применимые в любой непредвиденной ситуации.', icon: <Shield size={40} /> },
-    { title: 'Мужской коллектив', desc: 'Окружение сильных духом, стремящихся к развитию мужчин. Дружеская, уважительная атмосфера и поддержка.', icon: <Users size={40} /> },
-    { title: 'Функциональная сила', desc: 'Проработка всех мышечных групп, развитие выносливости, координации и взрывной силы борца.', icon: <Dumbbell size={40} /> },
-    { title: 'Характер и воля', desc: 'Преонелейте свои пределы, закалите ментальную стойкость в спаррингах и регулярных вызовах.', icon: <Target size={40} /> },
-    { title: 'Гибкость тела', desc: 'Регулярная суставная разминка и растяжка сохранят здоровье вашей спины и суставов до преклонных лет.', icon: <Check size={40} /> },
+    { title: 'ЭНЕРГИЯ', desc: 'Тренировки помогут вернуть бодрость и ощущение сил на каждый день – без вечной усталости и «разбитого» утра.', icon: <Zap size={40} /> },
+    { title: 'ТОНУС', desc: 'Вы почувствуете, как тело становится собраннее, а кофе больше не нужен как единственный источник энергии.', icon: <Dumbbell size={40} /> },
+    { title: 'СТРОЙНОСТЬ', desc: 'Регулярные занятия помогут убрать лишнее, вернуть легкость в теле и снова комфортно смотреть на себя в зеркало.', icon: <Target size={40} /> },
+    { title: 'ЗДОРОВАЯ СПИНА И СУСТАВЫ', desc: 'Тренировки укрепляют тело, снижают дискомфорт от сидячего образа жизни и помогают двигаться свободнее.', icon: <Heart size={40} /> },
+    { title: 'УВЕРЕННОСТЬ В СЕБЕ', desc: 'Вы снова почувствуете, что в форме, сильнее и увереннее – не только внешне, но и внутренне.', icon: <Award size={40} /> },
+    { title: 'ПОДДЕРЖКА И КОМФОРТ', desc: 'Заниматься можно без стресса: в понятной атмосфере, под контролем тренера, без лишнего давления и неловкости.', icon: <Users size={40} /> },
   ]
 };
 
@@ -218,15 +218,15 @@ const AUDIENCE_HERO_MAP = {
   },
   men: {
     bgImage: '/demo-everest-landing-ai/hero_men.jpg',
-    badge: 'Снятие стресса • Сильный коллектив',
+    badge: 'Мини-группы • Личный контроль • Восстановление',
     subBadge: 'БОЕВОЕ ДЖИУ-ДЖИТСУ • КУДО • ГРЭППЛИНГ',
     ctaText: 'НАЧАТЬ ТРЕНИРОВКИ',
     titleText: (
       <>
-        БОЕВАЯ <br className="sm:hidden" /> ЭФФЕКТИВНОСТЬ <br className="sm:hidden" /> И СИЛА
+        БОЕВАЯ ЭФФЕКТИВНОСТЬ <br /> И&nbsp;СИЛА
       </>
     ),
-    description: 'Интенсивные тренировки, реальная техника самообороны и сильная мужская атмосфера. Выйди на новый пик выносливости и ментальной стойкости.'
+    description: 'Персональные тренировки для мужчин 35+ в группах до 6 человек. Личный контроль без жестких боев — системное восстановление силы.'
   }
 };
 
@@ -238,16 +238,16 @@ const AUDIENCE_STATS_MAP = {
     { value: '951', label: 'Воспитанников' },
   ],
   parents: [
-    { value: '2', label: 'Детские секции' },
-    { value: '23', label: 'года опыт воспитания детей' },
-    { value: '0%', label: 'Травматизма на татами' },
-    { value: '600+', label: 'Счастливых семей' },
+    { value: '23', label: <>года опыта<br />воспитания детей</> },
+    { value: '0%', label: 'травм на\u00a0мягком татами' },
+    { value: '3', label: 'опытных тренера-наставника' },
+    { value: '3', label: 'детские секции' },
   ],
   men: [
-    { value: '3', label: 'Боевые дисциплины' },
-    { value: '100%', label: 'Психологической разрядки' },
-    { value: '3', label: 'Опытных наставника в зале' },
-    { value: '200+', label: 'Мужчин в клубе' },
+    { value: '6', label: 'человек в\u00a0мини-группе' },
+    { value: '35+', label: 'осознанный возраст на\u00a0ковре' },
+    { value: '100%', label: 'контроль безопасности и нагрузок' },
+    { value: '20+', label: 'мужчин в\u00a0сильном сообществе' },
   ]
 };
 
@@ -259,21 +259,21 @@ const AUDIENCE_PROGRAMS_MAP = {
       name: 'Боевое джиу-джитсу для детей',
       target: 'Младшая (4+) и старшая группы',
       description: 'Безопасное введение детей в мир борьбы. Основы самостраховки, мягкая гимнастика, развитие силы и гибкости без вреда для спины. Ребенок научится думать тактически и владеть своим телом.',
-      image: '/demo-everest-landing-ai/bjj.jpg'
+      image: 'https://everest.tomsk.ru/wp-content/uploads/2023/12/Frame-1046077-1.png'
     },
     {
       id: 'kudo',
       name: 'Кудо для детей',
       target: 'Группы 4-6 лет и 7+ лет',
       description: 'Динамичное боевое искусство в защитных шлемах NEO HEAD GEAR с защитными пластиковыми забралами, минимизирующими любой риск травм. Воспитываем командный дух, мужскую и спортивную дисциплину, уважение к старшим.',
-      image: '/demo-everest-landing-ai/kudo.jpg'
+      image: 'https://everest.tomsk.ru/wp-content/uploads/2024/01/Frame-1046075.png'
     },
     {
       id: 'grappling',
       name: 'Детский грэпплинг',
       target: 'Для детей от 7 лет',
       description: 'Увлекательная скоростная борьба без кимоно. Учит ловкости, выносливости и быстрой реакции в игровом формате. Развивает невероятную координацию и упорство у ребенка.',
-      image: '/demo-everest-landing-ai/greppling.jpg'
+      image: 'https://everest.tomsk.ru/wp-content/uploads/2024/01/Frame-10461172.png'
     }
   ],
   men: [
@@ -407,7 +407,73 @@ const Modal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose: () => 
   );
 };
 
+const formatRussianPhoneNumber = (val: string) => {
+  let digits = val.replace(/\D/g, '');
+  if (!digits) return '';
+
+  if (digits.startsWith('8')) {
+    digits = '7' + digits.substring(1);
+  } else if (!digits.startsWith('7')) {
+    digits = '7' + digits;
+  }
+
+  digits = digits.substring(0, 11);
+
+  let result = '+7';
+  if (digits.length > 1) {
+    result += ' (' + digits.substring(1, 4);
+  }
+  if (digits.length > 4) {
+    result += ') ' + digits.substring(4, 7);
+  }
+  if (digits.length > 7) {
+    result += '-' + digits.substring(7, 9);
+  }
+  if (digits.length > 9) {
+    result += '-' + digits.substring(9, 11);
+  }
+  return result;
+};
+
 const RegistrationForm = ({ coachName, onSuccess }: { coachName?: string; onSuccess: () => void }) => {
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s-]/g, '');
+    setName(val);
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let inputVal = e.target.value;
+    if (!inputVal) {
+      setPhone('');
+      return;
+    }
+
+    // Handles backspace gracefully when format character is deleted
+    if (inputVal.length < phone.length) {
+      const lastCharOfCurrent = phone[phone.length - 1];
+      const formattingChars = [' ', '-', ')', '('];
+      if (formattingChars.includes(lastCharOfCurrent)) {
+        let digits = phone.replace(/\D/g, '');
+        if (digits.length > 0) {
+          digits = digits.slice(0, -1);
+          inputVal = digits;
+        }
+      }
+    }
+
+    const formatted = formatRussianPhoneNumber(inputVal);
+    setPhone(formatted);
+  };
+
+  const handlePhoneFocus = () => {
+    if (!phone) {
+      setPhone('+7');
+    }
+  };
+
   return (
     <div className="px-8 py-12 md:px-16 md:py-20 bg-surface-container relative">
       <div className=" grit-texture absolute inset-0 opacity-5" />
@@ -434,6 +500,9 @@ const RegistrationForm = ({ coachName, onSuccess }: { coachName?: string; onSucc
           </label>
           <input 
             type="text" 
+            required
+            value={name}
+            onChange={handleNameChange}
             placeholder="Введите имя"
             className="w-full bg-transparent border-b-2 border-outline-variant py-4 px-0 font-body-lg text-on-surface placeholder:text-on-secondary-container focus:outline-none focus:border-primary-container transition-all"
           />
@@ -446,6 +515,11 @@ const RegistrationForm = ({ coachName, onSuccess }: { coachName?: string; onSucc
           <input 
             required
             type="tel" 
+            value={phone}
+            onChange={handlePhoneChange}
+            onFocus={handlePhoneFocus}
+            pattern="^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$"
+            title="Формат: +7 (999) 999-99-99"
             placeholder="+7 (___) ___-__-__"
             className="w-full bg-transparent border-b-2 border-outline-variant py-4 px-0 font-body-lg text-on-surface placeholder:text-on-secondary-container focus:outline-none focus:border-primary-container transition-all"
           />
@@ -512,6 +586,9 @@ export default function App() {
   const [activeModal, setActiveModal] = useState<'none' | 'registration' | 'coach' | 'schedule'>('none');
   const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [bottomFormSubmitted, setBottomFormSubmitted] = useState(false);
+  const [bottomName, setBottomName] = useState('');
+  const [bottomPhone, setBottomPhone] = useState('');
 
   useEffect(() => {
     const handleScroll = () => setIsNavScrolled(window.scrollY > 50);
@@ -589,14 +666,14 @@ export default function App() {
     setActiveModal('none');
   };
 
-  const renderNavLinks = () => (
+  const renderNavLinks = (onLinkClick?: () => void) => (
     <>
-      <a href="#about" className={`anchor-link ${activeSection === 'about' ? 'active' : ''}`}>О нас</a>
-      <a href="#coaches" className={`anchor-link ${activeSection === 'coaches' ? 'active' : ''}`}>Тренеры</a>
-      <a href="#programs" className={`anchor-link ${activeSection === 'programs' ? 'active' : ''}`}>Программы</a>
-      <a href="#pricing" className={`anchor-link ${activeSection === 'pricing' ? 'active' : ''}`}>Абонементы</a>
-      <a href="#faq" className={`anchor-link ${activeSection === 'faq' ? 'active' : ''}`}>Вопросы</a>
-      <a href="#locations" className={`anchor-link ${activeSection === 'locations' ? 'active' : ''}`}>Филиалы</a>
+      <a href="#about" onClick={onLinkClick} className={`anchor-link ${activeSection === 'about' ? 'active' : ''}`}>О нас</a>
+      <a href="#coaches" onClick={onLinkClick} className={`anchor-link ${activeSection === 'coaches' ? 'active' : ''}`}>Тренеры</a>
+      <a href="#programs" onClick={onLinkClick} className={`anchor-link ${activeSection === 'programs' ? 'active' : ''}`}>Программы</a>
+      <a href="#pricing" onClick={onLinkClick} className={`anchor-link ${activeSection === 'pricing' ? 'active' : ''}`}>Абонементы</a>
+      <a href="#faq" onClick={onLinkClick} className={`anchor-link ${activeSection === 'faq' ? 'active' : ''}`}>Вопросы</a>
+      <a href="#locations" onClick={onLinkClick} className={`anchor-link ${activeSection === 'locations' ? 'active' : ''}`}>Филиалы</a>
     </>
   );
 
@@ -722,7 +799,7 @@ export default function App() {
               </button>
             </div>
             <nav className="flex flex-col gap-8 text-2xl">
-              {renderNavLinks()}
+              {renderNavLinks(() => setMobileMenuOpen(false))}
             </nav>
             <div className="mt-auto pt-8 border-t border-outline-variant">
               <a href="tel:+73822256465" className="flex items-center gap-4 text-xl font-bold mb-6 text-on-surface hover:text-primary transition-colors">
@@ -798,7 +875,7 @@ export default function App() {
         </section>
 
         {/* --- About Section --- */}
-        <section id="about" className="py-12 md:py-32 bg-surface-container relative overflow-hidden scroll-mt-24">
+        <section id="about" className="py-12 md:py-20 bg-surface-container relative overflow-hidden scroll-mt-24">
           <div className="grit-texture absolute inset-0 opacity-5" />
           <div className="px-gutter max-w-container-max mx-auto flex flex-col lg:flex-row gap-8 lg:gap-20 items-center">
             <div className="flex-1">
@@ -836,7 +913,7 @@ export default function App() {
         </section>
 
         {/* --- Benefits Section --- */}
-        <section id="benefits" className="py-12 md:py-32 px-gutter max-w-container-max mx-auto scroll-mt-24">
+        <section id="benefits" className="py-12 md:py-20 px-gutter max-w-container-max mx-auto scroll-mt-24">
           <h2 className="section-title">Что дают тренировки</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {BENEFITS_MAP[audience].map((item) => (
@@ -856,7 +933,7 @@ export default function App() {
         </section>
 
         {/* --- Coaches Section --- */}
-        <section id="coaches" className="py-12 md:py-32 px-gutter max-w-container-max mx-auto scroll-mt-24">
+        <section id="coaches" className="py-12 md:py-20 px-gutter max-w-container-max mx-auto scroll-mt-24">
           <h2 className="section-title">Тренеры</h2>
           <div className="flex flex-wrap justify-center gap-6 md:gap-12">
             {COACHES.map((coach) => (
@@ -884,7 +961,7 @@ export default function App() {
         </section>
 
         {/* --- Programs Section --- */}
-        <section id="programs" className="py-12 md:py-32 bg-surface-container relative scroll-mt-24">
+        <section id="programs" className="py-12 md:py-20 bg-surface-container relative scroll-mt-24">
           <div className="grit-texture absolute inset-0 opacity-5" />
           <div className="px-gutter max-w-container-max mx-auto">
             <h2 className="section-title">Наши виды спорта</h2>
@@ -918,7 +995,7 @@ export default function App() {
         </section>
 
         {/* --- Reviews Section --- */}
-        <section id="reviews" className="py-12 md:py-32 px-gutter max-w-container-max mx-auto overflow-hidden scroll-mt-24">
+        <section id="reviews" className="py-12 md:py-20 px-gutter max-w-container-max mx-auto overflow-hidden scroll-mt-24">
         <div className="flex flex-col lg:flex-row justify-between items-center lg:items-end mb-6 md:mb-12 gap-4 md:gap-8 text-center lg:text-left">
             <h2 className="section-title mb-0 text-[32px]">Отзывы на Яндекс.Картах</h2>
             <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 bg-surface-container p-4 border border-outline-variant/30 shrink-0 max-w-full">
@@ -956,7 +1033,7 @@ export default function App() {
         </section>
 
         {/* --- Pricing Section --- */}
-        <section id="pricing" className="py-12 md:py-32 px-gutter max-w-container-max mx-auto scroll-mt-24">
+        <section id="pricing" className="py-12 md:py-20 px-gutter max-w-container-max mx-auto scroll-mt-24">
           <h2 className="section-title">Абонементы</h2>
 
           {/* --- Trial Promo Banner --- */}
@@ -1015,7 +1092,7 @@ export default function App() {
         </section>
 
         {/* --- FAQ Section --- */}
-        <section id="faq" className="py-12 md:py-32 bg-surface-container relative scroll-mt-24">
+        <section id="faq" className="py-12 md:py-20 bg-surface-container relative scroll-mt-24">
           <div className="grit-texture absolute inset-0 opacity-5" />
           <div className="px-gutter max-w-container-max mx-auto max-w-4xl">
             <h2 className="section-title text-center border-l-0 pl-0">Вопросы и ответы</h2>
@@ -1038,7 +1115,7 @@ export default function App() {
         </section>
 
         {/* --- Locations Section --- */}
-        <section id="locations" className="py-12 md:py-32 px-gutter max-w-container-max mx-auto scroll-mt-24">
+        <section id="locations" className="py-12 md:py-20 px-gutter max-w-container-max mx-auto scroll-mt-24">
           <h2 className="section-title">Как нас найти</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
             {[
@@ -1077,6 +1154,136 @@ export default function App() {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* --- Bottom Registration Form --- */}
+        <section className="py-12 md:py-20 px-gutter max-w-container-max mx-auto scroll-mt-24 border-t border-outline-variant">
+          <div className="card-dark overflow-hidden relative grid grid-cols-1 lg:grid-cols-2 gap-0">
+            {/* Left side: Premium image / copy */}
+            <div className="p-8 md:p-16 flex flex-col justify-between relative min-h-[350px] lg:min-h-full">
+              <div className="grit-texture absolute inset-0 opacity-10 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent lg:bg-gradient-to-r lg:from-background lg:via-background/95 lg:to-transparent z-10" />
+              <img 
+                src={
+                  audience === 'men' 
+                    ? 'https://everest.tomsk.ru/wp-content/uploads/2024/01/Frame-1046075.png' // Kudo image
+                    : audience === 'parents'
+                    ? 'https://everest.tomsk.ru/wp-content/uploads/2023/12/Frame-1046077-1.png' // BJJ kids
+                    : 'https://everest.tomsk.ru/wp-content/uploads/2024/01/Frame-10461172.png' // Grappling
+                }
+                alt="Запись на тренировку"
+                className="absolute inset-0 w-full h-full object-cover grayscale contrast-125 brightness-50"
+                referrerPolicy="no-referrer"
+              />
+              <div className="relative z-20 h-full flex flex-col justify-between">
+                <div>
+                  <span className="inline-block bg-primary-container text-on-primary-container text-[10px] font-black uppercase tracking-widest px-3 py-1 mb-6 rounded-sm">
+                    быстрый старт
+                  </span>
+                  <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-black uppercase italic leading-none text-on-surface tracking-tighter mb-4">
+                    {audience === 'parents' ? (
+                      <>Запишите ребенка <br className="hidden sm:block" /> <span className="whitespace-nowrap">на бесплатное</span> <br className="hidden sm:block" /> занятие</>
+                    ) : audience === 'men' ? (
+                      <>Запишитесь <br className="hidden sm:block" /> <span className="whitespace-nowrap">на бесплатное</span> <br className="hidden sm:block" /> занятие</>
+                    ) : (
+                      <>Записаться <br className="hidden sm:block" /> <span className="whitespace-nowrap">на пробную</span> <br className="hidden sm:block" /> тренировку</>
+                    )}
+                  </h2>
+                  <p className="text-on-surface-variant max-w-sm text-sm sm:text-base leading-relaxed mt-4">
+                    {audience === 'parents' 
+                      ? 'Сделайте первый шаг к дисциплине и сильному духу вашего ребенка. Пробная тренировка проходит под присмотром опытных и заботливых наставников.'
+                      : audience === 'men'
+                      ? 'Восстановите тонус, уверенность и силу без жестких боев и перегрузок. Начните тренировки в мини-группе до 6 человек.'
+                      : 'Заполните форму и начните путь к спортивным вершинам. Первая тренеровка бесплатно.'
+                    }
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right side: Modern Inline Form */}
+            <div className="bg-surface-container-low p-8 md:p-16 relative flex flex-col justify-center">
+              {bottomFormSubmitted ? (
+                <div className="h-full flex flex-col justify-center items-center text-center py-12">
+                  <div className="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container mb-6 animate-bounce">
+                    <Check size={32} />
+                  </div>
+                  <h3 className="font-display text-2xl uppercase font-black italic mb-2 text-on-surface">Ваша заявка принята!</h3>
+                  <p className="text-on-surface-variant max-w-sm text-sm">
+                    Мы свяжемся с вами в течение 15 минут, чтобы подтвердить время вашей первой тренировки. До встречи в зале!
+                  </p>
+                </div>
+              ) : (
+                <form className="space-y-8" onSubmit={(e) => { e.preventDefault(); setBottomFormSubmitted(true); }}>
+                  <div className="space-y-2">
+                    <label className="block text-[10px] font-bold uppercase tracking-widest text-primary">Ваше имя</label>
+                    <input 
+                      type="text" 
+                      required
+                      value={bottomName}
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s-]/g, '');
+                        setBottomName(val);
+                      }}
+                      placeholder={audience === 'parents' ? 'Имя ребенка или родителя' : 'Введите ваше имя'}
+                      className="w-full bg-transparent border-b border-outline-variant py-3 px-0 text-on-surface placeholder:text-on-secondary-container/40 focus:outline-none focus:border-primary transition-all text-base"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-[10px] font-bold uppercase tracking-widest text-primary">Телефон *</label>
+                    <input 
+                      type="tel" 
+                      required
+                      value={bottomPhone}
+                      onChange={(e) => {
+                        let inputVal = e.target.value;
+                        if (!inputVal) {
+                          setBottomPhone('');
+                          return;
+                        }
+
+                        // Handles backspace gracefully when format character is deleted
+                        if (inputVal.length < bottomPhone.length) {
+                          const lastCharOfCurrent = bottomPhone[bottomPhone.length - 1];
+                          const formattingChars = [' ', '-', ')', '('];
+                          if (formattingChars.includes(lastCharOfCurrent)) {
+                            let digits = bottomPhone.replace(/\D/g, '');
+                            if (digits.length > 0) {
+                              digits = digits.slice(0, -1);
+                              inputVal = digits;
+                            }
+                          }
+                        }
+
+                        const formatted = formatRussianPhoneNumber(inputVal);
+                        setBottomPhone(formatted);
+                      }}
+                      onFocus={() => {
+                        if (!bottomPhone) {
+                          setBottomPhone('+7');
+                        }
+                      }}
+                      pattern="^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$"
+                      title="Формат: +7 (999) 999-99-99"
+                      placeholder="+7 (___) ___-__-__"
+                      className="w-full bg-transparent border-b border-outline-variant py-3 px-0 text-on-surface placeholder:text-on-secondary-container/40 focus:outline-none focus:border-primary transition-all text-base"
+                    />
+                  </div>
+
+                  <div className="pt-4">
+                    <button type="submit" className="w-full btn-primary flex items-center justify-center gap-4 py-4 text-base font-bold uppercase tracking-widest">
+                      <span>Записаться бесплатно</span>
+                      <ArrowRight size={18} />
+                    </button>
+                    <p className="text-center text-[10px] text-on-secondary-container opacity-50 mt-4 uppercase tracking-widest leading-relaxed">
+                      Нажимая кнопку, вы соглашаетесь с Политикой конфиденциальности
+                    </p>
+                  </div>
+                </form>
+              )}
+            </div>
           </div>
         </section>
       </main>
@@ -1228,7 +1435,7 @@ export default function App() {
           <header className="p-4 md:p-6 bg-surface-container border-b border-outline-variant flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Calendar size={32} className="text-primary-container" />
-              <h2 className="font-display text-sm md:text-lg font-extrabold uppercase italic w-[218px]">
+              <h2 className="font-display text-sm md:text-lg font-extrabold uppercase italic w-auto max-w-[calc(100vw-140px)] md:max-w-none md:whitespace-nowrap">
                 Расписание: {selectedProgram ? selectedProgram.name : 'Все тренировки'}
               </h2>
             </div>
