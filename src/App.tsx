@@ -823,7 +823,7 @@ export default function App() {
 
       <main className="pb-28 lg:pb-0">
         {/* --- Hero Section --- */}
-        <section className="relative min-h-screen flex items-center pt-24 lg:pt-40 md:pt-32 pb-12 lg:pb-16">
+        <section className="relative min-h-[95vh] flex items-center pt-20 md:pt-28 lg:pt-36 pb-28 lg:pb-16">
           <div className="absolute inset-0 z-0 overflow-hidden">
             <img 
               key={audience}
@@ -871,10 +871,13 @@ export default function App() {
                 </p>
               )}
 
-              <button onClick={() => openRegistration()} className="btn-primary text-[10px] min-[320px]:text-[11px] min-[360px]:text-sm sm:text-lg md:text-xl w-full sm:w-auto px-5 sm:px-8 py-3.5 group max-w-full">
-                <span className="flex items-center justify-center gap-1.5 sm:gap-4 text-center whitespace-nowrap">
-                  <span>{AUDIENCE_HERO_MAP[audience].ctaText}</span>
-                  <ArrowRight className="shrink-0 group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform h-3.5 w-3.5 sm:h-5 sm:w-5" />
+              <button 
+                onClick={() => openRegistration()} 
+                className="btn-primary text-[10px] min-[320px]:text-[11px] min-[360px]:text-sm sm:text-lg md:text-xl w-full sm:w-auto px-4 sm:px-8 py-3.5 sm:py-4 group max-w-full"
+              >
+                <span className="flex items-center justify-center gap-1.5 sm:gap-4 text-center leading-tight flex-wrap">
+                  <span className="text-center break-words hyphens-manual">{AUDIENCE_HERO_MAP[audience].ctaText}</span>
+                  <ArrowRight className="shrink-0 group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform h-3.5 w-3.5 sm:h-5 sm:w-5 mt-0.5" />
                 </span>
               </button>
             </motion.div>
