@@ -879,11 +879,13 @@ export default function App() {
 
               <button 
                 onClick={() => openRegistration()} 
-                className="btn-primary text-[10px] min-[320px]:text-[11px] min-[360px]:text-sm sm:text-lg md:text-xl w-full sm:w-auto px-4 sm:px-8 py-3.5 sm:py-4 group max-w-full text-center"
+                className="btn-primary text-[10px] min-[320px]:text-[11px] min-[360px]:text-sm sm:text-lg md:text-xl w-full sm:w-auto px-4 sm:px-8 py-3.5 sm:py-4 group max-w-full"
               >
-                <span className="inline leading-tight">
-                  {AUDIENCE_HERO_MAP[audience].ctaText}
-                  <ArrowRight className="inline-block align-[-0.1em] shrink-0 group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform h-3.5 w-3.5 sm:h-5 sm:w-5 ml-1.5 sm:ml-2" />
+                <span className="flex items-center justify-center gap-2 sm:gap-4">
+                  <span className="text-center">
+                    {AUDIENCE_HERO_MAP[audience].ctaText}
+                  </span>
+                  <ArrowRight className="shrink-0 group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform h-3.5 w-3.5 sm:h-5 sm:w-5" />
                 </span>
               </button>
             </motion.div>
