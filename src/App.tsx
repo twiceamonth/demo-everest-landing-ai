@@ -1107,6 +1107,27 @@ export default function App() {
               </div>
             ))}
           </div>
+
+          {/* --- Family Discount Promo Banner (Parents Only) --- */}
+          {audience === 'parents' && (
+            <div className="mt-12 bg-secondary-container/15 border border-secondary-container/40 border-l-[6px] border-l-secondary-container p-6 sm:p-8 rounded-r-2xl max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
+              <div className="flex items-center gap-4 sm:gap-6 text-left">
+                <div className="bg-secondary-container text-on-secondary-container p-3.5 sm:p-4 rounded-full shrink-0 shadow-lg">
+                  <Users size={28} className="animate-pulse" />
+                </div>
+                <div>
+                  <h4 className="font-display font-black uppercase text-xl sm:text-2xl text-secondary-container italic leading-tight">
+                    Скидка 20% на второго ребёнка
+                  </h4>
+                  <p className="text-sm text-on-surface-variant/90 mt-1 max-w-2xl leading-normal">
+                    Приводите на тренировки брата или сестру — и получите скидку 20% на абонемент второго ребёнка. 
+                    Это удобно: оба ребёнка занимаются в одном месте, в одно время и под присмотром одних и тех же тренеров. 
+                    А ваш семейный бюджет заметно экономится.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </section>
 
         {/* --- FAQ Section --- */}
