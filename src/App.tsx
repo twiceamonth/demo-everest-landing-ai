@@ -621,9 +621,7 @@ export default function App() {
     return 'general';
   });
 
-  // 2. Остальные состояния
-  const tabsContainerRef = useRef<HTMLDivElement>(null);
-  const [pillRect, setPillRect] = useState<{ width: number; height: number; left: number; top: number } | null>(null);
+  // 2. Остальные состояния 	
   const [isNavScrolled, setIsNavScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [activeModal, setActiveModal] = useState<'none' | 'registration' | 'coach' | 'schedule'>('none');
@@ -658,30 +656,6 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
-
-  // 4. Анимация подложки (теперь audience уже существует!)
-  useEffect(() => {
-    const updatePill = () => {
-      if (!tabsContainerRef.current) return;
-      const activeButton = tabsContainerRef.current.querySelector(`[data-tab="${audience}"]`) as HTMLElement;
-      if (activeButton) {
-        const containerRect = tabsContainerRef.current.getBoundingClientRect();
-        const buttonRect = activeButton.getBoundingClientRect();
-        setPillRect({
-          width: buttonRect.width,
-          height: buttonRect.height,
-          left: buttonRect.left - containerRect.left,
-          top: buttonRect.top - containerRect.top,
-        });
-      }
-    };
-    const rafId = requestAnimationFrame(updatePill);
-    window.addEventListener('resize', updatePill);
-    return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener('resize', updatePill);
-    };
-  }, [audience]);
 
   // 5. Скролл и IntersectionObserver
   useEffect(() => {
@@ -809,47 +783,39 @@ export default function App() {
         </div>
 
 		{/* --- Audience Switcher (Desktop) --- */}
-	    <div className="hidden lg:block mt-4 border-t border-outline-variant/10 pt-3">
-	      <div className="max-w-container-max mx-auto flex justify-center">
-	        <div 
-	          ref={tabsContainerRef}
-	          className="relative bg-surface-container-low/85 backdrop-blur-xl p-1 rounded-full border border-outline-variant/30 flex items-center gap-1 shadow-lg"
-	        >
-	          {/* Единая подложка, которая плавно перемещается между вкладками */}
-	          {pillRect && (
-	            <motion.div 
-	              initial={false}
-	              animate={{
-	                width: pillRect.width,
-	                height: pillRect.height,
-	                x: pillRect.left,
-	                y: pillRect.top,
-	              }}
-	              transition={{ type: 'spring', stiffness: 450, damping: 32, mass: 0.8 }}
-	              className="absolute top-0 left-0 bg-primary-container rounded-full pointer-events-none z-0"
-	            />
-	          )}
-	
-	          {[
-	            { id: 'general', label: 'О школе' },
-	            { id: 'parents', label: 'Дети' },
-	            { id: 'men', label: 'Взрослые' }
-	          ].map((tab) => (
-	            <button
-	              key={tab.id}
-	              data-tab={tab.id} // Важно для поиска активной кнопки
-	              onClick={() => setAudience(tab.id as any)}
-	              // transition-all заменен на transition-colors для избежания конфликтов
-	              className={`relative z-10 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-colors duration-300 ${
-	                audience === tab.id ? 'text-white' : 'text-on-surface-variant hover:text-primary-container'
-	              }`}
-	            >
-	              <span className="relative z-10">{tab.label}</span>
-	            </button>
-	          ))}
-	        </div>
-	      </div>
-	    </div>
+		<div className="hidden lg:block mt-4 border-t border-outline-variant/10 pt-3">
+		  <div className="max-w-container-max mx-auto flex justify-center">
+		    <div className="relative bg-surface-container-low/85 backdrop-blur-xl p-1 rounded-full border border-outline-variant/30 flex items-center gap-1 shadow-lg">
+		      {[
+		        { id: 'general', label: 'О школе' },
+		        { id: 'parents', label: 'Дети' },
+		        { id: 'men', label: 'Взрослые' }
+		      ].map((tab) => (
+		        <button
+		          key={tab.id}
+		          onClick={() => setAudience(tab.id as any)}
+		          className={`relative px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest ${
+		            audience === tab.id ? 'text-white' : 'text-on-surface-variant hover:text-primary-container'
+		          }`}
+		        >
+		          {audience === tab.id && (
+		            <motion.div 
+		              layoutId="active-audience-pill"
+		              className="absolute inset-0 bg-primary-container rounded-full -z-10"
+		              transition={{ 
+		                type: 'spring', 
+		                stiffness: 500, 
+		                damping: 35,
+		                mass: 0.8
+		              }}
+		            />
+		          )}
+		          <span className="relative z-10">{tab.label}</span>
+		        </button>
+		      ))}
+		    </div>
+		  </div>
+		</div>
       </header>
 
       {/* --- Mobile Menu --- */}
