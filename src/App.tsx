@@ -254,7 +254,7 @@ const AUDIENCE_HERO_MAP = {
 const ABOUT_US_MAP = {
   general: about_us,
   parents: about_us,
-  men: about_us, 
+  men: hero_men, 
 };
 
 const AUDIENCE_STATS_MAP = {
@@ -1105,9 +1105,6 @@ export default function App() {
 		          </div>
 		        </div>
 		        <p className="text-on-surface-variant text-sm leading-relaxed mb-6 italic">"{review.text}"</p>
-		        <div className="flex items-center gap-2 text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
-		          <Check size={12} /> Подтвержденный визит
-		        </div>
 		      </div>
 		    ))}
 		  </div>
