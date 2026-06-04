@@ -1123,6 +1123,7 @@ export default function App() {
 		      <img
 				  src={yandex}
 				  alt="yandex maps"
+				  className="h-[4.5rem] sm:h-24 md:h-28 lg:h-32 w-auto object-contain mb-0 sm:mb-3 inline-block"
 				  />
 		      <span>Читать на Яндекс.Картах</span>
 		    </a>
@@ -1137,6 +1138,7 @@ export default function App() {
 		      <img
 				  src={gis2}
 				  alt="2gis"
+				  className="h-[4.5rem] sm:h-24 md:h-28 lg:h-32 w-auto object-contain mb-0 sm:mb-3 inline-block"
 				  />
 		      <span>Читать в 2ГИС</span>
 		    </a>
