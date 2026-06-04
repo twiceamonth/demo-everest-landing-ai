@@ -19,7 +19,8 @@ import {
   Dumbbell,
   Heart,
   Compass,
-  Gift
+  Gift,
+	ArrowUp
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import png1 from './assets/1.png'
@@ -246,6 +247,12 @@ const AUDIENCE_HERO_MAP = {
     ),
     description: 'Персональные тренировки для мужчин 35+. Мини-группы до 6 человек. Личный контроль без жестких боев — системное восстановление силы.'
   }
+};
+
+const ABOUT_US_MAP = {
+  general: about_us,
+  parents: about_us,
+  men: about_us, 
 };
 
 const AUDIENCE_STATS_MAP = {
@@ -647,6 +654,7 @@ export default function App() {
   const [bottomFormSubmitted, setBottomFormSubmitted] = useState(false);
   const [bottomName, setBottomName] = useState('');
   const [bottomPhone, setBottomPhone] = useState('');
+	const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsNavScrolled(window.scrollY > 50);
@@ -666,6 +674,12 @@ export default function App() {
         }
       });
     };
+
+	  const handleScroll = () => {
+    	setIsNavScrolled(window.scrollY > 50);
+    	setShowScrollTop(window.scrollY > 600); // <-- Показываем кнопку после 600px
+  	};
+  	window.addEventListener('scroll', handleScroll);
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
     sections.forEach(id => {
@@ -780,53 +794,37 @@ export default function App() {
         </div>
 
         {/* --- Audience Switcher (Desktop) --- */}
-        <div className="hidden lg:block mt-4 border-t border-outline-variant/10 pt-3">
-          <div className="max-w-container-max mx-auto flex justify-center">
-            <div className="bg-surface-container-low/85 backdrop-blur-xl p-1 rounded-full border border-outline-variant/30 flex items-center gap-1 shadow-lg">
-              <button 
-                onClick={() => setAudience('general')}
-                className={`relative px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${audience === 'general' ? 'text-white' : 'text-on-surface-variant hover:text-primary-container'}`}
-              >
-                {audience === 'general' && (
-                  <motion.div 
-                    layoutId="active-audience-pill" 
-                    className="absolute inset-0 bg-primary-container rounded-full z-0"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">О школе</span>
-              </button>
-              
-              <button 
-                onClick={() => setAudience('parents')}
-                className={`relative px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${audience === 'parents' ? 'text-white' : 'text-on-surface-variant hover:text-primary-container'}`}
-              >
-                {audience === 'parents' && (
-                  <motion.div 
-                    layoutId="active-audience-pill" 
-                    className="absolute inset-0 bg-primary-container rounded-full z-0"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">Дети</span>
-              </button>
-
-              <button 
-                onClick={() => setAudience('men')}
-                className={`relative px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${audience === 'men' ? 'text-white' : 'text-on-surface-variant hover:text-primary-container'}`}
-              >
-                {audience === 'men' && (
-                  <motion.div 
-                    layoutId="active-audience-pill" 
-                    className="absolute inset-0 bg-primary-container rounded-full z-0"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">Взрослые</span>
-              </button>
-            </div>
-          </div>
-        </div>
+		<div className="hidden lg:block mt-4 border-t border-outline-variant/10 pt-3 ">
+		  <div className="max-w-container-max mx-auto flex justify-center ">
+			{/* Добавлен relative для создания корректного stacking context для layoutId */}
+			<div className="relative bg-surface-container-low/85 backdrop-blur-xl p-1 rounded-full border border-outline-variant/30 flex items-center gap-1 shadow-lg ">
+			  {[
+				{ id: 'general', label: 'О школе' },
+				{ id: 'parents', label: 'Дети' },
+				{ id: 'men', label: 'Взрослые' }
+			  ].map((tab) => (
+				<button 
+				  key={tab.id}
+				  onClick={() => setAudience(tab.id as any)}
+				  // transition-all заменен на transition-colors, добавлен z-10
+				  className={`relative px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest z-10 transition-colors duration-300 ${
+					audience === tab.id ? 'text-white' : 'text-on-surface-variant hover:text-primary-container'
+				  }`}
+				>
+				  <span className="relative z-10">{tab.label}</span>
+				  {audience === tab.id && (
+					<motion.div 
+					  layoutId="active-audience-pill" 
+					  // Добавлен -z-10, чтобы фон уходил строго под текст
+					  className="absolute inset-0 bg-primary-container rounded-full -z-10"
+					  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+					/>
+				  )}
+				</button>
+			  ))}
+			</div>
+		  </div>
+		</div>
       </header>
 
       {/* --- Mobile Menu --- */}
@@ -965,12 +963,16 @@ export default function App() {
             <div className="flex-1 relative">
               <div className="absolute -top-4 -left-4 w-24 h-24 border-t-8 border-l-8 border-primary-container" />
               <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-8 border-r-8 border-primary-container" />
-              <img 
-                src={about_us} 
-                alt="Academy interior"
-                className="w-full brightness-100 transition-all duration-700 shadow-2xl"
-                referrerPolicy="no-referrer"
-              />
+              <motion.img 
+				key={audience}
+				initial={{ opacity: 0, scale: 0.95 }}
+				animate={{ opacity: 1, scale: 1 }}
+				transition={{ duration: 0.5 }}
+				src={ABOUT_US_MAP[audience]} 
+				alt="Academy interior "
+				className="w-full brightness-100 transition-all duration-700 shadow-2xl "
+				referrerPolicy="no-referrer "
+			  />
             </div>
           </div>
         </section>
@@ -1647,6 +1649,24 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
           <span className="text-[10px] font-bold uppercase tracking-wider">Взрослые</span>
         </button>
       </div>
+
+		{/* --- Scroll to Top Button --- */}
+		  <AnimatePresence>
+		    {showScrollTop && (
+		      <motion.button
+		        initial={{ opacity: 0, y: 20, scale: 0.8 }}
+		        animate={{ opacity: 1, y: 0, scale: 1 }}
+		        exit={{ opacity: 0, y: 20, scale: 0.8 }}
+		        transition={{ duration: 0.3, ease: 'easeInOut' }}
+		        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+		        className="fixed z-[95] bottom-24 lg:bottom-8 right-4 lg:right-8 bg-primary-container text-white p-3 lg:p-4 rounded-full shadow-2xl border border-outline-variant/50 hover:bg-primary hover:scale-110 transition-transform duration-300 flex items-center justify-center group"
+		        aria-label="Наверх"
+		      >
+		        <ArrowUp size={24} className="group-hover:-translate-y-1 transition-transform" />
+		      </motion.button>
+		    )}
+		  </AnimatePresence>
+</div>
     </div>
   );
 }
