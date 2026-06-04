@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode } from 'react';
+import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import { 
   Phone, 
   ArrowRight, 
@@ -609,6 +609,38 @@ className="w-full btn-primary flex items-center justify-center gap-4 text-xl">
 };
 
 export default function App() {
+	const tabsContainerRef = useRef<HTMLDivElement>(null);
+	const [pillRect, setPillRect] = useState<{ width: number; height: number; left: number; top: number } | null>(null);
+	
+	useEffect(() => {
+	  const updatePill = () => {
+	    if (!tabsContainerRef.current) return;
+	    // Находим активную кнопку по data-атрибуту
+	    const activeButton = tabsContainerRef.current.querySelector(`[data-tab="${audience}"]`) as HTMLElement;
+	    if (activeButton) {
+	      const containerRect = tabsContainerRef.current.getBoundingClientRect();
+	      const buttonRect = activeButton.getBoundingClientRect();
+	      
+	      // Вычисляем точное смещение кнопки относительно контейнера
+	      setPillRect({
+	        width: buttonRect.width,
+	        height: buttonRect.height,
+	        left: buttonRect.left - containerRect.left,
+	        top: buttonRect.top - containerRect.top,
+	      });
+	    }
+	  };
+	
+	  // requestAnimationFrame гарантирует, что DOM обновился перед измерением
+	  const rafId = requestAnimationFrame(updatePill);
+	  window.addEventListener('resize', updatePill); // Обновляем при изменении размера окна
+	  
+	  return () => {
+	    cancelAnimationFrame(rafId);
+	    window.removeEventListener('resize', updatePill);
+	  };
+	}, [audience]);
+	
   const [audience, setAudience] = useState<'general' | 'parents' | 'men'>(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -790,38 +822,48 @@ export default function App() {
           </div>
         </div>
 
-        {/* --- Audience Switcher (Desktop) --- */}
-		<div className="hidden lg:block mt-4 border-t border-outline-variant/10 pt-3 ">
-		  <div className="max-w-container-max mx-auto flex justify-center ">
-			{/* Добавлен relative для создания корректного stacking context для layoutId */}
-			<div className="relative bg-surface-container-low/85 backdrop-blur-xl p-1 rounded-full border border-outline-variant/30 flex items-center gap-1 shadow-lg ">
-			  {[
-				{ id: 'general', label: 'О школе' },
-				{ id: 'parents', label: 'Дети' },
-				{ id: 'men', label: 'Взрослые' }
-			  ].map((tab) => (
-				<button 
-				  key={tab.id}
-				  onClick={() => setAudience(tab.id as any)}
-				  // transition-all заменен на transition-colors, добавлен z-10
-				  className={`relative px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest z-10 transition-colors duration-300 ${
-					audience === tab.id ? 'text-white' : 'text-on-surface-variant hover:text-primary-container'
-				  }`}
-				>
-				  <span className="relative z-10">{tab.label}</span>
-				  {audience === tab.id && (
-					<motion.div 
-					  layoutId="active-audience-pill" 
-					  // Добавлен -z-10, чтобы фон уходил строго под текст
-					  className="absolute inset-0 bg-primary-container rounded-full -z-10"
-					  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-					/>
-				  )}
-				</button>
-			  ))}
-			</div>
-		  </div>
-		</div>
+		{/* --- Audience Switcher (Desktop) --- */}
+	    <div className="hidden lg:block mt-4 border-t border-outline-variant/10 pt-3">
+	      <div className="max-w-container-max mx-auto flex justify-center">
+	        <div 
+	          ref={tabsContainerRef}
+	          className="relative bg-surface-container-low/85 backdrop-blur-xl p-1 rounded-full border border-outline-variant/30 flex items-center gap-1 shadow-lg"
+	        >
+	          {/* Единая подложка, которая плавно перемещается между вкладками */}
+	          {pillRect && (
+	            <motion.div 
+	              initial={false}
+	              animate={{
+	                width: pillRect.width,
+	                height: pillRect.height,
+	                x: pillRect.left,
+	                y: pillRect.top,
+	              }}
+	              transition={{ type: 'spring', stiffness: 450, damping: 32, mass: 0.8 }}
+	              className="absolute top-0 left-0 bg-primary-container rounded-full pointer-events-none z-0"
+	            />
+	          )}
+	
+	          {[
+	            { id: 'general', label: 'О школе' },
+	            { id: 'parents', label: 'Дети' },
+	            { id: 'men', label: 'Взрослые' }
+	          ].map((tab) => (
+	            <button
+	              key={tab.id}
+	              data-tab={tab.id} // Важно для поиска активной кнопки
+	              onClick={() => setAudience(tab.id as any)}
+	              // transition-all заменен на transition-colors для избежания конфликтов
+	              className={`relative z-10 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-colors duration-300 ${
+	                audience === tab.id ? 'text-white' : 'text-on-surface-variant hover:text-primary-container'
+	              }`}
+	            >
+	              <span className="relative z-10">{tab.label}</span>
+	            </button>
+	          ))}
+	        </div>
+	      </div>
+	    </div>
       </header>
 
       {/* --- Mobile Menu --- */}
