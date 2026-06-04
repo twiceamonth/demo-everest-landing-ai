@@ -1114,34 +1114,34 @@ export default function App() {
 		  
 		  <div className="mt-6 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
 		    <a 
-		      href="https://yandex.ru/maps/org/everest/107137209858/reviews/" 
-		      target="_blank" 
-		      rel="noopener noreferrer"
-		      className="btn-outline flex items-center justify-center gap-3 w-full sm:w-auto px-6"
-		    >
-		      {/* Yandex Maps Icon */}
-		      <img
-				  src={yandex}
-				  alt="yandex maps"
-				  className="h-14 sm:h-16 md:h-20 lg:h-24 w-auto object-contain mb-2 sm:mb-4 inline-block"
-				  />
-		      <span>Читать на Яндекс.Картах</span>
-		    </a>
+			  href="https://yandex.ru/maps/org/everest/107137209858/reviews/" 
+			  target="_blank" 
+			  rel="noopener noreferrer"
+			  className="btn-outline flex items-center justify-center gap-3 w-full sm:w-auto px-6"
+			>
+			  {/* Yandex Maps Icon - фиксированный размер 16x16px */}
+			  <img
+			    src={yandexMaps}
+			    alt="yandex maps"
+			    className="h-4 w-4 object-contain shrink-0"
+			  />
+			  <span>Читать на Яндекс.Картах</span>
+			</a>
 		    
 		    <a 
-		      href="https://2gis.ru/tomsk/firm/70000001039795089/tab/reviews" 
-		      target="_blank" 
-		      rel="noopener noreferrer"
-		      className="btn-primary flex items-center justify-center gap-3 w-full sm:w-auto px-6"
-		    >
-		      {/* 2GIS Icon */}
-		      <img
-				  src={gis2}
-				  alt="2gis"
-				  className="h-4 sm:h-6 md:h-8 lg:h-10 w-auto object-contain mb-2 sm:mb-4 inline-block"
-				  />
-		      <span>Читать в 2ГИС</span>
-		    </a>
+			  href="https://2gis.ru/tomsk/firm/70000001039795089/tab/reviews" 
+			  target="_blank" 
+			  rel="noopener noreferrer"
+			  className="btn-primary flex items-center justify-center gap-3 w-full sm:w-auto px-6"
+			>
+			  {/* 2GIS Icon - фиксированный размер 16x16px */}
+			  <img
+			    src={gis2}
+			    alt="2gis"
+			    className="h-4 w-4 object-contain shrink-0"
+			  />
+			  <span>Читать в 2ГИС</span>
+			</a>
 		  </div>
 		</section>
 		  
