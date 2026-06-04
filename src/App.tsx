@@ -609,38 +609,7 @@ className="w-full btn-primary flex items-center justify-center gap-4 text-xl">
 };
 
 export default function App() {
-	const tabsContainerRef = useRef<HTMLDivElement>(null);
-	const [pillRect, setPillRect] = useState<{ width: number; height: number; left: number; top: number } | null>(null);
-	
-	useEffect(() => {
-	  const updatePill = () => {
-	    if (!tabsContainerRef.current) return;
-	    // Находим активную кнопку по data-атрибуту
-	    const activeButton = tabsContainerRef.current.querySelector(`[data-tab="${audience}"]`) as HTMLElement;
-	    if (activeButton) {
-	      const containerRect = tabsContainerRef.current.getBoundingClientRect();
-	      const buttonRect = activeButton.getBoundingClientRect();
-	      
-	      // Вычисляем точное смещение кнопки относительно контейнера
-	      setPillRect({
-	        width: buttonRect.width,
-	        height: buttonRect.height,
-	        left: buttonRect.left - containerRect.left,
-	        top: buttonRect.top - containerRect.top,
-	      });
-	    }
-	  };
-	
-	  // requestAnimationFrame гарантирует, что DOM обновился перед измерением
-	  const rafId = requestAnimationFrame(updatePill);
-	  window.addEventListener('resize', updatePill); // Обновляем при изменении размера окна
-	  
-	  return () => {
-	    cancelAnimationFrame(rafId);
-	    window.removeEventListener('resize', updatePill);
-	  };
-	}, [audience]);
-	
+  // 1. СНАЧАЛА объявляем audience, так как от неё зависят useEffect ниже
   const [audience, setAudience] = useState<'general' | 'parents' | 'men'>(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -652,16 +621,28 @@ export default function App() {
     return 'general';
   });
 
+  // 2. Остальные состояния
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const [pillRect, setPillRect] = useState<{ width: number; height: number; left: number; top: number } | null>(null);
+  const [isNavScrolled, setIsNavScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [activeModal, setActiveModal] = useState<'none' | 'registration' | 'coach' | 'schedule'>('none');
+  const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
+  const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [bottomFormSubmitted, setBottomFormSubmitted] = useState(false);
+  const [bottomName, setBottomName] = useState('');
+  const [bottomPhone, setBottomPhone] = useState('');
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // 3. Синхронизация audience с URL
   useEffect(() => {
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
     const urlAudience = params.get('audience') || 'general';
     if (urlAudience !== audience) {
-      if (audience === 'general') {
-        url.searchParams.delete('audience');
-      } else {
-        url.searchParams.set('audience', audience);
-      }
+      if (audience === 'general') url.searchParams.delete('audience');
+      else url.searchParams.set('audience', audience);
       window.history.pushState({ audience }, '', url.toString());
     }
   }, [audience]);
@@ -678,38 +659,45 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const [isNavScrolled, setIsNavScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
-  const [activeModal, setActiveModal] = useState<'none' | 'registration' | 'coach' | 'schedule'>('none');
-  const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [bottomFormSubmitted, setBottomFormSubmitted] = useState(false);
-  const [bottomName, setBottomName] = useState('');
-  const [bottomPhone, setBottomPhone] = useState('');
-	const [showScrollTop, setShowScrollTop] = useState(false);
+  // 4. Анимация подложки (теперь audience уже существует!)
+  useEffect(() => {
+    const updatePill = () => {
+      if (!tabsContainerRef.current) return;
+      const activeButton = tabsContainerRef.current.querySelector(`[data-tab="${audience}"]`) as HTMLElement;
+      if (activeButton) {
+        const containerRect = tabsContainerRef.current.getBoundingClientRect();
+        const buttonRect = activeButton.getBoundingClientRect();
+        setPillRect({
+          width: buttonRect.width,
+          height: buttonRect.height,
+          left: buttonRect.left - containerRect.left,
+          top: buttonRect.top - containerRect.top,
+        });
+      }
+    };
+    const rafId = requestAnimationFrame(updatePill);
+    window.addEventListener('resize', updatePill);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('resize', updatePill);
+    };
+  }, [audience]);
 
+  // 5. Скролл и IntersectionObserver
   useEffect(() => {
     const handleScroll = () => {
-    	setIsNavScrolled(window.scrollY > 50);
-    	setShowScrollTop(window.scrollY > 600); // <-- Показываем кнопку после 600px
-  	};
-  	window.addEventListener('scroll', handleScroll);
-
-    const sections = ['about', 'benefits', 'coaches', 'programs', 'reviews', 'pricing', 'faq', 'locations'];
-    const observerOptions = {
-      root: null,
-      rootMargin: '-50% 0px -50% 0px',
-      threshold: 0
+      setIsNavScrolled(window.scrollY > 50);
+      setShowScrollTop(window.scrollY > 600);
     };
-
+    window.addEventListener('scroll', handleScroll);
+    
+    const sections = ['about', 'benefits', 'coaches', 'programs', 'reviews', 'pricing', 'faq', 'locations'];
+    const observerOptions = { root: null, rootMargin: '-50% 0px -50% 0px', threshold: 0 };
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
+        if (entry.isIntersecting) setActiveSection(entry.target.id);
       });
     };
-
     const observer = new IntersectionObserver(observerCallback, observerOptions);
     sections.forEach(id => {
       const el = document.getElementById(id);
