@@ -657,8 +657,11 @@ export default function App() {
 	const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsNavScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+    	setIsNavScrolled(window.scrollY > 50);
+    	setShowScrollTop(window.scrollY > 600); // <-- Показываем кнопку после 600px
+  	};
+  	window.addEventListener('scroll', handleScroll);
 
     const sections = ['about', 'benefits', 'coaches', 'programs', 'reviews', 'pricing', 'faq', 'locations'];
     const observerOptions = {
@@ -674,12 +677,6 @@ export default function App() {
         }
       });
     };
-
-	  const handleScroll = () => {
-    	setIsNavScrolled(window.scrollY > 50);
-    	setShowScrollTop(window.scrollY > 600); // <-- Показываем кнопку после 600px
-  	};
-  	window.addEventListener('scroll', handleScroll);
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
     sections.forEach(id => {
