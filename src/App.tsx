@@ -35,6 +35,8 @@ import image2 from './assets/image2.svg'
 import kudo from './assets/kudo.jpg'
 import logo from './assets/logo.png'
 import vk from './assets/vk.png'
+import yandex from './assets/yandex-logo.svg'
+import gis2 from './assets/2gis-logo.svg'
 
 // --- Types ---
 interface Coach {
@@ -1118,9 +1120,10 @@ export default function App() {
 		      className="btn-outline flex items-center justify-center gap-3 w-full sm:w-auto px-6"
 		    >
 		      {/* Yandex Maps Icon */}
-		      <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg">
-		        <path d="M12.844 2.001c.292 0 .58.022.862.065L20.5 4.5l3.206 7.344a.75.75 0 01-.037.662l-3.206 5.5-6.794 3.5-6.794-3.5-3.206-5.5a.75.75 0 01-.037-.662L6.838 4.5l6.794-2.434c.282-.043.57-.065.862-.065h.35zm-.027 1.505c-.24 0-.477.018-.71.053L6.313 5.64l-2.83 6.473 2.83 4.856 5.97 3.076 5.969-3.076 2.83-4.856-2.83-6.473-5.794-2.081a4.5 4.5 0 00-.71-.053h-.131zM12.5 6.5a4 4 0 110 8 4 4 0 010-8zm0 1.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/>
-		      </svg>
+		      <img
+				  src={yandex}
+				  alt="yandex maps"
+				  />
 		      <span>Читать на Яндекс.Картах</span>
 		    </a>
 		    
@@ -1131,9 +1134,10 @@ export default function App() {
 		      className="btn-primary flex items-center justify-center gap-3 w-full sm:w-auto px-6"
 		    >
 		      {/* 2GIS Icon */}
-		      <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg">
-		        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-		      </svg>
+		      <img
+				  src={gis2}
+				  alt="2gis"
+				  />
 		      <span>Читать в 2ГИС</span>
 		    </a>
 		  </div>
