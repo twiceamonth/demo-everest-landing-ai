@@ -720,8 +720,6 @@ export default function App() {
     setActiveModal('coach');
   };
 
-  const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
-
   const openSchedule = (program?: Program) => {
     setSelectedProgram(program || null);
     setActiveModal('schedule');
