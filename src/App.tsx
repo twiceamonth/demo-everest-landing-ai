@@ -1085,43 +1085,60 @@ export default function App() {
         </section>
 
         {/* --- Reviews Section --- */}
-        <section id="reviews" className="py-12 md:py-20 px-gutter max-w-container-max mx-auto overflow-hidden scroll-mt-24">
-        <div className="flex flex-col lg:flex-row justify-between items-center lg:items-end mb-6 md:mb-12 gap-4 md:gap-8 text-center lg:text-left">
-            <h2 className="section-title mb-0 text-[32px]">Отзывы на Яндекс.Картах</h2>
-            <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 bg-surface-container p-4 border border-outline-variant/30 shrink-0 max-w-full">
-              <div className="flex gap-1 text-yellow-500">
-                {[...Array(5)].map((_, i) => <Star key={i} size={20} fill="currentColor" />)}
-              </div>
-              <span className="font-display font-bold text-2xl">5.0</span>
-              <span className="text-on-surface-variant text-xs uppercase tracking-widest">на основе 300+ отзывов</span>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {REVIEWS_MAP[audience].map((review) => (
-              <div key={review.id} className="bg-surface-container p-6 min-[375px]:p-8 border border-outline-variant/20 hover:border-primary/40 transition-colors">
-                <div className="mb-4 md:mb-6">
-                  <div className="mb-3 md:mb-4">
-                    <h4 className="font-display font-bold text-lg mb-1">{review.name}</h4>
-                    <div className="flex gap-0.5 text-yellow-500 mb-2">
-                       {[...Array(review.rating)].map((_, i) => <Star key={i} size={12} fill="currentColor" />)}
-                    </div>
-                    <p className="text-[10px] text-on-surface-variant uppercase tracking-widest">{review.date}</p>
-                  </div>
-                </div>
-                <p className="text-on-surface-variant text-sm leading-relaxed mb-6 italic">"{review.text}"</p>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
-                  <Check size={12} /> Подтвержденный визит
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="mt-6 md:mt-12 text-center">
-            <button className="btn-outline">Читать все отзывы</button>
-          </div>
-        </section>
-
+		<section id="reviews" className="py-12 md:py-20 px-gutter max-w-container-max mx-auto overflow-hidden scroll-mt-24">
+		  <div className="flex flex-col mb-6 md:mb-12 gap-4 text-center lg:text-left">
+		    <h2 className="section-title mb-0 text-[32px]">Отзывы</h2>
+		  </div>
+		  
+		  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+		    {REVIEWS_MAP[audience].map((review) => (
+		      <div key={review.id} className="bg-surface-container p-6 min-[375px]:p-8 border border-outline-variant/20 hover:border-primary/40 transition-colors">
+		        <div className="mb-4 md:mb-6">
+		          <div className="mb-3 md:mb-4">
+		            <h4 className="font-display font-bold text-lg mb-1">{review.name}</h4>
+		            <div className="flex gap-0.5 text-yellow-500 mb-2">
+		              {[...Array(review.rating)].map((_, i) => <Star key={i} size={12} fill="currentColor" />)}
+		            </div>
+		            <p className="text-[10px] text-on-surface-variant uppercase tracking-widest">{review.date}</p>
+		          </div>
+		        </div>
+		        <p className="text-on-surface-variant text-sm leading-relaxed mb-6 italic">"{review.text}"</p>
+		        <div className="flex items-center gap-2 text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
+		          <Check size={12} /> Подтвержденный визит
+		        </div>
+		      </div>
+		    ))}
+		  </div>
+		  
+		  <div className="mt-6 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+		    <a 
+		      href="https://yandex.ru/maps/org/everest/107137209858/reviews/" 
+		      target="_blank" 
+		      rel="noopener noreferrer"
+		      className="btn-outline flex items-center justify-center gap-3 w-full sm:w-auto px-6"
+		    >
+		      {/* Yandex Maps Icon */}
+		      <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg">
+		        <path d="M12.844 2.001c.292 0 .58.022.862.065L20.5 4.5l3.206 7.344a.75.75 0 01-.037.662l-3.206 5.5-6.794 3.5-6.794-3.5-3.206-5.5a.75.75 0 01-.037-.662L6.838 4.5l6.794-2.434c.282-.043.57-.065.862-.065h.35zm-.027 1.505c-.24 0-.477.018-.71.053L6.313 5.64l-2.83 6.473 2.83 4.856 5.97 3.076 5.969-3.076 2.83-4.856-2.83-6.473-5.794-2.081a4.5 4.5 0 00-.71-.053h-.131zM12.5 6.5a4 4 0 110 8 4 4 0 010-8zm0 1.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/>
+		      </svg>
+		      <span>Читать на Яндекс.Картах</span>
+		    </a>
+		    
+		    <a 
+		      href="https://2gis.ru/tomsk/firm/70000001039795089/tab/reviews" 
+		      target="_blank" 
+		      rel="noopener noreferrer"
+		      className="btn-primary flex items-center justify-center gap-3 w-full sm:w-auto px-6"
+		    >
+		      {/* 2GIS Icon */}
+		      <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg">
+		        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+		      </svg>
+		      <span>Читать в 2ГИС</span>
+		    </a>
+		  </div>
+		</section>
+		  
         {/* --- Pricing Section --- */}
         <section id="pricing" className="py-12 md:py-20 px-gutter max-w-container-max mx-auto scroll-mt-24">
           <h2 className="section-title">Абонементы</h2>
