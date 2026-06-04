@@ -22,6 +22,18 @@ import {
   Gift
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import png1 from './assets/1.png'
+import png2 from './assets/2.png'
+import png3 from './assets/3.png'
+import about_us from './assets/about-us.png'
+import bjj from './assets/bjj.jpg'
+import greppling from './assets/greppling.jpg'
+import hero_men from './assets/hero_men.jpg'
+import hero_parents from './assets/hero_parents.jpg'
+import image2 from './assets/image2.svg'
+import kudo from './assets/kudo.jpg'
+import logo from './assets/logo.png'
+import vk from './assets/vk.png'
 
 // --- Types ---
 interface Coach {
@@ -60,7 +72,7 @@ const COACHES: Coach[] = [
     rank: '2 Дан JKA / 1 Кю ФКР',
     title: 'Тренер по Кудо / МС России',
     bio: 'Вице-президент Федерации Кудо Томской области. Высшее экономическое образование ТГУ ЭФ. Специалист по спортивной подготовке по виду спорта. Мастер спорта России. Судья 1й категории. 2 Дан - JKA. 1 кю - ФКР',
-    image: '/demo-everest-landing-ai/1.png',
+    image: png1,
     achievements: [
       'Мастер спорта России',
       'Мастер 2го Дана JKA',
@@ -78,7 +90,7 @@ const COACHES: Coach[] = [
     rank: 'Черный пояс 5 дан',
     title: 'Директор центра / Старший тренер по боевому джиу-джитсу',
     bio: 'Образование высшее, ТГПУ факультет физической культуры. Тренерский стаж с 2003 года. Тренирует детей, юношей и взрослых. Основатель региональной общественной организации "Федерация боевого дзю-дзютцу" Томской Области. Черный пояс 5 дан. Педагог 1 категории.',
-    image: '/demo-everest-landing-ai/2.png',
+    image: png2,
     achievements: [
       'Основатель Федерации боевого дзю-дзютцу ТО',
       'Черный пояс 5 дан',
@@ -96,7 +108,7 @@ const COACHES: Coach[] = [
     rank: 'Сборная Томской Области',
     title: 'Тренер по боевому джиу-джитсу',
     bio: 'Помощник главного тренера спортивного Центра "Эверест". Входит в состав сборной Томской области. Тренирует детей с 7 лет. Призер кубка России по боевому джиу-джитсу, многократный чемпион Сибири.',
-    image: '/demo-everest-landing-ai/3.png',
+    image: png3,
     achievements: [
       'Призер кубка России',
       'Многократный чемпион Сибири',
@@ -116,21 +128,21 @@ const PROGRAMS: Program[] = [
     name: 'Боевое джиу-джитсу',
     target: 'Для детей / Для взрослых',
     description: 'Система самозащиты и рукопашного боя, вобравшая в себя лучшие приемы из борьбы, ударов и болевых воздействий. Обучение включает технику бросков, удушающих и болевых приемов на руки и ноги.',
-    image: '/demo-everest-landing-ai/bjj.jpg',
+    image: bjj,
   },
   {
     id: 'kudo',
     name: 'Кудо',
     target: 'Для детей / Для взрослых',
     description: 'Современное полноконтактное боевое искусство, сочетающее в себе карате, дзюдо и тайский бокс. Особенности — защитный шлем и возможность использовать как ударную, так и борцовскую технику.',
-    image: '/demo-everest-landing-ai/kudo.jpg',
+    image: kudo,
   },
   {
     id: 'grappling',
     name: 'Грэпплинг',
     target: 'Для детей / Для взрослых',
     description: 'Вид спортивного единоборства, совмещающий технику всех борцовских дисциплин с минимальными ограничениями по использованию болевых и удушающих приемов. В отличие от БЖЖ, здесь не используется кимоно, что делает схватки более динамичными и скоростными.',
-    image: '/demo-everest-landing-ai/greppling.jpg', // Grappling action
+    image: greppling, // Grappling action
   }
 ];
 
@@ -211,7 +223,7 @@ const AUDIENCE_HERO_MAP = {
     description: null
   },
   parents: {
-    bgImage: '/demo-everest-landing-ai/hero_parents.jpg',
+    bgImage: hero_parents,
     badge: 'Безопасность • Дисциплина • Здоровье',
     subBadge: 'КУДО И ДЖИУ-ДЖИТСУ ДЛЯ ДЕТЕЙ ОТ 4 ЛЕТ',
     ctaText: 'ЗАПИСАТЬ РЕБЕНКА НА БЕСПЛАТНУЮ ТРЕНИРОВКУ',
@@ -223,7 +235,7 @@ const AUDIENCE_HERO_MAP = {
     description: 'Развиваем дисциплину, уверенность в себе и физическую выносливость с самого детства в безопасном формате тренировок с заботливыми наставниками.'
   },
   men: {
-    bgImage: '/demo-everest-landing-ai/hero_men.jpg',
+    bgImage: hero_men,
     badge: 'Мини-группы • Личный контроль • Восстановление',
     subBadge: 'БОЕВОЕ ДЖИУ-ДЖИТСУ • КУДО • ГРЭППЛИНГ',
     ctaText: 'НАЧАТЬ С БЕСПЛАТНОЙ ТРЕНИРОВКИ',
@@ -288,21 +300,21 @@ const AUDIENCE_PROGRAMS_MAP = {
       name: 'Боевое джиу-джитсу',
       target: 'Для мужчин / Новички и профи',
       description: 'Прикладная система самообороны и рукопашного боя. Болевые и удушающие приемы, бросковая техника, контроль оппонента в партере. Идеально подходит для обретения уверенности и боевой техники на любой случай жизни.',
-      image: '/demo-everest-landing-ai/bjj.jpg'
+      image: bjj
     },
     {
       id: 'kudo',
       name: 'Кудо',
       target: 'Реальное полноконтактное кудо',
       description: 'Максимально приближенное к жизни боевое искусство. Сочетает мощную ударную технику руками и ногами, подножки, подсечки, борьбу в партере. Защитный шлем с забралом позволяет драться в полную силу с минимальной вероятностью синяков для офисной работы.',
-      image: '/demo-everest-landing-ai/kudo.jpg'
+      image: kudo
     },
     {
       id: 'grappling',
       name: 'Грэпплинг',
       target: 'Для мужчин любого уровня',
       description: 'Функциональный борцовский тренинг. Никаких кимоно — быстрая, силовая борьба на татами на основе болевых и удушающих. Развивает железную спину, стальной хват и безграничную кардио-выносливость.',
-      image: '/demo-everest-landing-ai/greppling.jpg'
+      image: greppling
     }
   ]
 };
@@ -368,6 +380,36 @@ const AUDIENCE_FAQ_MAP = {
 
 const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 const TIMES = ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00'];
+
+const sendLead = async (name: string, phone: string) => {
+  // получаем audience из URL
+  const params = new URLSearchParams(window.location.search)
+  var audience = params.get('audience') || 'Общая'
+
+  // преобразуем audience согласно требованиям
+  if (audience === 'parents') {
+    audience = 'Родители и дети'
+  } else if (audience === 'men') {
+    audience = 'Взрослые мужчины'
+  }
+
+  const formData = new FormData()
+
+  formData.append('your-name', name)
+  formData.append('your-phone', phone)
+  formData.append('audience', audience)
+
+  const res = await fetch(
+    'https://everest.tomsk.ru/wp-json/contact-form-7/v1/contact-forms/9124/feedback',
+    {
+      method: 'POST',
+      body: formData
+    }
+  )
+
+  const data = await res.json()
+  return data
+}
 
 // --- Components ---
 
@@ -541,14 +583,18 @@ const RegistrationForm = ({ coachName, onSuccess }: { coachName?: string; onSucc
           <p className="text-[10px] text-on-secondary-container opacity-60 mb-8 italic">
             * Обязательное поле для заполнения.
           </p>
-          <button className="w-full btn-primary flex items-center justify-center gap-4 text-xl">
+          <button 
+		onClick={async () => {
+		const result = await sendLead(name, phone)
+		}}		
+className="w-full btn-primary flex items-center justify-center gap-4 text-xl">
             <span>Записаться</span>
             <ArrowRight />
           </button>
         </div>
 
         <p className="text-center text-[10px] text-on-secondary-container uppercase tracking-[0.2em] opacity-50">
-          Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+          Нажимая кнопку, вы даете согласие на обработку персональных данных и соглашаетесь с <a href="https://everest.tomsk.ru/privacy-policy/" className="text-center text-[10px] text-on-secondary-container uppercase tracking-[0.2em] opacity-50">политикой конфиденциальности</a>. 
         </p>
       </form>
     </div>
@@ -704,7 +750,7 @@ export default function App() {
             }}
           >
             <img 
-              src="/demo-everest-landing-ai/logo.png" 
+              src={logo}
               alt="ЭВЕРЕСТ" 
               className="h-12 md:h-16 w-auto group-hover:brightness-110 transition-all"
               referrerPolicy="no-referrer"
@@ -722,7 +768,7 @@ export default function App() {
             </a>
             <a href="https://vk.com/everest_tomsk" target="_blank" rel="noopener noreferrer" className="vk-link hidden sm:flex items-center justify-center shrink-0 w-8 h-8" aria-label="VK">
               <img 
-                src="/demo-everest-landing-ai/vk.png" 
+                src={vk} 
                 alt="VK" 
                 referrerPolicy="no-referrer"
               />
@@ -801,7 +847,7 @@ export default function App() {
               }}
             >
               <img 
-                src="/demo-everest-landing-ai/logo.png" 
+                src={logo} 
                 alt="ЭВЕРЕСТ" 
                 className="h-12 w-auto"
                 referrerPolicy="no-referrer"
@@ -850,7 +896,7 @@ export default function App() {
             >
               <h1 className="font-display text-[1.8rem] max-[320px]:text-[1.5rem] min-[360px]:text-[2rem] min-[400px]:text-[2.35rem] sm:text-6xl md:text-[4.75rem] lg:text-[4.75rem] xl:text-[5.5rem] text-on-surface mb-4 uppercase font-black leading-[0.9] tracking-tighter">
                 <img 
-                  src="/demo-everest-landing-ai/image2.svg" 
+                  src={image2}
                   alt="ЭВЕРЕСТ" 
                   className="h-[4.5rem] sm:h-24 md:h-28 lg:h-32 w-auto object-contain mb-0 sm:mb-3 inline-block"
                   style={{ filter: 'invert(91%) sepia(21%) saturate(225%) hue-rotate(163deg) brightness(98%) contrast(93%)' }}
@@ -900,11 +946,11 @@ export default function App() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-8 md:mb-12">
                 <div>
                   <div className="text-primary-container font-display text-5xl sm:text-6xl font-black italic">2003</div>
-                  <div className="text-xs uppercase font-bold tracking-widest mt-2 text-on-surface/80 leading-relaxed">Создание клуба</div>
+                  <div className="text-xs uppercase font-bold tracking-widest mt-2 text-on-surface/80 leading-relaxed">год основания клуба</div>
                 </div>
                 <div>
                   <div className="text-primary-container font-display text-5xl sm:text-6xl font-black italic">2017</div>
-                  <div className="text-xs uppercase font-bold tracking-widest mt-2 text-on-surface/80 leading-relaxed">Становление центром физической культуры и спорта</div>
+                  <div className="text-xs uppercase font-bold tracking-widest mt-2 text-on-surface/80 leading-relaxed">год создания центра физической культуры и спорта</div>
                 </div>
               </div>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 md:gap-x-12 md:gap-y-16 mt-8 md:mt-12 border-t border-outline-variant/30 pt-8 md:pt-12">
@@ -920,7 +966,7 @@ export default function App() {
               <div className="absolute -top-4 -left-4 w-24 h-24 border-t-8 border-l-8 border-primary-container" />
               <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-8 border-r-8 border-primary-container" />
               <img 
-                src="/demo-everest-landing-ai/about-us.png" 
+                src={about_us} 
                 alt="Academy interior"
                 className="w-full brightness-100 transition-all duration-700 shadow-2xl"
                 referrerPolicy="no-referrer"
@@ -1119,7 +1165,7 @@ export default function App() {
                     Скидка 20% на второго ребёнка
                   </h4>
                   <p className="text-sm text-on-surface-variant/90 mt-1 max-w-2xl leading-normal">
-                    Приводите на тренировки брата или сестру — и получите скидку 20% на абонемент второго ребёнка. 
+                    Приводите на тренировки второго ребенка — и получите скидку 20% на абонемент второго ребёнка. 
                     Это удобно: оба ребёнка занимаются в одном месте, в одно время и под присмотром одних и тех же тренеров. 
                     А ваш семейный бюджет заметно экономится.
                   </p>
@@ -1249,7 +1295,7 @@ export default function App() {
                   </div>
                   <h3 className="font-display text-2xl uppercase font-black italic mb-2 text-on-surface">Ваша заявка принята!</h3>
                   <p className="text-on-surface-variant max-w-sm text-sm">
-                    Мы свяжемся с вами в течение 15 минут, чтобы подтвердить время вашей первой тренировки. До встречи в зале!
+                    Мы свяжемся с вами в ближайшее время, чтобы подтвердить время вашей первой тренировки. До встречи в зале!
                   </p>
                 </div>
               ) : (
@@ -1311,12 +1357,16 @@ export default function App() {
                   </div>
 
                   <div className="pt-4">
-                    <button type="submit" className="w-full btn-primary flex items-center justify-center gap-4 py-4 text-base font-bold uppercase tracking-widest">
+                    <button 
+			onClick={async () => {
+				const result = await sendLead(bottomName, bottomPhone)
+				}}
+type="submit" className="w-full btn-primary flex items-center justify-center gap-4 py-4 text-base font-bold uppercase tracking-widest">
                       <span>Записаться бесплатно</span>
                       <ArrowRight size={18} />
                     </button>
                     <p className="text-center text-[10px] text-on-secondary-container opacity-50 mt-4 uppercase tracking-widest leading-relaxed">
-                      Нажимая кнопку, вы соглашаетесь с Политикой конфиденциальности
+                      Нажимая кнопку, вы даете согласие на обработку персональных данных и соглашаетесь с <a href="https://everest.tomsk.ru/privacy-policy/" className="text-center text-[10px] text-on-secondary-container uppercase tracking-[0.2em] opacity-50">политикой конфиденциальности</a>.
                     </p>
                   </div>
                 </form>
@@ -1332,7 +1382,7 @@ export default function App() {
           <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-8 md:mb-16">
             <div className="shrink-0">
               <img 
-                src="/demo-everest-landing-ai/logo.png" 
+                src={logo} 
                 alt="ЭВЕРЕСТ" 
                 className="h-16 w-auto mb-6"
                 referrerPolicy="no-referrer"
@@ -1370,9 +1420,7 @@ export default function App() {
             <div className="space-y-4">
               <h4 className="font-display font-bold uppercase tracking-widest text-primary">Инфо</h4>
               <nav className="flex flex-col gap-2">
-                <a href="#" className="text-on-surface-variant hover:text-primary transition-colors">Политика конфиденциальности</a>
-                <a href="#" className="text-on-surface-variant hover:text-primary transition-colors">Публичная оферта</a>
-                <a href="#" className="text-on-surface-variant hover:text-primary transition-colors">Правила клуба</a>
+                <a href="https://everest.tomsk.ru/privacy-policy/" className="text-on-surface-variant hover:text-primary transition-colors">Политика конфиденциальности</a>
               </nav>
             </div>
             <div className="space-y-4">
@@ -1380,7 +1428,7 @@ export default function App() {
               <div className="flex justify-center md:justify-start">
                 <a href="https://vk.com/everest_tomsk" target="_blank" rel="noopener noreferrer" className="vk-link flex items-center justify-center shrink-0 w-10 h-10" aria-label="VK">
                   <img 
-                    src="/demo-everest-landing-ai/vk.png" 
+                    src={vk}
                     alt="VK" 
                     referrerPolicy="no-referrer"
                   />
