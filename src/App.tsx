@@ -1138,7 +1138,7 @@ export default function App() {
 		      <img
 				  src={gis2}
 				  alt="2gis"
-				  className="h-14 sm:h-16 md:h-20 lg:h-24 w-auto object-contain mb-2 sm:mb-4 inline-block"
+				  className="h-4 sm:h-6 md:h-8 lg:h-10 w-auto object-contain mb-2 sm:mb-4 inline-block"
 				  />
 		      <span>Читать в 2ГИС</span>
 		    </a>
