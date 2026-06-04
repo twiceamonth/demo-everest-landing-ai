@@ -1121,7 +1121,7 @@ export default function App() {
 			>
 			  {/* Yandex Maps Icon - фиксированный размер 16x16px */}
 			  <img
-			    src={yandexMaps}
+			    src={yandex}
 			    alt="yandex maps"
 			    className="h-4 w-4 object-contain shrink-0"
 			  />
