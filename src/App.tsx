@@ -643,6 +643,7 @@ export default function App() {
   const [bottomName, setBottomName] = useState('');
   const [bottomPhone, setBottomPhone] = useState('');
   const [showScrollTop, setShowScrollTop] = useState(false);
+	const [showCookieBanner, setShowCookieBanner] = useState(true);
 
   // 3. Синхронизация audience с URL
   useEffect(() => {
@@ -692,6 +693,14 @@ export default function App() {
     };
   }, [audience]);
 
+	// Проверяем, давал ли пользователь согласие на куки ранее
+	useEffect(() => {
+	  const cookieConsent = localStorage.getItem('everest_cookie_consent');
+	  if (cookieConsent === 'accepted') {
+	    setShowCookieBanner(false);
+	  }
+	}, []);
+	
   // 5. Скролл и IntersectionObserver
   useEffect(() => {
     const handleScroll = () => {
@@ -761,6 +770,11 @@ export default function App() {
     alert('Заявка успешно отправлена! Мы перезвоним вам.');
     setActiveModal('none');
   };
+
+	const handleAcceptCookies = () => {
+		localStorage.setItem('everest_cookie_consent', 'accepted');
+		setShowCookieBanner(false);
+	};
 
   const renderNavLinks = (onLinkClick?: () => void) => (
     <>
@@ -1942,7 +1956,41 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
 		      </motion.button>
 		    )}
 		  </AnimatePresence>
-		
+
+		{/* --- Cookie Consent Banner --- */}
+		<AnimatePresence>
+		  {showCookieBanner && (
+		    <motion.div
+		      initial={{ y: '100%', opacity: 0 }}
+		      animate={{ y: 0, opacity: 1 }}
+		      exit={{ y: '100%', opacity: 0 }}
+		      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+		      className="fixed bottom-20 lg:bottom-4 left-4 right-4 lg:left-8 lg:right-8 lg:max-w-4xl z-[89] bg-surface-container border border-outline-variant shadow-2xl p-4 md:p-6 rounded-xl backdrop-blur-md"
+		    >
+		      <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
+		        <div className="flex-shrink-0 bg-primary-container/10 p-2.5 rounded-full hidden md:flex">
+		          <Shield size={24} className="text-primary-container" />
+		        </div>
+		        <p className="flex-1 text-xs md:text-sm text-on-surface-variant leading-relaxed">
+		          Мы используем файлы cookie и сервисы веб-аналитики (Яндекс.Метрика) для улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с обработкой данных и{' '}
+		          <button
+		            type="button"
+		            onClick={() => setActiveModal('privacy')}
+		            className="text-primary underline underline-offset-2 hover:text-primary-container transition-colors font-semibold"
+		          >
+		            политикой конфиденциальности
+		          </button>.
+		        </p>
+		        <button
+		          onClick={handleAcceptCookies}
+		          className="btn-primary w-full md:w-auto whitespace-nowrap text-xs md:text-sm px-5 py-2.5 shrink-0"
+		        >
+		          Принять и закрыть
+		        </button>
+		      </div>
+		    </motion.div>
+		  )}
+		</AnimatePresence>
     </div>
   );
 }
