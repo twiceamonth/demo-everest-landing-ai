@@ -242,7 +242,7 @@ const AUDIENCE_HERO_MAP = {
 
 const ABOUT_US_MAP = {
   general: about_us,
-  parents: about_us,
+  parents: hero_parents,
   men: hero_men, 
 };
 
