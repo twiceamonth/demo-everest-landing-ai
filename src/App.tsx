@@ -498,7 +498,7 @@ const formatRussianPhoneNumber = (val: string) => {
   return result;
 };
 
-const RegistrationForm = ({ coachName, onSuccess }: { coachName?: string; onSuccess: () => void }) => {
+const RegistrationForm = ({ coachName, onSuccess, onOpenPrivacy }: { coachName?: string; onSuccess: () => void; onOpenPrivacy?: () => void }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
@@ -605,12 +605,12 @@ className="w-full btn-primary flex items-center justify-center gap-4 text-xl">
         <p className="text-center text-[10px] text-on-secondary-container uppercase tracking-[0.2em] opacity-50">
 	      Нажимая кнопку, вы даете согласие на обработку персональных данных и соглашаетесь с{' '}
 	      <button 
-	        type="button"
-	        onClick={(e) => { e.preventDefault(); onOpenPrivacy?.(); }} 
-	        className="underline hover:text-primary transition-colors"
-	      >
-	        политикой конфиденциальности
-	      </button>. 
+			  type="button"
+			  onClick={(e) => { e.preventDefault(); e.stopPropagation(); onOpenPrivacy?.(); }} 
+			  className="underline hover:text-primary transition-colors cursor-pointer"
+			>
+			  политикой конфиденциальности
+			</button>. 
 	    </p>
       </form>
     </div>
@@ -1436,12 +1436,12 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
                     <p className="text-center text-[10px] text-on-secondary-container opacity-50 mt-4 uppercase tracking-widest leading-relaxed">
 					  Нажимая кнопку, вы даете согласие на обработку персональных данных и соглашаетесь с{' '}
 					  <button 
-					    type="button"
-					    onClick={() => setActiveModal('privacy')} 
-					    className="underline hover:text-primary transition-colors"
-					  >
-					    политикой конфиденциальности
-					  </button>.
+						  type="button"
+						  onClick={(e) => { e.preventDefault(); e.stopPropagation(); onOpenPrivacy?.(); }} 
+						  className="underline hover:text-primary transition-colors cursor-pointer"
+						>
+						  политикой конфиденциальности
+						</button>.
 					</p>
                   </div>
                 </form>
@@ -1973,13 +1973,13 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
 		        </div>
 		        <p className="flex-1 text-xs md:text-sm text-on-surface-variant leading-relaxed">
 		          Мы используем файлы cookie и сервисы веб-аналитики (Яндекс.Метрика) для улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с обработкой данных и{' '}
-		          <button
-		            type="button"
-		            onClick={() => setActiveModal('privacy')}
-		            className="text-primary underline underline-offset-2 hover:text-primary-container transition-colors font-semibold"
-		          >
-		            политикой конфиденциальности
-		          </button>.
+		         <button 
+					  type="button"
+					  onClick={(e) => { e.preventDefault(); e.stopPropagation(); onOpenPrivacy?.(); }} 
+					  className="underline hover:text-primary transition-colors cursor-pointer"
+					>
+					  политикой конфиденциальности
+					</button>.
 		        </p>
 		        <button
 		          onClick={handleAcceptCookies}
