@@ -638,7 +638,6 @@ export default function App() {
   const [activeModal, setActiveModal] = useState<'none' | 'registration' | 'coach' | 'schedule' | 'privacy'>('none');
   const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
-	const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
 	const [selectedBranch, setSelectedBranch] = useState<'raduzhny' | 'south'>('raduzhny');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [bottomFormSubmitted, setBottomFormSubmitted] = useState(false);
