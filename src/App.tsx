@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
+import { useSchedule } from './hooks/useSchedule';
 import { 
   Phone, 
   ArrowRight, 
@@ -633,6 +634,7 @@ export default function App() {
   const [bottomPhone, setBottomPhone] = useState('');
   const [showScrollTop, setShowScrollTop] = useState(false);
 	const [showCookieBanner, setShowCookieBanner] = useState(true);
+	const { schedule, loading: scheduleLoading, error: scheduleError, getScheduleFor } = useSchedule();
 
   // 3. Синхронизация audience с URL
   useEffect(() => {
@@ -731,70 +733,6 @@ export default function App() {
     setSelectedProgram(program || null);
     setActiveModal('schedule');
   };
-
-  const getDifferentiatedSchedule = (programId: string | undefined, branch: 'raduzhny' | 'south'): ScheduleItem[] => {
-		  // Расписание для филиала Радужный
-		  if (branch === 'raduzhny') {
-		    if (programId === 'grappling') {
-		      return [
-		        { id: 'rg1', day: 'Вт', time: '18:00', title: 'Grappling Intro', coach: 'В. Падалко', type: 'fundamentals' },
-		        { id: 'rg2', day: 'Чт', time: '18:00', title: 'Grappling Intro', coach: 'В. Падалко', type: 'fundamentals' },
-		        { id: 'rg3', day: 'Сб', time: '12:00', title: 'Open Mat', coach: 'Сборная', type: 'free' } as any,
-		        { id: 'rg4', day: 'Пн', time: '20:00', title: 'No-Gi Advanced', coach: 'А. Чернов', type: 'advanced' },
-		        { id: 'rg5', day: 'Ср', time: '20:00', title: 'No-Gi Advanced', coach: 'А. Чернов', type: 'advanced' },
-		      ];
-		    }
-		    if (programId === 'kudo') {
-		      return [
-		        { id: 'rk1', day: 'Вт', time: '10:00', title: 'Kudo Kids', coach: 'В. Падалко', type: 'fundamentals' },
-		        { id: 'rk2', day: 'Чт', time: '10:00', title: 'Kudo Kids', coach: 'В. Падалко', type: 'fundamentals' },
-		        { id: 'rk3', day: 'Сб', time: '10:00', title: 'Kudo Intensive', coach: 'В. Падалко', type: 'advanced' },
-		        { id: 'rk4', day: 'Пн', time: '19:00', title: 'Kudo Adults', coach: 'В. Падалко', type: 'advanced' } as any,
-		        { id: 'rk5', day: 'Ср', time: '19:00', title: 'Kudo Adults', coach: 'В. Падалко', type: 'advanced' } as any,
-		      ];
-		    }
-		    // BJJ для Радужного
-		    return [
-		      { id: 'r1', day: 'Пн', time: '10:00', title: 'Fundamentals', coach: 'А. Соколов', type: 'fundamentals' },
-		      { id: 'r2', day: 'Ср', time: '10:00', title: 'Fundamentals', coach: 'А. Соколов', type: 'fundamentals' },
-		      { id: 'r3', day: 'Пт', time: '10:00', title: 'Fundamentals', coach: 'А. Соколов', type: 'fundamentals' },
-		      { id: 'r4', day: 'Пн', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
-		      { id: 'r5', day: 'Вт', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
-		      { id: 'r6', day: 'Ср', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
-		      { id: 'r7', day: 'Чт', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
-		      { id: 'r8', day: 'Пт', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
-		      { id: 'r9', day: 'Сб', time: '14:00', title: 'Sparring Session', coach: 'М. Волков', type: 'sparring' },
-		    ];
-		  }
-		  
-		  // Расписание для филиала Южные Ворота
-		  if (programId === 'grappling') {
-		    return [
-		      { id: 'sg1', day: 'Пн', time: '19:00', title: 'Grappling Basics', coach: 'А. Семенов', type: 'fundamentals' },
-		      { id: 'sg2', day: 'Ср', time: '19:00', title: 'Grappling Basics', coach: 'А. Семенов', type: 'fundamentals' },
-		      { id: 'sg3', day: 'Пт', time: '19:00', title: 'Grappling Advanced', coach: 'А. Семенов', type: 'advanced' },
-		      { id: 'sg4', day: 'Сб', time: '11:00', title: 'Open Mat', coach: 'А. Семенов', type: 'free' } as any,
-		    ];
-		  }
-		  if (programId === 'kudo') {
-		    return [
-		      { id: 'sk1', day: 'Пн', time: '17:00', title: 'Kudo Kids', coach: 'А. Чернов', type: 'fundamentals' },
-		      { id: 'sk2', day: 'Ср', time: '17:00', title: 'Kudo Kids', coach: 'А. Чернов', type: 'fundamentals' },
-		      { id: 'sk3', day: 'Пт', time: '17:00', title: 'Kudo Kids', coach: 'А. Чернов', type: 'fundamentals' },
-		      { id: 'sk4', day: 'Вт', time: '20:00', title: 'Kudo Adults', coach: 'А. Чернов', type: 'advanced' },
-		      { id: 'sk5', day: 'Чт', time: '20:00', title: 'Kudo Adults', coach: 'А. Чернов', type: 'advanced' },
-		    ];
-		  }
-		  // BJJ для Южных Ворот
-		  return [
-		    { id: 's1', day: 'Пн', time: '09:00', title: 'Morning BJJ', coach: 'А. Семенов', type: 'fundamentals' },
-		    { id: 's2', day: 'Ср', time: '09:00', title: 'Morning BJJ', coach: 'А. Семенов', type: 'fundamentals' },
-		    { id: 's3', day: 'Пт', time: '09:00', title: 'Morning BJJ', coach: 'А. Семенов', type: 'fundamentals' },
-		    { id: 's4', day: 'Вт', time: '19:00', title: 'Evening Pro', coach: 'А. Чернов', type: 'advanced' },
-		    { id: 's5', day: 'Чт', time: '19:00', title: 'Evening Pro', coach: 'А. Чернов', type: 'advanced' },
-		    { id: 's6', day: 'Сб', time: '13:00', title: 'Sparring', coach: 'А. Семенов', type: 'sparring' },
-		  ];
-		};
 
   const handleRegistrationSuccess = () => {
     alert('Заявка успешно отправлена! Мы перезвоним вам.');
@@ -1666,7 +1604,29 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
 				</button>
 			  </div>
 			</header>
+			{scheduleLoading && (
+			  <div className="flex-1 flex items-center justify-center py-20">
+			    <div className="flex flex-col items-center gap-4">
+			      <div className="w-12 h-12 border-4 border-primary-container border-t-transparent rounded-full animate-spin" />
+			      <p className="text-sm uppercase tracking-widest text-on-surface-variant font-bold">
+			        Загрузка расписания...
+			      </p>
+			    </div>
+			  </div>
+			)}
 			
+			{scheduleError && (
+			  <div className="flex-1 flex items-center justify-center py-20">
+			    <div className="text-center space-y-4">
+			      <p className="text-destructive font-bold">Ошибка: {scheduleError}</p>
+			      <button onClick={() => window.location.reload()} className="btn-primary px-6 py-2">
+			        Попробовать снова
+			      </button>
+			    </div>
+			  </div>
+			)}
+
+			  {!scheduleLoading && !scheduleError && (
 			<div className="flex-1 overflow-auto bg-surface-container-low">
 			  <div className="min-w-[800px] grid grid-cols-[100px_repeat(7,1fr)]">
 				{/* Day Headers */}
@@ -1690,7 +1650,7 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
 				  const showTimeIndicator = currentHour >= slotHour && currentHour < slotHour + 2;
 				  const topPercent = showTimeIndicator ? ((currentHour - slotHour) * 60 + currentMin) / 120 * 100 : 0;
 		
-				  const currentSchedule = getDifferentiatedSchedule(selectedProgram?.id, selectedBranch);
+				  const currentSchedule = getScheduleFor(selectedProgram?.id, selectedBranch);
 		
 				  return (
 					<React.Fragment key={time}>
@@ -1734,7 +1694,7 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
 				})}
 			  </div>
 			</div>
-		
+		)}
 			<footer className="p-4 md:p-6 bg-surface border-t border-outline-variant flex flex-col md:flex-row items-center justify-between gap-6">
 			  <div className="flex gap-6">
 				<div className="flex items-center gap-2">
