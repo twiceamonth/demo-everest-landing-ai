@@ -603,8 +603,15 @@ className="w-full btn-primary flex items-center justify-center gap-4 text-xl">
         </div>
 
         <p className="text-center text-[10px] text-on-secondary-container uppercase tracking-[0.2em] opacity-50">
-          Нажимая кнопку, вы даете согласие на обработку персональных данных и соглашаетесь с <a href="https://everest.tomsk.ru/privacy-policy/" className="text-center text-[10px] text-on-secondary-container uppercase tracking-[0.2em] opacity-50">политикой конфиденциальности</a>. 
-        </p>
+	      Нажимая кнопку, вы даете согласие на обработку персональных данных и соглашаетесь с{' '}
+	      <button 
+	        type="button"
+	        onClick={(e) => { e.preventDefault(); onOpenPrivacy?.(); }} 
+	        className="underline hover:text-primary transition-colors"
+	      >
+	        политикой конфиденциальности
+	      </button>. 
+	    </p>
       </form>
     </div>
   );
@@ -628,7 +635,7 @@ export default function App() {
   const [pillRect, setPillRect] = useState<{ width: number; height: number; left: number; top: number } | null>(null);
   const [isNavScrolled, setIsNavScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [activeModal, setActiveModal] = useState<'none' | 'registration' | 'coach' | 'schedule'>('none');
+  const [activeModal, setActiveModal] = useState<'none' | 'registration' | 'coach' | 'schedule' | 'privacy'>('none');
   const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -1413,8 +1420,15 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
                       <ArrowRight size={18} />
                     </button>
                     <p className="text-center text-[10px] text-on-secondary-container opacity-50 mt-4 uppercase tracking-widest leading-relaxed">
-                      Нажимая кнопку, вы даете согласие на обработку персональных данных и соглашаетесь с <a href="https://everest.tomsk.ru/privacy-policy/" className="text-center text-[10px] text-on-secondary-container uppercase tracking-[0.2em] opacity-50">политикой конфиденциальности</a>.
-                    </p>
+					  Нажимая кнопку, вы даете согласие на обработку персональных данных и соглашаетесь с{' '}
+					  <button 
+					    type="button"
+					    onClick={() => setActiveModal('privacy')} 
+					    className="underline hover:text-primary transition-colors"
+					  >
+					    политикой конфиденциальности
+					  </button>.
+					</p>
                   </div>
                 </form>
               )}
@@ -1467,8 +1481,13 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
             <div className="space-y-4">
               <h4 className="font-display font-bold uppercase tracking-widest text-primary">Инфо</h4>
               <nav className="flex flex-col gap-2">
-                <a href="https://everest.tomsk.ru/privacy-policy/" className="text-on-surface-variant hover:text-primary transition-colors">Политика конфиденциальности</a>
-              </nav>
+			  <button 
+			    onClick={() => setActiveModal('privacy')} 
+			    className="text-on-surface-variant hover:text-primary transition-colors text-left"
+			  >
+			    Политика конфиденциальности
+			  </button>
+			</nav>
             </div>
             <div className="space-y-4">
               <h4 className="font-display font-bold uppercase tracking-widest text-primary">Соцсети</h4>
@@ -1494,8 +1513,12 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
 
       {/* --- Modals --- */}
       <Modal isOpen={activeModal === 'registration'} onClose={() => setActiveModal('none')}>
-        <RegistrationForm coachName={selectedCoach?.name} onSuccess={handleRegistrationSuccess} />
-      </Modal>
+		  <RegistrationForm 
+		    coachName={selectedCoach?.name} 
+		    onSuccess={handleRegistrationSuccess} 
+		    onOpenPrivacy={() => setActiveModal('privacy')} 
+		  />
+	</Modal>
 
       <Modal isOpen={activeModal === 'coach'} onClose={() => setActiveModal('none')}>
         {selectedCoach && (
@@ -1694,6 +1717,135 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
           <span className="text-[10px] font-bold uppercase tracking-wider">Взрослые</span>
         </button>
       </div>
+
+		<Modal isOpen={activeModal === 'privacy'} onClose={() => setActiveModal('none')}>
+			  <div className="bg-surface-container-low text-on-surface-variant">
+			    <div className="p-6 md:p-12 space-y-8 max-w-4xl mx-auto">
+			      
+			      {/* Заголовок */}
+			      <div className="border-b border-outline-variant/30 pb-6">
+			        <h2 className="font-display text-2xl md:text-4xl font-black uppercase italic text-on-surface leading-tight mb-2">
+			          Политика в отношении обработки персональных данных
+			        </h2>
+			        <p className="text-sm md:text-base italic opacity-80">
+			          Автономной некоммерческой организации Центр физической культуры и спорта «Эверест» (г. Томск) от 30.01.2026
+			        </p>
+			      </div>
+			      
+			      <div className="space-y-10 text-sm md:text-base leading-relaxed normal-case">
+			        
+			        {/* Раздел 1 */}
+			        <section>
+			          <h3 className="font-display text-lg md:text-xl font-bold text-on-surface mb-4">1. Общие положения</h3>
+			          <p className="mb-4">1.1. Настоящая Политика определяет порядок и условия обработки персональных данных (далее – ПДн) в Автономной некоммерческой организации Центр физической культуры и спорта «Эверест» (далее – Оператор, Организация) в соответствии с Конституцией РФ, Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных» (далее – Закон), иными нормативными правовыми актами.</p>
+			          
+			          <div className="mt-6 space-y-2 pl-4 border-l-2 border-primary-container bg-surface-container/50 p-4 rounded-r-lg">
+			            <p><strong className="text-on-surface">Полное наименование:</strong> Автономная некоммерческая организация Центр физической культуры и спорта «Эверест»</p>
+			            <p><strong className="text-on-surface">Сокращенное наименование:</strong> АНО ЦФКС «Эверест»</p>
+			            <p><strong className="text-on-surface">Юридический/почтовый адрес:</strong> 634026, г. Томск, ул. Героев Чубаровцев, д. 69</p>
+			            <p><strong className="text-on-surface">ИНН:</strong> 7017418582, <strong>КПП:</strong> 701701001, <strong>ОГРН:</strong> 1177000100023</p>
+			            <p><strong className="text-on-surface">Email:</strong> cfs-everest@mail.ru</p>
+			            <p><strong className="text-on-surface">Телефон:</strong> +7 (952) 893-44-61</p>
+			            <p><strong className="text-on-surface">Генеральный директор:</strong> Чернов Андрей Алексеевич</p>
+			          </div>
+			          
+			          <p className="mt-6">1.3. Политика действует бессрочно до замены новой версией. Текст Политики размещается в свободном доступе на официальном сайте Оператора. Контроль за исполнением требований Политики возлагается на ответственного за организацию обработки ПДн.</p>
+			          <p className="mt-4">1.4. Обработка ПДн осуществляется на законной и справедливой основе, ограничивается достижением конкретных, заранее определенных целей.</p>
+			        </section>
+			
+			        {/* Раздел 2 */}
+			        <section>
+			          <h3 className="font-display text-lg md:text-xl font-bold text-on-surface mb-4">2. Правовые основания обработки персональных данных</h3>
+			          <p className="mb-3">2.1. Правовыми основаниями обработки ПДн являются:</p>
+			          <ul className="list-disc pl-6 space-y-2">
+			            <li>Конституция РФ;</li>
+			            <li>Федеральный закон от 27.07.2006 № 152-ФЗ «О персональных данных»;</li>
+			            <li>Трудовой кодекс РФ;</li>
+			            <li>Гражданский кодекс РФ;</li>
+			            <li>Устав АНО ЦФКС «Эверест»;</li>
+			            <li>договоры, заключаемые между Оператором и субъектами ПДн;</li>
+			            <li>согласия субъектов ПДн на обработку персональных данных;</li>
+			            <li>иные федеральные законы и нормативные правовые акты.</li>
+			          </ul>
+			        </section>
+			
+			        {/* Раздел 3 */}
+			        <section>
+			          <h3 className="font-display text-lg md:text-xl font-bold text-on-surface mb-4">3. Цели, объем и условия обработки персональных данных</h3>
+			          <p className="mb-6">Оператор обрабатывает ПДн следующих категорий субъектов: посетители сайта; сотрудники Оператора; тренерско-преподавательский состав; контрагенты и представители юридических лиц.</p>
+			          
+			          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+			            <div className="bg-surface-container p-5 rounded-lg border border-outline-variant/20">
+			              <h4 className="font-display font-bold text-on-surface mb-3 uppercase text-sm tracking-wide">3.1. Обработка запросов и обращений</h4>
+			              <p className="text-xs mb-2"><strong>Категории:</strong> посетители сайта, клиенты.</p>
+			              <p className="text-xs mb-2"><strong>Перечень ПДн:</strong> фамилия, имя; контактный номер телефона; email.</p>
+			              <p className="text-xs mb-2"><strong>Сроки:</strong> до завершения обращения, далее не более 1 года в архиве.</p>
+			              <p className="text-xs opacity-80 italic">Правовое основание: п. 1 ч. 1 ст. 6 Закона № 152-ФЗ.</p>
+			            </div>
+			
+			            <div className="bg-surface-container p-5 rounded-lg border border-outline-variant/20">
+			              <h4 className="font-display font-bold text-on-surface mb-3 uppercase text-sm tracking-wide">3.2. Статистика (Яндекс Метрика)</h4>
+			              <p className="text-xs mb-2"><strong>Перечень:</strong> IP-адрес; cookie; данные браузера/ОС; реферер; действия на страницах.</p>
+			              <p className="text-xs mb-2"><strong>Сроки:</strong> обезличенно; идентифицирующие — не более 2 лет.</p>
+			              <p className="text-xs opacity-80 italic">Правовое основание: ч. 1 ст. 6 Закона № 152-ФЗ (согласие через баннер).</p>
+			            </div>
+			
+			            <div className="bg-surface-container p-5 rounded-lg border border-outline-variant/20 md:col-span-2">
+			              <h4 className="font-display font-bold text-on-surface mb-3 uppercase text-sm tracking-wide">3.3. Размещение информации о тренерах</h4>
+			              <p className="text-xs mb-2"><strong>Перечень ПДн:</strong> ФИО; фотография; специализация; образование и достижения.</p>
+			              <p className="text-xs mb-2"><strong>Сроки:</strong> на период действия письменного согласия сотрудника (ст. 10.1 Закона № 152-ФЗ).</p>
+			            </div>
+			          </div>
+			          <p className="text-xs opacity-60 italic mt-4">* Обработка данных сотрудников (кадровое делопроизводство) регулируется внутренним «Положением о защите персональных данных работников».</p>
+			        </section>
+			
+			        {/* Раздел 4 */}
+			        <section>
+			          <h3 className="font-display text-lg md:text-xl font-bold text-on-surface mb-4">4. Принципы и условия обработки</h3>
+			          <ul className="list-disc pl-6 space-y-2">
+			            <li>законность и справедливая основа;</li>
+			            <li>ограничение обработки достижением конкретных целей;</li>
+			            <li>соответствие содержания и объема заявленным целям;</li>
+			            <li>обеспечение точности и актуальности ПДн;</li>
+			            <li>хранение не дольше, чем этого требуют цели обработки.</li>
+			          </ul>
+			          <p className="mt-4">4.2. Оператор вправе поручить обработку ПДн другому лицу (например, ООО «ЯНДЕКС») с согласия субъекта.</p>
+			          <p className="mt-4">4.3. Трансграничная передача ПДн не осуществляется.</p>
+			        </section>
+			
+			        {/* Раздел 5 */}
+			        <section>
+			          <h3 className="font-display text-lg md:text-xl font-bold text-on-surface mb-4">5. Права субъектов персональных данных</h3>
+			          <p className="mb-3">5.1. Субъект ПДн имеет право:</p>
+			          <ul className="list-disc pl-6 space-y-2">
+			            <li>на получение сведений об обработке его ПДн;</li>
+			            <li>требовать уточнения, блокирования или уничтожения ПДн;</li>
+			            <li>отозвать согласие на обработку ПДн в любое время;</li>
+			            <li>обжаловать действия Оператора в Роскомнадзоре или в судебном порядке.</li>
+			          </ul>
+			          <p className="mt-4">5.2. Запросы направляются в форме электронного документа либо на бумажном носителе по адресу Оператора.</p>
+			          <p className="mt-4">5.3. Оператор рассматривает запрос и направляет ответ в течение 10 рабочих дней.</p>
+			        </section>
+			
+			        {/* Раздел 6 и 7 */}
+			        <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+			          <div>
+			            <h3 className="font-display text-lg font-bold text-on-surface mb-3">6. Меры безопасности</h3>
+			            <p>Оператор принимает необходимые правовые, организационные и технические меры для защиты ПДн (антивирусное ПО, контроль доступа, резервное копирование).</p>
+			          </div>
+			          <div>
+			            <h3 className="font-display text-lg font-bold text-on-surface mb-3">7. Заключительные положения</h3>
+			            <p>Настоящая Политика является общедоступным документом. Вопросы, не урегулированные Политикой, регулируются законодательством РФ.</p>
+			          </div>
+			        </section>
+			        
+			        <div className="pt-8 border-t border-outline-variant/30 text-sm italic opacity-80 flex justify-between items-center">
+			          <span>Дата вступления в силу: «30» января 2026 г.</span>
+			        </div>
+			      </div>
+			    </div>
+			  </div>
+			</Modal>
 
 		{/* --- Scroll to Top Button --- */}
 		  <AnimatePresence>
