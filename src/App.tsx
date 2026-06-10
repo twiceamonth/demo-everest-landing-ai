@@ -1435,9 +1435,9 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
                     </button>
                     <p className="text-center text-[10px] text-on-secondary-container opacity-50 mt-4 uppercase tracking-widest leading-relaxed">
 					  Нажимая кнопку, вы даете согласие на обработку персональных данных и соглашаетесь с{' '}
-					  <button 
+					  <button
 						  type="button"
-						  onClick={(e) => { e.preventDefault(); e.stopPropagation(); onOpenPrivacy?.(); }} 
+						  onClick={() => setActiveModal('privacy')}
 						  className="underline hover:text-primary transition-colors cursor-pointer"
 						>
 						  политикой конфиденциальности
@@ -1973,10 +1973,10 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
 		        </div>
 		        <p className="flex-1 text-xs md:text-sm text-on-surface-variant leading-relaxed">
 		          Мы используем файлы cookie и сервисы веб-аналитики (Яндекс.Метрика) для улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с обработкой данных и{' '}
-		         <button 
+		         <button
 					  type="button"
-					  onClick={(e) => { e.preventDefault(); e.stopPropagation(); onOpenPrivacy?.(); }} 
-					  className="underline hover:text-primary transition-colors cursor-pointer"
+					  onClick={() => setActiveModal('privacy')}
+					  className="text-primary underline underline-offset-2 hover:text-primary-container transition-colors font-semibold"
 					>
 					  политикой конфиденциальности
 					</button>.
