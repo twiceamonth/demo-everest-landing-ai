@@ -638,6 +638,8 @@ export default function App() {
   const [activeModal, setActiveModal] = useState<'none' | 'registration' | 'coach' | 'schedule' | 'privacy'>('none');
   const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
+	const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
+	const [selectedBranch, setSelectedBranch] = useState<'raduzhny' | 'south'>('raduzhny');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [bottomFormSubmitted, setBottomFormSubmitted] = useState(false);
   const [bottomName, setBottomName] = useState('');
@@ -743,28 +745,69 @@ export default function App() {
     setActiveModal('schedule');
   };
 
-  const getDifferentiatedSchedule = (programId: string | undefined): ScheduleItem[] => {
-    if (programId === 'grappling') {
-      return [
-        { id: 'g1', day: 'Вт', time: '18:00', title: 'Grappling Intro', coach: 'В. Падалко', type: 'fundamentals' },
-        { id: 'g2', day: 'Чт', time: '18:00', title: 'Grappling Intro', coach: 'В. Падалко', type: 'fundamentals' },
-        { id: 'g3', day: 'Сб', time: '12:00', title: 'Open Mat', coach: 'Сборная', type: 'free' } as any,
-        { id: 'g4', day: 'Пн', time: '20:00', title: 'No-Gi Advanced', coach: 'А. Чернов', type: 'advanced' },
-        { id: 'g5', day: 'Ср', time: '20:00', title: 'No-Gi Advanced', coach: 'А. Чернов', type: 'advanced' },
-      ];
-    }
-    if (programId === 'kudo') {
-      return [
-        { id: 'k1', day: 'Вт', time: '10:00', title: 'Kudo Kids', coach: 'В. Падалко', type: 'fundamentals' },
-        { id: 'k2', day: 'Чт', time: '10:00', title: 'Kudo Kids', coach: 'В. Падалко', type: 'fundamentals' },
-        { id: 'k3', day: 'Сб', time: '10:00', title: 'Kudo Intensive', coach: 'В. Падалко', type: 'advanced' },
-        { id: 'k4', day: 'Пн', time: '19:00', title: 'Kudo Adults', coach: 'В. Падалко', type: 'advanced' } as any,
-        { id: 'k5', day: 'Ср', time: '19:00', title: 'Kudo Adults', coach: 'В. Падалко', type: 'advanced' } as any,
-      ];
-    }
-    // Default: BJJ
-    return SCHEDULE;
-  };
+  const getDifferentiatedSchedule = (programId: string | undefined, branch: 'raduzhny' | 'south'): ScheduleItem[] => {
+		  // Расписание для филиала Радужный
+		  if (branch === 'raduzhny') {
+		    if (programId === 'grappling') {
+		      return [
+		        { id: 'rg1', day: 'Вт', time: '18:00', title: 'Grappling Intro', coach: 'В. Падалко', type: 'fundamentals' },
+		        { id: 'rg2', day: 'Чт', time: '18:00', title: 'Grappling Intro', coach: 'В. Падалко', type: 'fundamentals' },
+		        { id: 'rg3', day: 'Сб', time: '12:00', title: 'Open Mat', coach: 'Сборная', type: 'free' } as any,
+		        { id: 'rg4', day: 'Пн', time: '20:00', title: 'No-Gi Advanced', coach: 'А. Чернов', type: 'advanced' },
+		        { id: 'rg5', day: 'Ср', time: '20:00', title: 'No-Gi Advanced', coach: 'А. Чернов', type: 'advanced' },
+		      ];
+		    }
+		    if (programId === 'kudo') {
+		      return [
+		        { id: 'rk1', day: 'Вт', time: '10:00', title: 'Kudo Kids', coach: 'В. Падалко', type: 'fundamentals' },
+		        { id: 'rk2', day: 'Чт', time: '10:00', title: 'Kudo Kids', coach: 'В. Падалко', type: 'fundamentals' },
+		        { id: 'rk3', day: 'Сб', time: '10:00', title: 'Kudo Intensive', coach: 'В. Падалко', type: 'advanced' },
+		        { id: 'rk4', day: 'Пн', time: '19:00', title: 'Kudo Adults', coach: 'В. Падалко', type: 'advanced' } as any,
+		        { id: 'rk5', day: 'Ср', time: '19:00', title: 'Kudo Adults', coach: 'В. Падалко', type: 'advanced' } as any,
+		      ];
+		    }
+		    // BJJ для Радужного
+		    return [
+		      { id: 'r1', day: 'Пн', time: '10:00', title: 'Fundamentals', coach: 'А. Соколов', type: 'fundamentals' },
+		      { id: 'r2', day: 'Ср', time: '10:00', title: 'Fundamentals', coach: 'А. Соколов', type: 'fundamentals' },
+		      { id: 'r3', day: 'Пт', time: '10:00', title: 'Fundamentals', coach: 'А. Соколов', type: 'fundamentals' },
+		      { id: 'r4', day: 'Пн', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
+		      { id: 'r5', day: 'Вт', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
+		      { id: 'r6', day: 'Ср', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
+		      { id: 'r7', day: 'Чт', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
+		      { id: 'r8', day: 'Пт', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
+		      { id: 'r9', day: 'Сб', time: '14:00', title: 'Sparring Session', coach: 'М. Волков', type: 'sparring' },
+		    ];
+		  }
+		  
+		  // Расписание для филиала Южные Ворота
+		  if (programId === 'grappling') {
+		    return [
+		      { id: 'sg1', day: 'Пн', time: '19:00', title: 'Grappling Basics', coach: 'А. Семенов', type: 'fundamentals' },
+		      { id: 'sg2', day: 'Ср', time: '19:00', title: 'Grappling Basics', coach: 'А. Семенов', type: 'fundamentals' },
+		      { id: 'sg3', day: 'Пт', time: '19:00', title: 'Grappling Advanced', coach: 'А. Семенов', type: 'advanced' },
+		      { id: 'sg4', day: 'Сб', time: '11:00', title: 'Open Mat', coach: 'А. Семенов', type: 'free' } as any,
+		    ];
+		  }
+		  if (programId === 'kudo') {
+		    return [
+		      { id: 'sk1', day: 'Пн', time: '17:00', title: 'Kudo Kids', coach: 'А. Чернов', type: 'fundamentals' },
+		      { id: 'sk2', day: 'Ср', time: '17:00', title: 'Kudo Kids', coach: 'А. Чернов', type: 'fundamentals' },
+		      { id: 'sk3', day: 'Пт', time: '17:00', title: 'Kudo Kids', coach: 'А. Чернов', type: 'fundamentals' },
+		      { id: 'sk4', day: 'Вт', time: '20:00', title: 'Kudo Adults', coach: 'А. Чернов', type: 'advanced' },
+		      { id: 'sk5', day: 'Чт', time: '20:00', title: 'Kudo Adults', coach: 'А. Чернов', type: 'advanced' },
+		    ];
+		  }
+		  // BJJ для Южных Ворот
+		  return [
+		    { id: 's1', day: 'Пн', time: '09:00', title: 'Morning BJJ', coach: 'А. Семенов', type: 'fundamentals' },
+		    { id: 's2', day: 'Ср', time: '09:00', title: 'Morning BJJ', coach: 'А. Семенов', type: 'fundamentals' },
+		    { id: 's3', day: 'Пт', time: '09:00', title: 'Morning BJJ', coach: 'А. Семенов', type: 'fundamentals' },
+		    { id: 's4', day: 'Вт', time: '19:00', title: 'Evening Pro', coach: 'А. Чернов', type: 'advanced' },
+		    { id: 's5', day: 'Чт', time: '19:00', title: 'Evening Pro', coach: 'А. Чернов', type: 'advanced' },
+		    { id: 's6', day: 'Сб', time: '13:00', title: 'Sparring', coach: 'А. Семенов', type: 'sparring' },
+		  ];
+		};
 
   const handleRegistrationSuccess = () => {
     alert('Заявка успешно отправлена! Мы перезвоним вам.');
@@ -1601,109 +1644,134 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
       </Modal>
 
       <Modal isOpen={activeModal === 'schedule'} onClose={() => setActiveModal('none')}>
-        <div className="flex flex-col h-full max-h-[90vh]">
-          <header className="p-4 md:p-6 bg-surface-container border-b border-outline-variant flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Calendar size={32} className="text-primary-container" />
-              <h2 className="font-display text-sm md:text-lg font-extrabold uppercase italic w-auto max-w-[calc(100vw-140px)] md:max-w-none md:whitespace-nowrap">
-                Расписание: {selectedProgram ? selectedProgram.name : 'Все тренировки'}
-              </h2>
-            </div>
-          </header>
-          
-          <div className="flex-1 overflow-auto bg-surface-container-low">
-            <div className="min-w-[800px] grid grid-cols-[100px_repeat(7,1fr)]">
-              {/* Day Headers */}
-              <div className="h-12 border-r border-b border-outline-variant bg-surface-container-high sticky top-0 z-20 flex items-center justify-center">
-                <span className="text-[10px] uppercase font-bold text-on-surface-variant">Время</span>
-              </div>
-              {DAYS.map((day) => (
-                <div key={day} className="h-12 border-r border-b border-outline-variant bg-surface-container-high sticky top-0 z-20 flex flex-col items-center justify-center">
-                  <span className="font-display font-bold uppercase text-primary">{day}</span>
-                  <span className="text-[8px] text-on-surface-variant">---</span>
-                </div>
-              ))}
-
-              {/* Time Slots */}
-              {TIMES.map((time) => {
-                const now = new Date();
-                const currentHour = now.getHours();
-                const currentMin = now.getMinutes();
-                const slotHour = parseInt(time.split(':')[0]);
-                
-                // Show line if current time falls within this slot range (2 hours)
-                const showTimeIndicator = currentHour >= slotHour && currentHour < slotHour + 2;
-                const topPercent = showTimeIndicator ? ((currentHour - slotHour) * 60 + currentMin) / 120 * 100 : 0;
-
-                const currentSchedule = getDifferentiatedSchedule(selectedProgram?.id);
-
-                return (
-                  <React.Fragment key={time}>
-                    <div className="h-14 md:h-16 border-r border-b border-outline-variant flex items-start justify-center pt-2 text-[10px] font-bold text-on-surface-variant relative">
-                      {time}
-                      {showTimeIndicator && (
-                        <div 
-                          className="absolute left-0 right-0 h-0.5 bg-primary-container z-30 flex items-center" 
-                          style={{ top: `${topPercent}%` }}
-                        >
-                          <div className="w-2 h-2 bg-primary-container rounded-full -ml-1 shadow-lg shadow-primary-container/50" />
-                        </div>
-                      )}
-                    </div>
-                    {DAYS.map((day) => {
-                       const session = currentSchedule.find(s => s.day === day && s.time === time);
-                       return (
-                         <div key={`${day}-${time}`} className="h-14 md:h-16 border-r border-b border-outline-variant relative p-0.5 group">
-                           {showTimeIndicator && (
-                             <div 
-                               className="absolute left-0 right-0 h-0.5 bg-primary-container/30 z-30 pointer-events-none" 
-                               style={{ top: `${topPercent}%` }}
-                             />
-                           )}
-                           {session && (
-                             <div className={`h-full w-full border-l-2 md:border-l-4 p-0.5 md:p-1 flex flex-col justify-center transition-colors shadow-lg cursor-pointer overflow-hidden ${
-                               session.type === 'fundamentals' ? 'bg-surface-variant border-primary-container hover:bg-surface-bright' :
-                               session.type === 'advanced' ? 'bg-primary-container border-white hover:brightness-110' :
-                               'bg-secondary-container border-on-secondary-container hover:brightness-110'
-                             }`}>
-                               <span className={`text-[5px] md:text-[7px] font-black uppercase leading-tight mb-0.25 ${session.type === 'advanced' ? 'text-white/80' : 'text-primary'}`}>{session.title}</span>
-                               <span className={`text-[9px] font-black leading-tight mb-0.25 ${session.type === 'advanced' ? 'text-white' : 'text-on-surface'}`}>{selectedProgram?.name || 'ТРЕНИРОВКА'}</span>
-                               <span className={`text-[9px] italic leading-none opacity-80 ${session.type === 'advanced' ? 'text-white/70' : 'text-on-surface-variant'}`}>{session.coach}</span>
-                             </div>
-                           )}
-                         </div>
-                       );
-                    })}
-                  </React.Fragment>
-                );
-              })}
-            </div>
-          </div>
-
-          <footer className="p-4 md:p-6 bg-surface border-t border-outline-variant flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex gap-6">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-surface-variant border-l-2 border-primary-container" />
-                <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Базовый</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-primary-container" />
-                <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Продвинутый</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-secondary-container" />
-                <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Спарринг</span>
-              </div>
-            </div>
-            <button 
-              onClick={() => setActiveModal('registration')} 
-              className="btn-primary w-full md:w-auto text-[10px] min-[320px]:text-xs min-[360px]:text-sm sm:text-base px-3 sm:px-6 py-3 whitespace-nowrap"
-            >
-              Записаться на тренировку
-            </button>
-          </footer>
-        </div>
-      </Modal>
+		  <div className="flex flex-col h-full max-h-[90vh]">
+			<header className="p-4 md:p-6 bg-surface-container border-b border-outline-variant flex flex-col gap-4">
+			  <div className="flex items-center justify-between">
+				<div className="flex items-center gap-4">
+				  <Calendar size={32} className="text-primary-container" />
+				  <h2 className="font-display text-sm md:text-lg font-extrabold uppercase italic">
+					Расписание: {selectedProgram ? selectedProgram.name : 'Все тренировки'}
+				  </h2>
+				</div>
+			  </div>
+			  
+			  {/* Переключатель филиалов */}
+			  <div className="flex gap-2 bg-surface-container-low p-1 rounded-full">
+				<button
+				  onClick={() => setSelectedBranch('raduzhny')}
+				  className={`flex-1 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${
+					selectedBranch === 'raduzhny' 
+					  ? 'bg-primary-container text-white shadow-lg' 
+					  : 'text-on-surface-variant hover:text-primary'
+				  }`}
+				>
+				  <span className="hidden sm:inline">Филиал </span>Радужный
+				</button>
+				<button
+				  onClick={() => setSelectedBranch('south')}
+				  className={`flex-1 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${
+					selectedBranch === 'south' 
+					  ? 'bg-primary-container text-white shadow-lg' 
+					  : 'text-on-surface-variant hover:text-primary'
+				  }`}
+				>
+				  <span className="hidden sm:inline">Филиал </span>Южные Ворота
+				</button>
+			  </div>
+			</header>
+			
+			<div className="flex-1 overflow-auto bg-surface-container-low">
+			  <div className="min-w-[800px] grid grid-cols-[100px_repeat(7,1fr)]">
+				{/* Day Headers */}
+				<div className="h-12 border-r border-b border-outline-variant bg-surface-container-high sticky top-0 z-20 flex items-center justify-center">
+				  <span className="text-[10px] uppercase font-bold text-on-surface-variant">Время</span>
+				</div>
+				{DAYS.map((day) => (
+				  <div key={day} className="h-12 border-r border-b border-outline-variant bg-surface-container-high sticky top-0 z-20 flex flex-col items-center justify-center">
+					<span className="font-display font-bold uppercase text-primary">{day}</span>
+					<span className="text-[8px] text-on-surface-variant">---</span>
+				  </div>
+				))}
+		
+				{/* Time Slots */}
+				{TIMES.map((time) => {
+				  const now = new Date();
+				  const currentHour = now.getHours();
+				  const currentMin = now.getMinutes();
+				  const slotHour = parseInt(time.split(':')[0]);
+				  
+				  const showTimeIndicator = currentHour >= slotHour && currentHour < slotHour + 2;
+				  const topPercent = showTimeIndicator ? ((currentHour - slotHour) * 60 + currentMin) / 120 * 100 : 0;
+		
+				  const currentSchedule = getDifferentiatedSchedule(selectedProgram?.id, selectedBranch);
+		
+				  return (
+					<React.Fragment key={time}>
+					  <div className="h-14 md:h-16 border-r border-b border-outline-variant flex items-start justify-center pt-2 text-[10px] font-bold text-on-surface-variant relative">
+						{time}
+						{showTimeIndicator && (
+						  <div 
+							className="absolute left-0 right-0 h-0.5 bg-primary-container z-30 flex items-center" 
+							style={{ top: `${topPercent}%` }}
+						  >
+							<div className="w-2 h-2 bg-primary-container rounded-full -ml-1 shadow-lg shadow-primary-container/50" />
+						  </div>
+						)}
+					  </div>
+					  {DAYS.map((day) => {
+						 const session = currentSchedule.find(s => s.day === day && s.time === time);
+						 return (
+						   <div key={`${day}-${time}`} className="h-14 md:h-16 border-r border-b border-outline-variant relative p-0.5 group">
+							 {showTimeIndicator && (
+							   <div 
+								 className="absolute left-0 right-0 h-0.5 bg-primary-container/30 z-30 pointer-events-none" 
+								 style={{ top: `${topPercent}%` }}
+							   />
+							 )}
+							 {session && (
+							   <div className={`h-full w-full border-l-2 md:border-l-4 p-0.5 md:p-1 flex flex-col justify-center transition-colors shadow-lg cursor-pointer overflow-hidden ${
+								 session.type === 'fundamentals' ? 'bg-surface-variant border-primary-container hover:bg-surface-bright' :
+								 session.type === 'advanced' ? 'bg-primary-container border-white hover:brightness-110' :
+								 'bg-secondary-container border-on-secondary-container hover:brightness-110'
+							   }`}>
+								 <span className={`text-[5px] md:text-[7px] font-black uppercase leading-tight mb-0.25 ${session.type === 'advanced' ? 'text-white/80' : 'text-primary'}`}>{session.title}</span>
+								 <span className={`text-[9px] font-black leading-tight mb-0.25 ${session.type === 'advanced' ? 'text-white' : 'text-on-surface'}`}>{selectedProgram?.name || 'ТРЕНИРОВКА'}</span>
+								 <span className={`text-[9px] italic leading-none opacity-80 ${session.type === 'advanced' ? 'text-white/70' : 'text-on-surface-variant'}`}>{session.coach}</span>
+							   </div>
+							 )}
+						   </div>
+						 );
+					  })}
+					</React.Fragment>
+				  );
+				})}
+			  </div>
+			</div>
+		
+			<footer className="p-4 md:p-6 bg-surface border-t border-outline-variant flex flex-col md:flex-row items-center justify-between gap-6">
+			  <div className="flex gap-6">
+				<div className="flex items-center gap-2">
+				  <div className="w-3 h-3 bg-surface-variant border-l-2 border-primary-container" />
+				  <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Базовый</span>
+				</div>
+				<div className="flex items-center gap-2">
+				  <div className="w-3 h-3 bg-primary-container" />
+				  <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Продвинутый</span>
+				</div>
+				<div className="flex items-center gap-2">
+				  <div className="w-3 h-3 bg-secondary-container" />
+				  <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Спарринг</span>
+				</div>
+			  </div>
+			  <button 
+				onClick={() => setActiveModal('registration')} 
+				className="btn-primary w-full md:w-auto text-[10px] min-[320px]:text-xs min-[360px]:text-sm sm:text-base px-3 sm:px-6 py-3 whitespace-nowrap"
+			  >
+				Записаться на тренировку
+			  </button>
+			</footer>
+		  </div>
+		</Modal>
 
       {/* --- Floating Audience Switcher (Mobile Tab Bar) --- */}
       <div className="lg:hidden fixed bottom-4 left-4 right-4 z-[90] bg-surface-container/90 backdrop-blur-xl rounded-2xl border border-outline-variant/30 py-2.5 px-4 shadow-2xl flex justify-around items-center">
