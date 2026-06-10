@@ -149,18 +149,6 @@ const PROGRAMS: Program[] = [
   }
 ];
 
-const SCHEDULE: ScheduleItem[] = [
-  { id: '1', day: 'Пн', time: '10:00', title: 'Fundamentals', coach: 'А. Соколов', type: 'fundamentals' },
-  { id: '2', day: 'Ср', time: '10:00', title: 'Fundamentals', coach: 'А. Соколов', type: 'fundamentals' },
-  { id: '3', day: 'Пт', time: '10:00', title: 'Fundamentals', coach: 'А. Соколов', type: 'fundamentals' },
-  { id: '4', day: 'Пн', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
-  { id: '5', day: 'Вт', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
-  { id: '6', day: 'Ср', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
-  { id: '7', day: 'Чт', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
-  { id: '8', day: 'Пт', time: '18:00', title: 'Pro Level', coach: 'Д. Новиков', type: 'advanced' },
-  { id: '9', day: 'Сб', time: '14:00', title: 'Sparring Session', coach: 'М. Волков', type: 'sparring' },
-];
-
 const REVIEWS_MAP = {
   general: [
     { id: '1', name: 'Сергей Перминов', date: 'Яндекс.Карты – 2 октября 2025', rating: 5, text: 'Зал супер ребëнок занимается уже 3 года! Тренер хороший по джиу-джитсу Андрей Алексеевич! Тренеруюсь сам в этом зале уже 2 года!' },
