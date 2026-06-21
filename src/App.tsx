@@ -59,13 +59,14 @@ interface Program {
   image: string;
 }
 
-interface ScheduleItem {
+export interface ScheduleItem {
   id: string;
   day: string;
   time: string;
   title: string;
   coach: string;
-  type: 'fundamentals' | 'advanced' | 'sparring' | 'free';
+  type?: string;
+  sport?: string;
 }
 
 // --- Data ---
@@ -379,7 +380,7 @@ const AUDIENCE_FAQ_MAP = {
 const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 const TIMES = ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00'];
 
-const sendLead = async (name: string, phone: string) => {
+const sendLead = async (name: string, phone: string, trainingType?: string) => {
   // получаем audience из URL
   const params = new URLSearchParams(window.location.search)
   var audience = params.get('audience') || 'Общая'
@@ -396,9 +397,18 @@ const sendLead = async (name: string, phone: string) => {
   formData.append('your-name', name)
   formData.append('your-phone', phone)
   formData.append('audience', audience)
+  if (trainingType) {
+    formData.append('training-type', trainingType)
+    formData.append('training_type', trainingType)
+  }
+
+  const baseUrl = 'https://everest.tomsk.ru/wp-json/contact-form-7/v1/contact-forms/9124/feedback'
+  const url = trainingType 
+    ? `${baseUrl}?training_type=${encodeURIComponent(trainingType)}&training-type=${encodeURIComponent(trainingType)}` 
+    : baseUrl
 
   const res = await fetch(
-    'https://everest.tomsk.ru/wp-json/contact-form-7/v1/contact-forms/9124/feedback',
+    url,
     {
       method: 'POST',
       body: formData
@@ -487,9 +497,10 @@ const formatRussianPhoneNumber = (val: string) => {
   return result;
 };
 
-const RegistrationForm = ({ coachName, onSuccess, onOpenPrivacy }: { coachName?: string; onSuccess: () => void; onOpenPrivacy?: () => void }) => {
+const RegistrationForm = ({ coachName, trainingType, hideTrainingTypeLabel, onSuccess, onOpenPrivacy }: { coachName?: string; trainingType?: string; hideTrainingTypeLabel?: boolean; onSuccess: () => void; onOpenPrivacy?: () => void }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s-]/g, '');
@@ -526,26 +537,48 @@ const RegistrationForm = ({ coachName, onSuccess, onOpenPrivacy }: { coachName?:
     }
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !phone) return;
+    setLoading(true);
+    try {
+      const typeStr = trainingType || (coachName ? `Тренер: ${coachName}` : undefined);
+      await sendLead(name, phone, typeStr);
+      onSuccess();
+    } catch (err) {
+      alert('Произошла ошибка при отправке заявки. Пожалуйста, попробуйте еще раз.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="px-8 py-12 md:px-16 md:py-20 bg-surface-container relative">
+    <div className="px-6 py-10 sm:px-10 sm:py-16 md:px-12 md:py-16 bg-surface-container relative">
       <div className=" grit-texture absolute inset-0 opacity-5" />
       <div className="h-1.5 w-full bg-primary-container absolute top-0 left-0" />
       
-      <div className="mb-12">
-        <h2 className="font-display text-[31px] sm:text-4xl md:text-5xl font-extrabold uppercase italic tracking-tighter mb-4 text-on-surface leading-[1]">
-          Записаться <br className="sm:hidden" /> <span className="whitespace-nowrap">на тренировку</span>
+      <div className="mb-10">
+        <h2 className="font-display text-[26px] sm:text-3xl md:text-4xl font-extrabold uppercase italic tracking-tighter mb-4 text-on-surface leading-[1.1] break-words">
+          Записаться <br className="sm:hidden" /> <span className="text-primary-container">на тренировку</span>
         </h2>
-        {coachName && (
-          <p className="text-primary font-display font-bold uppercase tracking-widest mb-2">
-            К тренеру: {coachName}
+        {trainingType && !hideTrainingTypeLabel && (
+          <p className="text-primary font-display text-xs sm:text-sm font-black uppercase tracking-wider mb-2 leading-snug break-words">
+            <span className="text-on-surface-variant/80 font-bold block sm:inline">Направление: </span>
+            <span className="text-primary block sm:inline">{trainingType}</span>
           </p>
         )}
-        <p className="text-on-surface-variant border-l-4 border-primary-container pl-4 font-body-lg">
+        {coachName && !trainingType && (
+          <p className="text-primary font-display text-xs sm:text-sm font-black uppercase tracking-wider mb-2 leading-snug break-words">
+            <span className="text-on-surface-variant/80 font-bold block sm:inline">К тренеру: </span>
+            <span className="text-primary block sm:inline">{coachName}</span>
+          </p>
+        )}
+        <p className="text-on-surface-variant border-l-4 border-primary-container pl-4 font-body-lg text-sm sm:text-base">
           Мы свяжемся с вами в ближайшее время
         </p>
       </div>
 
-      <form className="space-y-10" onSubmit={(e) => { e.preventDefault(); onSuccess(); }}>
+      <form className="space-y-10" onSubmit={handleSubmit}>
         <div className="group relative">
           <label className="block text-xs font-bold uppercase tracking-widest text-primary mb-2">
             Ваше имя
@@ -556,7 +589,8 @@ const RegistrationForm = ({ coachName, onSuccess, onOpenPrivacy }: { coachName?:
             value={name}
             onChange={handleNameChange}
             placeholder="Введите имя"
-            className="w-full bg-transparent border-b-2 border-outline-variant py-4 px-0 font-body-lg text-on-surface placeholder:text-on-secondary-container focus:outline-none focus:border-primary-container transition-all"
+            disabled={loading}
+            className="w-full bg-transparent border-b-2 border-outline-variant py-4 px-0 font-body-lg text-on-surface placeholder:text-on-secondary-container focus:outline-none focus:border-primary-container transition-all disabled:opacity-50"
           />
         </div>
 
@@ -573,7 +607,8 @@ const RegistrationForm = ({ coachName, onSuccess, onOpenPrivacy }: { coachName?:
             pattern="^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$"
             title="Формат: +7 (999) 999-99-99"
             placeholder="+7 (___) ___-__-__"
-            className="w-full bg-transparent border-b-2 border-outline-variant py-4 px-0 font-body-lg text-on-surface placeholder:text-on-secondary-container focus:outline-none focus:border-primary-container transition-all"
+            disabled={loading}
+            className="w-full bg-transparent border-b-2 border-outline-variant py-4 px-0 font-body-lg text-on-surface placeholder:text-on-secondary-container focus:outline-none focus:border-primary-container transition-all disabled:opacity-50"
           />
         </div>
 
@@ -582,12 +617,12 @@ const RegistrationForm = ({ coachName, onSuccess, onOpenPrivacy }: { coachName?:
             * Обязательное поле для заполнения.
           </p>
           <button 
-		onClick={async () => {
-		const result = await sendLead(name, phone)
-		}}		
-className="w-full btn-primary flex items-center justify-center gap-4 text-xl">
-            <span>Записаться</span>
-            <ArrowRight />
+            type="submit"
+            disabled={loading}
+            className="w-full btn-primary flex items-center justify-center gap-4 text-xl disabled:opacity-50"
+          >
+            <span>{loading ? 'Отправка...' : 'Записаться'}</span>
+            {!loading && <ArrowRight />}
           </button>
         </div>
 
@@ -627,6 +662,8 @@ export default function App() {
   const [activeModal, setActiveModal] = useState<'none' | 'registration' | 'coach' | 'schedule' | 'privacy'>('none');
   const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
+  const [selectedTrainingType, setSelectedTrainingType] = useState<string | null>(null);
+  const [activeScheduleDay, setActiveScheduleDay] = useState<string>('Пн');
 	const [selectedBranch, setSelectedBranch] = useState<'raduzhny' | 'south'>('raduzhny');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [bottomFormSubmitted, setBottomFormSubmitted] = useState(false);
@@ -719,8 +756,20 @@ export default function App() {
     };
   }, []);
 
-  const openRegistration = (coach?: Coach) => {
-    setSelectedCoach(coach || null);
+  const openRegistration = (coachOrType?: Coach | string) => {
+    if (typeof coachOrType === 'string') {
+      setSelectedTrainingType(coachOrType);
+      setSelectedCoach(null);
+      const url = new URL(window.location.href);
+      url.searchParams.set('training_type', coachOrType);
+      window.history.replaceState(null, '', url.toString());
+    } else {
+      setSelectedCoach(coachOrType || null);
+      setSelectedTrainingType(null);
+      const url = new URL(window.location.href);
+      url.searchParams.delete('training_type');
+      window.history.replaceState(null, '', url.toString());
+    }
     setActiveModal('registration');
   };
 
@@ -1045,33 +1094,253 @@ export default function App() {
         <section id="programs" className="py-12 md:py-20 bg-surface-container relative scroll-mt-24">
           <div className="grit-texture absolute inset-0 opacity-5" />
           <div className="px-gutter max-w-container-max mx-auto">
-            <h2 className="section-title">Наши виды спорта</h2>
-            <div className="space-y-12 md:space-y-24">
-              {AUDIENCE_PROGRAMS_MAP[audience].map((program, idx) => (
-                <div key={program.id} className={`flex flex-col lg:flex-row gap-8 lg:gap-16 items-center ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-                  <div className="flex-1 w-full">
-                    <img 
-                      src={program.image} 
-                      alt={program.name}
-                      className="w-full h-[250px] sm:h-[400px] object-cover brightness-100 transition-all duration-700 shadow-2xl"
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-display text-3xl md:text-5xl font-black uppercase text-primary-container italic mb-2 md:mb-4">{program.name}</h3>
-                    <p className="text-primary font-bold uppercase tracking-[0.2em] mb-4 md:mb-8">{program.target}</p>
-                    <p className="text-on-surface-variant text-body-lg mb-6 md:mb-10 leading-relaxed">{program.description}</p>
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      <button onClick={() => openSchedule(program as any)} className="btn-outline flex items-center justify-center gap-2">
-                        <Calendar size={20} className="text-primary-container" />
-                        Посмотреть расписание
-                      </button>
-                      <button onClick={() => openRegistration()} className="btn-primary">Записаться</button>
+            {audience === 'general' && (
+              <>
+                <h2 className="section-title">Наши виды спорта</h2>
+                <div className="space-y-12 md:space-y-24">
+                  {AUDIENCE_PROGRAMS_MAP[audience].map((program, idx) => (
+                    <div key={program.id} className={`flex flex-col lg:flex-row gap-8 lg:gap-16 items-center ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+                      <div className="flex-1 w-full">
+                        <img 
+                          src={program.image} 
+                          alt={program.name}
+                          className="w-full h-[250px] sm:h-[400px] object-cover brightness-100 transition-all duration-700 shadow-2xl"
+                          referrerPolicy="no-referrer"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-display text-3xl md:text-5xl font-black uppercase text-primary-container italic mb-2 md:mb-4">{program.name}</h3>
+                        <p className="text-primary font-bold uppercase tracking-[0.2em] mb-4 md:mb-8">{program.target}</p>
+                        <p className="text-on-surface-variant text-body-lg mb-6 md:mb-10 leading-relaxed">{program.description}</p>
+                        <div className="w-full">
+                          <button onClick={() => openRegistration(program.name)} className="btn-primary w-full py-4 text-center">Записаться</button>
+                        </div>
+                      </div>
                     </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {audience === 'parents' && (
+              <div className="space-y-8">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                  <div>
+                    <h2 className="section-title mb-2">Расписание детских тренировок</h2>
+                    <p className="text-on-surface-variant text-sm tracking-wide">
+                      Выберите филиал и день. Нажмите на тренировку для быстрой записи.
+                    </p>
+                  </div>
+                  
+                  {/* Переключатель филиалов */}
+                  <div className="flex gap-2 bg-surface-container-low p-1 rounded-full border border-outline-variant/10 self-stretch md:self-auto min-w-[280px]">
+                    <button
+                      onClick={() => setSelectedBranch('raduzhny')}
+                      className={`flex-1 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${
+                        selectedBranch === 'raduzhny' 
+                          ? 'bg-primary-container text-white shadow-lg' 
+                          : 'text-on-surface-variant hover:text-primary'
+                      }`}
+                    >
+                      Радужный
+                    </button>
+                    <button
+                      onClick={() => setSelectedBranch('south')}
+                      className={`flex-1 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${
+                        selectedBranch === 'south' 
+                          ? 'bg-primary-container text-white shadow-lg' 
+                          : 'text-on-surface-variant hover:text-primary'
+                      }`}
+                    >
+                      Южные Ворота
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
+
+                {scheduleLoading && (
+                  <div className="flex items-center justify-center py-20">
+                    <div className="flex flex-col items-center gap-4">
+                      <div className="w-12 h-12 border-4 border-primary-container border-t-transparent rounded-full animate-spin" />
+                      <p className="text-sm uppercase tracking-widest text-on-surface-variant font-bold">
+                        Загрузка расписания...
+                      </p>
+                    </div>
+                  </div>
+                )}
+                
+                {scheduleError && (
+                  <div className="flex items-center justify-center py-20">
+                    <div className="text-center space-y-4">
+                      <p className="text-destructive font-bold">Ошибка: {scheduleError}</p>
+                      <button onClick={() => window.location.reload()} className="btn-primary px-6 py-2">
+                        Попробовать снова
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {!scheduleLoading && !scheduleError && (() => {
+                  const bjjS = getScheduleFor('bjj', selectedBranch).map(s => ({ ...s, sport: 'Джиу-джитсу' }));
+                  const kudoS = getScheduleFor('kudo', selectedBranch).map(s => ({ ...s, sport: 'Кудо' }));
+                  const grapplingS = getScheduleFor('grappling', selectedBranch).map(s => ({ ...s, sport: 'Грэпплинг' }));
+                  const combinedSchedule = [...bjjS, ...kudoS, ...grapplingS];
+
+                  return (
+                    <>
+                      {/* Мобильная версия с переключателем дней */}
+                      <div className="md:hidden">
+                        <div className="flex space-x-2 border-b border-outline-variant/20 overflow-x-auto pb-3 mb-6 scrollbar-none">
+                          {DAYS.map((day) => (
+                            <button
+                              key={day}
+                              onClick={() => setActiveScheduleDay(day)}
+                              className={`px-4 py-2 rounded-full font-display font-extrabold text-xs uppercase tracking-wider transition-all shrink-0 ${
+                                activeScheduleDay === day
+                                  ? 'bg-primary-container text-white shadow-lg'
+                                  : 'text-on-surface-variant hover:text-primary'
+                              }`}
+                            >
+                              {day}
+                            </button>
+                          ))}
+                        </div>
+
+                        <div className="space-y-4">
+                          {TIMES.map((time) => {
+                            const daySessions = combinedSchedule.filter(
+                              (s) => s.day === activeScheduleDay && s.time === time
+                            );
+                            if (daySessions.length === 0) return null;
+
+                            return (
+                              <div key={time} className="flex gap-4 items-start bg-surface-container-low p-4 rounded-xl border border-outline-variant/10">
+                                <div className="font-display font-black text-primary text-sm pt-1 min-w-[50px]">{time}</div>
+                                <div className="flex-1 space-y-2">
+                                  {daySessions.map((session, sIdx) => (
+                                    <div
+                                      key={session.id || sIdx}
+                                      onClick={() => openRegistration(session.sport)}
+                                      className="bg-surface-variant hover:bg-surface-bright border-l-4 border-primary-container p-3 rounded-r-xl transition-all shadow-md cursor-pointer"
+                                    >
+                                      <div className="font-display font-bold text-sm text-on-surface mb-1">
+                                        {session.sport}
+                                      </div>
+                                      <div className="text-xs text-on-surface-variant opacity-80">
+                                        Тренер: {session.coach}
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            );
+                          })}
+                          {TIMES.every(time => combinedSchedule.filter(s => s.day === activeScheduleDay && s.time === time).length === 0) && (
+                            <div className="text-center py-8 text-on-surface-variant text-sm italic">
+                              В этот день тренировок нет
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Десктопная версия */}
+                      <div className="hidden md:block overflow-x-auto bg-surface-container-low rounded-2xl border border-outline-variant/20 shadow-2xl">
+                        <div className="min-w-[800px] grid grid-cols-[100px_repeat(7,1fr)]">
+                          <div className="h-12 md:h-16 border-r border-b border-outline-variant/30 bg-surface-container-high sticky top-0 z-20 flex items-center justify-center">
+                            <span className="text-[10px] md:text-xs uppercase font-bold text-on-surface-variant">Время</span>
+                          </div>
+                          {DAYS.map((day) => (
+                            <div key={day} className="h-12 md:h-16 border-r border-b border-outline-variant/30 bg-surface-container-high sticky top-0 z-20 flex flex-col items-center justify-center">
+                              <span className="font-display font-bold md:text-lg uppercase text-primary">{day}</span>
+                            </div>
+                          ))}
+                  
+                          {TIMES.map((time) => (
+                            <React.Fragment key={time}>
+                              <div className="h-16 md:h-24 border-r border-b border-outline-variant/20 flex items-center justify-center text-[11px] md:text-xs font-bold text-on-surface-variant">
+                                {time}
+                              </div>
+                              {DAYS.map((day) => {
+                                 const cellSessions = combinedSchedule.filter(s => s.day === day && s.time === time);
+                                 return (
+                                   <div key={`${day}-${time}`} className="min-h-16 md:min-h-24 border-r border-b border-outline-variant/20 relative p-1 md:p-2 group flex flex-col gap-1.5 justify-center">
+                                     {cellSessions.map((session, sIdx) => (
+                                       <div 
+                                         key={session.id || sIdx} 
+                                         onClick={() => openRegistration(session.sport)}
+                                         className="w-full border-l-[3px] md:border-l-4 border-primary-container bg-surface-variant hover:bg-surface-bright p-1.5 md:p-2.5 flex flex-col justify-center transition-all shadow-sm hover:shadow-md cursor-pointer overflow-hidden rounded md:rounded-lg"
+                                       >
+                                         <span className="text-[10px] md:text-[13px] font-extrabold leading-tight text-on-surface uppercase tracking-wide">
+                                           {session.sport}
+                                         </span>
+                                         <span className="text-[9px] md:text-[11px] italic leading-none opacity-80 text-on-surface-variant mt-1">
+                                           {session.coach}
+                                         </span>
+                                       </div>
+                                     ))}
+                                   </div>
+                                 );
+                              })}
+                            </React.Fragment>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+            )}
+
+            {audience === 'men' && (
+              <div className="flex flex-col lg:flex-row gap-12 items-stretch max-w-5xl mx-auto">
+                <div className="flex-1 flex flex-col justify-center p-6 md:p-8 bg-surface-container-low rounded-2xl border border-outline-variant/20 shadow-xl relative overflow-hidden">
+                  <div className="grit-texture absolute inset-0 opacity-5" />
+                  <div className="relative z-10 space-y-6">
+                    <div>
+                      <span className="text-secondary uppercase text-[10px] tracking-[0.2em] font-bold">Персональный формат</span>
+                      <h2 className="font-display font-black uppercase text-primary-container italic leading-tight mt-2">
+                        <span className="block whitespace-nowrap text-[22px] sm:text-3xl md:text-3xl lg:text-[38px] xl:text-[38px]">Индивидуальный</span>
+                        <span className="block whitespace-nowrap text-[22px] sm:text-3xl md:text-3xl lg:text-[38px] xl:text-[38px] text-primary mt-1">формат</span>
+                      </h2>
+                    </div>
+                    <div className="h-1 w-20 bg-primary-container" />
+                    <div>
+                      <p className="text-white text-lg md:text-xl font-display font-medium leading-relaxed italic mb-4">
+                        «Тело не ждёт.<br />Верни контроль над собой.»
+                      </p>
+                    </div>
+                    <p className="text-on-surface-variant text-body-lg leading-relaxed">
+                      Мы подбираем формат тренировок, интенсивность и время начала занятий индивидуально для каждого. Оставьте заявку ниже, чтобы обсудить ваш текущий уровень, спортивные цели и составить персональный план занятий в нашем центре.
+                    </p>
+                    
+                    <ul className="space-y-3 text-sm font-bold uppercase tracking-wider text-on-surface-variant">
+                      <li className="flex items-center gap-3">
+                        <span className="w-1.5 h-1.5 bg-primary-container rounded-full" />
+                        Удобное персональное время
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <span className="w-1.5 h-1.5 bg-primary-container rounded-full" />
+                        Адаптация под ваши цели и здоровье
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <span className="w-1.5 h-1.5 bg-primary-container rounded-full" />
+                        Полный контроль нагрузок
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="flex-1">
+                  <div className="bg-surface-container rounded-2xl border border-outline-variant/30 overflow-hidden shadow-2xl">
+                    <RegistrationForm 
+                      trainingType="Индивидуальные тренировки для мужчин"
+                      hideTrainingTypeLabel={true}
+                      onSuccess={handleRegistrationSuccess}
+                      onOpenPrivacy={() => setActiveModal('privacy')}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </section>
 
@@ -1254,18 +1523,39 @@ export default function App() {
             ].map((loc, i) => (
               <div key={i} className="card-dark group">
                 <div className="h-64 sm:h-80 overflow-hidden relative">
-                  <iframe 
-                    src={i === 0 
-                      ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2197.834460786523!2d84.97864817754637!3d56.513233873289!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4326940a00000001%3A0xc3f6a2b8e5c4a5!2z0YPQuy4g0JvQtdC90YHQutCw0Y8sIDEyLCDQotC-0LzRgdC6LCDQotC-0LzRgdC60LDRjyDQvtCx0LsuLCA2MzQwMDE!5e0!3m2!1sru!2sru!4v1715431234567!5m2!1sru!2sru"
-                      : "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2203.456789012345!2d84.987654321098!3d56.456789012345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTbCsDI3JzI0LjQiTiA4NMKwNTknMTUuNSJF!5e0!3m2!1sru!2sru!4v1715431234568!5m2!1sru!2sru"
-                    }
-                    width="100%" 
-                    height="100%" 
-                    className="border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700" 
-                    allowFullScreen 
-                    loading="lazy" 
-                    referrerPolicy="no-referrer-when-downgrade"
-                  ></iframe>
+                  {i === 0 ? (
+                    <div style={{ position: 'relative', overflow: 'hidden', width: '100%', height: '100%' }}>
+                      <a href="https://yandex.ru/maps/org/everest/107137209858/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '0px' }}>Эверест</a>
+                      <a href="https://yandex.ru/maps/67/tomsk/category/sports_club/184107297/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '14px' }}>Спортивный клуб, секция в Томске</a>
+                      <a href="https://yandex.ru/maps/67/tomsk/category/sports_school/184107305/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '28px' }}>Спортивная школа в Томске</a>
+                      <iframe 
+                        src="https://yandex.ru/map-widget/v1/org/everest/107137209858/?ll=84.973185%2C56.523458&z=18" 
+                        width="100%" 
+                        height="100%" 
+                        frameBorder="1" 
+                        allowFullScreen={true} 
+                        style={{ position: 'relative' }} 
+                        className="border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700"
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                  ) : (
+                    <div style={{ position: 'relative', overflow: 'hidden', width: '100%', height: '100%' }}>
+                      <a href="https://yandex.ru/maps/org/everest/224174291896/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '0px' }}>Эверест</a>
+                      <a href="https://yandex.ru/maps/11353/tomsk-district/category/sports_club/184107297/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '14px' }}>Спортивный клуб, секция в Томской области</a>
+                      <a href="https://yandex.ru/maps/11353/tomsk-district/category/sports_association/184107303/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '28px' }}>Спортивное объединение в Томской области</a>
+                      <iframe 
+                        src="https://yandex.ru/map-widget/v1/org/everest/224174291896/?ll=85.023830%2C56.440129&z=18" 
+                        width="100%" 
+                        height="100%" 
+                        frameBorder="1" 
+                        allowFullScreen={true} 
+                        style={{ position: 'relative' }} 
+                        className="border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700"
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                  )}
                 </div>
                 <div className="p-6 md:p-8">
                   <h3 className="font-display text-2xl uppercase font-black italic mb-2">{loc.name}</h3>
@@ -1494,9 +1784,19 @@ type="submit" className="w-full btn-primary flex items-center justify-center gap
       </footer>
 
       {/* --- Modals --- */}
-      <Modal isOpen={activeModal === 'registration'} onClose={() => setActiveModal('none')}>
+      <Modal 
+        isOpen={activeModal === 'registration'} 
+        onClose={() => { 
+          setActiveModal('none'); 
+          setSelectedTrainingType(null);
+          const url = new URL(window.location.href);
+          url.searchParams.delete('training_type');
+          window.history.replaceState(null, '', url.toString());
+        }}
+      >
 		  <RegistrationForm 
 		    coachName={selectedCoach?.name} 
+		    trainingType={selectedTrainingType || undefined}
 		    onSuccess={handleRegistrationSuccess} 
 		    onOpenPrivacy={() => setActiveModal('privacy')} 
 		  />
