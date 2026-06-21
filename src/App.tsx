@@ -507,24 +507,118 @@ const formatRussianPhoneNumber = (val: string) => {
 };
 
 function YandexMapEmbed({ html }: { html: string }) {
-  const rootRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [showFailedMessage, setShowFailedMessage] = useState(false);
+
+  // Динамически извлекаем ссылку на Яндекс.Карты из HTML-строки пользователя
+  const linkHrefMatch = html.match(/href="([^"]+)"/);
+  const mapUrl = linkHrefMatch ? linkHrefMatch[1] : "https://yandex.ru/maps/";
 
   useEffect(() => {
-    if (!rootRef.current) return;
+    if (!containerRef.current) return;
 
-    rootRef.current.innerHTML = html;
-
-    const iframe = rootRef.current.querySelector("iframe");
-    if (iframe instanceof HTMLIFrameElement) {
-      iframe.style.setProperty("display", "block", "important");
-      iframe.style.setProperty("width", "100%", "important");
-      iframe.style.setProperty("height", "400px", "important");
-      iframe.style.setProperty("border", "0", "important");
-      iframe.style.setProperty("position", "relative", "important");
+    // Безопасно парсим HTML-строку
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    
+    const iframe = tempDiv.querySelector("iframe");
+    if (iframe) {
+      // Задаем корректные стили и атрибуты
+      iframe.setAttribute("width", "100%");
+      iframe.setAttribute("height", "400");
+      iframe.setAttribute("frameborder", "0");
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.border = "0";
+      iframe.style.display = "block";
+      iframe.style.position = "absolute";
+      iframe.style.inset = "0";
+      iframe.style.zIndex = "10";
+      iframe.className = "absolute inset-0 w-full h-full border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700";
+      
+      // Отслеживаем успешную загрузку интерактивной карты
+      iframe.onload = () => {
+        setIsLoaded(true);
+      };
     }
+
+    // Очищаем и добавляем в контейнер
+    containerRef.current.innerHTML = "";
+    containerRef.current.appendChild(tempDiv.firstElementChild || tempDiv);
+
+    // Таймер на случай медленного интернета или блокировки трекеров/рекламы
+    const timer = setTimeout(() => {
+      setShowFailedMessage(true);
+    }, 2500);
+
+    return () => clearTimeout(timer);
   }, [html]);
 
-  return <div ref={rootRef} className="relative w-full h-[400px] overflow-hidden" />;
+  return (
+    <div className="relative w-full h-[400px] overflow-hidden bg-surface-container">
+      {/* 1. Интерактивная карта */}
+      <div 
+        ref={containerRef} 
+        className={`w-full h-full transition-opacity duration-500 ${isLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0'}`} 
+      />
+
+      {/* 2. Заглушка, если карта не загрузилась или заблокирована */}
+      {!isLoaded && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 bg-surface-container-high text-center z-20">
+          <div className="mb-4 relative flex items-center justify-center w-12 h-12 rounded-full bg-outline-variant/10">
+            <img 
+              src={yandex} 
+              alt="Яндекс Карты" 
+              className="w-7 h-7 object-contain animate-pulse" 
+            />
+          </div>
+
+          <h4 className="font-display font-bold text-lg text-on-surface mb-2">
+            {!showFailedMessage ? "Загрузка интерактивной карты..." : "Не удалось загрузить карту"}
+          </h4>
+
+          <p className="text-xs text-on-surface-variant max-w-[280px] mb-6 leading-relaxed">
+            {!showFailedMessage 
+              ? "Пожалуйста, подождите. Загружаем Яндекс.Карты..." 
+              : "Её мог заблокировать ваш блокировщик рекламы или трекеров. Вы можете открыть карту напрямую:"
+            }
+          </p>
+
+          <a
+            href={mapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary inline-flex items-center gap-2 px-6 py-3 text-sm"
+          >
+            <img 
+              src={yandex} 
+              alt="Яндекс" 
+              className="w-4 h-4 object-contain brightness-0 invert" 
+            />
+            <span>Открыть в Яндекс.Картах</span>
+          </a>
+        </div>
+      )}
+
+      {/* 3. Удобная плавающая кнопка поверх работающей карты */}
+      {isLoaded && (
+        <a
+          href={mapUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute bottom-4 right-4 z-20 bg-surface-container-high hover:bg-surface-bright border border-outline-variant/30 text-xs text-on-surface hover:text-primary font-bold px-3 py-2 flex items-center gap-1.5 shadow-lg rounded transition-colors"
+        >
+          <img 
+            src={yandex} 
+            alt="Яндекс" 
+            className="w-3.5 h-3.5 object-contain" 
+          />
+          <span>В Яндекс.Карты</span>
+        </a>
+      )}
+    </div>
+  );
 }
 
 const RegistrationForm = ({ coachName, trainingType, hideTrainingTypeLabel, onSuccess, onOpenPrivacy }: { coachName?: string; trainingType?: string; hideTrainingTypeLabel?: boolean; onSuccess: () => void; onOpenPrivacy?: () => void }) => {
