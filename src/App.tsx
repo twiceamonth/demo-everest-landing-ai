@@ -506,6 +506,27 @@ const formatRussianPhoneNumber = (val: string) => {
   return result;
 };
 
+function YandexMapEmbed({ html }: { html: string }) {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!rootRef.current) return;
+
+    rootRef.current.innerHTML = html;
+
+    const iframe = rootRef.current.querySelector("iframe");
+    if (iframe instanceof HTMLIFrameElement) {
+      iframe.style.setProperty("display", "block", "important");
+      iframe.style.setProperty("width", "100%", "important");
+      iframe.style.setProperty("height", "400px", "important");
+      iframe.style.setProperty("border", "0", "important");
+      iframe.style.setProperty("position", "relative", "important");
+    }
+  }, [html]);
+
+  return <div ref={rootRef} className="relative w-full h-[400px] overflow-hidden" />;
+}
+
 const RegistrationForm = ({ coachName, trainingType, hideTrainingTypeLabel, onSuccess, onOpenPrivacy }: { coachName?: string; trainingType?: string; hideTrainingTypeLabel?: boolean; onSuccess: () => void; onOpenPrivacy?: () => void }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -1524,36 +1545,25 @@ export default function App() {
           <h2 className="section-title">Как нас найти</h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
-            <div className="card-dark group">
-              <div
-                className="h-[400px] overflow-hidden relative"
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    <div style="position:relative;overflow:hidden;width:100%;height:100%;">
-                      <a href="https://yandex.ru/maps/org/everest/107137209858/?utm_medium=mapframe&utm_source=maps"
-                        style="color:#eee;font-size:12px;position:absolute;top:0px;left:0px;z-index:2;">
-                        Эверест
-                      </a>
-                      <a href="https://yandex.ru/maps/67/tomsk/category/sports_club/184107297/?utm_medium=mapframe&utm_source=maps"
-                        style="color:#eee;font-size:12px;position:absolute;top:14px;left:0px;z-index:2;">
-                        Спортивный клуб, секция в Томске
-                      </a>
-                      <a href="https://yandex.ru/maps/67/tomsk/category/sports_school/184107305/?utm_medium=mapframe&utm_source=maps"
-                        style="color:#eee;font-size:12px;position:absolute;top:28px;left:0px;z-index:2;">
-                        Спортивная школа в Томске
-                      </a>
-                      <iframe
-                        src="https://yandex.ru/map-widget/v1/org/everest/107137209858/?ll=84.972859%2C56.523316&z=18.8"
-                        width="100%"
-                        height="400"
-                        frameborder="1"
-                        allowfullscreen="true"
-                        style="position:relative;width:100%;height:400px;display:block;border:0;"
-                      ></iframe>
-                    </div>
-                  `,
-                }}
+            <div className="card-dark group overflow-hidden">
+              <YandexMapEmbed
+                html={`
+                  <div style="position:relative;overflow:hidden;width:100%;height:100%;">
+                    <a href="https://yandex.ru/maps/org/everest/107137209858/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;left:0px;z-index:2;">Эверест</a>
+                    <a href="https://yandex.ru/maps/67/tomsk/category/sports_club/184107297/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:14px;left:0px;z-index:2;">Спортивный клуб, секция в Томске</a>
+                    <a href="https://yandex.ru/maps/67/tomsk/category/sports_school/184107305/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:28px;left:0px;z-index:2;">Спортивная школа в Томске</a>
+                    <iframe
+                      src="https://yandex.ru/map-widget/v1/org/everest/107137209858/?ll=84.972859%2C56.523316&z=18.8"
+                      width="100%"
+                      height="400"
+                      frameborder="1"
+                      allowfullscreen="true"
+                      style="position:relative;width:100%;height:400px;display:block;border:0;"
+                    ></iframe>
+                  </div>
+                `}
               />
+
               <div className="p-6 md:p-8">
                 <h3 className="font-display text-2xl uppercase font-black italic mb-2">
                   Филиал Радужный
@@ -1567,36 +1577,25 @@ export default function App() {
               </div>
             </div>
 
-            <div className="card-dark group">
-              <div
-                className="h-[400px] overflow-hidden relative"
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    <div style="position:relative;overflow:hidden;width:100%;height:100%;">
-                      <a href="https://yandex.ru/maps/org/everest/224174291896/?utm_medium=mapframe&utm_source=maps"
-                        style="color:#eee;font-size:12px;position:absolute;top:0px;left:0px;z-index:2;">
-                        Эверест
-                      </a>
-                      <a href="https://yandex.ru/maps/11353/tomsk-district/category/sports_club/184107297/?utm_medium=mapframe&utm_source=maps"
-                        style="color:#eee;font-size:12px;position:absolute;top:14px;left:0px;z-index:2;">
-                        Спортивный клуб, секция в Томской области
-                      </a>
-                      <a href="https://yandex.ru/maps/11353/tomsk-district/category/sports_association/184107303/?utm_medium=mapframe&utm_source=maps"
-                        style="color:#eee;font-size:12px;position:absolute;top:28px;left:0px;z-index:2;">
-                        Спортивное объединение в Томской области
-                      </a>
-                      <iframe
-                        src="https://yandex.ru/map-widget/v1/org/everest/224174291896/?ll=85.024178%2C56.440091&z=18.8"
-                        width="100%"
-                        height="400"
-                        frameborder="1"
-                        allowfullscreen="true"
-                        style="position:relative;width:100%;height:400px;display:block;border:0;"
-                      ></iframe>
-                    </div>
-                  `,
-                }}
+            <div className="card-dark group overflow-hidden">
+              <YandexMapEmbed
+                html={`
+                  <div style="position:relative;overflow:hidden;width:100%;height:100%;">
+                    <a href="https://yandex.ru/maps/org/everest/224174291896/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;left:0px;z-index:2;">Эверест</a>
+                    <a href="https://yandex.ru/maps/11353/tomsk-district/category/sports_club/184107297/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:14px;left:0px;z-index:2;">Спортивный клуб, секция в Томской области</a>
+                    <a href="https://yandex.ru/maps/11353/tomsk-district/category/sports_association/184107303/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:28px;left:0px;z-index:2;">Спортивное объединение в Томской области</a>
+                    <iframe
+                      src="https://yandex.ru/map-widget/v1/org/everest/224174291896/?ll=85.024178%2C56.440091&z=18.8"
+                      width="100%"
+                      height="400"
+                      frameborder="1"
+                      allowfullscreen="true"
+                      style="position:relative;width:100%;height:400px;display:block;border:0;"
+                    ></iframe>
+                  </div>
+                `}
               />
+
               <div className="p-6 md:p-8">
                 <h3 className="font-display text-2xl uppercase font-black italic mb-2">
                   Филиал Южные Ворота
