@@ -535,7 +535,7 @@ function YandexMapEmbed({ html }: { html: string }) {
       iframe.style.position = "absolute";
       iframe.style.inset = "0";
       iframe.style.zIndex = "10";
-      iframe.className = "absolute inset-0 w-full h-full border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700";
+      iframe.className = "absolute inset-0 w-full h-full border-0";
       
       // Отслеживаем успешную загрузку интерактивной карты
       iframe.onload = () => {
@@ -599,23 +599,6 @@ function YandexMapEmbed({ html }: { html: string }) {
             <span>Открыть в Яндекс.Картах</span>
           </a>
         </div>
-      )}
-
-      {/* 3. Удобная плавающая кнопка поверх работающей карты */}
-      {isLoaded && (
-        <a
-          href={mapUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute bottom-4 right-4 z-20 bg-surface-container-high hover:bg-surface-bright border border-outline-variant/30 text-xs text-on-surface hover:text-primary font-bold px-3 py-2 flex items-center gap-1.5 shadow-lg rounded transition-colors"
-        >
-          <img 
-            src={yandex} 
-            alt="Яндекс" 
-            className="w-3.5 h-3.5 object-contain" 
-          />
-          <span>В Яндекс.Карты</span>
-        </a>
       )}
     </div>
   );
