@@ -1504,66 +1504,68 @@ export default function App() {
         </section>
 
         {/* --- Locations Section --- */}
-        <section id="locations" className="py-12 md:py-20 px-gutter max-w-container-max mx-auto scroll-mt-24">
+        <section
+          id="locations"
+          className="py-12 md:py-20 px-gutter max-w-container-max mx-auto scroll-mt-24"
+        >
           <h2 className="section-title">Как нас найти</h2>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
-            {[
-              { 
-                name: 'Филиал Радужный', 
-                addr: 'мкр. Радужный, ул. Ленская, 12', 
-                features: 'БЖЖ, грэпплинг, кудо',
-                map: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAb3d6nU4-D46XWq7-D46XWq7-D46XWq7-D46XWq7-D46XWq7-D46XWq7-D46XWq7-D46XWq7-D' // Mock map
-              },
-              { 
-                name: 'Филиал Южные Ворота', 
-                addr: 'мкр. Южные Ворота, ул. Тихая, 105 (2 этаж)', 
-                features: 'Детские и взрослые группы',
-                map: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAb3d6nU4-D46XWq7-D46XWq7-D46XWq7-D46XWq7-D46XWq7-D46XWq7-D46XWq7-D46XWq7-D' // Mock map
-              },
-            ].map((loc, i) => (
-              <div key={i} className="card-dark group">
-                <div className="h-[400px] overflow-hidden relative">
-                  {i === 0 ? (
-                    <div style={{ position: 'relative', overflow: 'hidden', width: '100%', height: '100%' }}>
-                      <a href="https://yandex.ru/maps/org/everest/107137209858/?utm_medium=mapframe&amp;utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '0px' }}>Эверест</a>
-                      <a href="https://yandex.ru/maps/67/tomsk/category/sports_club/184107297/?utm_medium=mapframe&amp;utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '14px' }}>Спортивный клуб, секция в Томске</a>
-                      <a href="https://yandex.ru/maps/67/tomsk/category/sports_school/184107305/?utm_medium=mapframe&amp;utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '28px' }}>Спортивная школа в Томске</a>
-                      <iframe 
-                        src="https://yandex.ru/map-widget/v1/org/everest/107137209858/?ll=84.972859%2C56.523316&amp;z=18.8" 
-                        width="100%" 
-                        height="400" 
-                        frameBorder="1" 
-                        allowFullScreen={true} 
-                        style={{ position: 'relative' }}
-                        className="border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700"
-                        loading="lazy"
-                      ></iframe>
-                    </div>
-                  ) : (
-                    <div style={{ position: 'relative', overflow: 'hidden', width: '100%', height: '100%' }}>
-                      <a href="https://yandex.ru/maps/org/everest/224174291896/?utm_medium=mapframe&amp;utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '0px' }}>Эверест</a>
-                      <a href="https://yandex.ru/maps/11353/tomsk-district/category/sports_club/184107297/?utm_medium=mapframe&amp;utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '14px' }}>Спортивный клуб, секция в Томской области</a>
-                      <a href="https://yandex.ru/maps/11353/tomsk-district/category/sports_association/184107303/?utm_medium=mapframe&amp;utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '28px' }}>Спортивное объединение в Томской области</a>
-                      <iframe 
-                        src="https://yandex.ru/map-widget/v1/org/everest/224174291896/?ll=85.024178%2C56.440091&amp;z=18.8" 
-                        width="100%" 
-                        height="400" 
-                        frameBorder="1" 
-                        allowFullScreen={true} 
-                        style={{ position: 'relative' }}
-                        className="border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700"
-                        loading="lazy"
-                      ></iframe>
-                    </div>
-                  )}
-                </div>
-                <div className="p-6 md:p-8">
-                  <h3 className="font-display text-2xl uppercase font-black italic mb-2">{loc.name}</h3>
-                  <p className="text-on-surface opacity-80 mb-1">{loc.addr}</p>
-                  <p className="text-primary-container font-display text-xs font-bold uppercase tracking-widest">{loc.features}</p>
-                </div>
+            <div className="card-dark overflow-hidden">
+              <div className="w-full aspect-[4/3] relative overflow-hidden">
+                <iframe
+                  src="https://yandex.ru/map-widget/v1/org/everest/107137209858/?ll=84.972859%2C56.523316&z=18.8"
+                  title="Филиал Радужный"
+                  width="100%"
+                  height="100%"
+                  frameBorder={0}
+                  allowFullScreen
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700"
+                  style={{ position: "absolute", inset: 0 }}
+                />
               </div>
-            ))}
+
+              <div className="p-6 md:p-8">
+                <h3 className="font-display text-2xl uppercase font-black italic mb-2">
+                  Филиал Радужный
+                </h3>
+                <p className="text-on-surface opacity-80 mb-1">
+                  мкр. Радужный, ул. Ленская, 12
+                </p>
+                <p className="text-primary-container font-display text-xs font-bold uppercase tracking-widest">
+                  БЖЖ, грэпплинг, кудо
+                </p>
+              </div>
+            </div>
+
+            <div className="card-dark overflow-hidden">
+              <div className="w-full aspect-[4/3] relative overflow-hidden">
+                <iframe
+                  src="https://yandex.ru/map-widget/v1/org/everest/224174291896/?ll=85.024178%2C56.440091&z=18.8"
+                  title="Филиал Южные Ворота"
+                  width="100%"
+                  height="100%"
+                  frameBorder={0}
+                  allowFullScreen
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700"
+                  style={{ position: "absolute", inset: 0 }}
+                />
+              </div>
+
+              <div className="p-6 md:p-8">
+                <h3 className="font-display text-2xl uppercase font-black italic mb-2">
+                  Филиал Южные Ворота
+                </h3>
+                <p className="text-on-surface opacity-80 mb-1">
+                  мкр. Южные Ворота, ул. Тихая, 105 (2 этаж)
+                </p>
+                <p className="text-primary-container font-display text-xs font-bold uppercase tracking-widest">
+                  Детские и взрослые группы
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
