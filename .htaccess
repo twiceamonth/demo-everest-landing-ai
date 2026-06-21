@@ -1,0 +1,27 @@
+# .htaccess для подпапки /demo-everest-landing-ai/
+# Разместите этот файл в физической папке /demo-everest-landing-ai/ на вашем сервере.
+# Он решает проблему конфликта роутинга с WordPress, предотвращая перенаправление статических файлов на index.php.
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /demo-everest-landing-ai/
+
+  # Если запрашиваемый файл или папка существуют физически, отдавать их напрямую
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Все остальные запросы направлять на index.html нашего React-лендинга (для SPA-роутинга)
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Обеспечение корректных MIME-типов для статических ассетов
+<IfModule mod_mime.c>
+  AddType application/javascript .js
+  AddType text/css .css
+</IfModule>
+
+# Включение gzip-сжатия для быстрой загрузки скриптов и стилей
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE application/javascript text/css text/html text/xml image/svg+xml
+</IfModule>
