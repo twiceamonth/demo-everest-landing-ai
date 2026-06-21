@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import { useSchedule } from './hooks/useSchedule';
+import { usePricing } from './hooks/usePricing';
 import { 
   Phone, 
   ArrowRight, 
@@ -67,6 +68,14 @@ export interface ScheduleItem {
   coach: string;
   type?: string;
   sport?: string;
+}
+
+export interface PricingItem {
+  id: string;
+  name: string;
+  price: string;
+  period: string;
+  items: string[];
 }
 
 // --- Data ---
@@ -672,6 +681,7 @@ export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 	const [showCookieBanner, setShowCookieBanner] = useState(true);
 	const { schedule, loading: scheduleLoading, error: scheduleError, getScheduleFor } = useSchedule();
+	const { pricing, loading: pricingLoading, error: pricingError, getPricingFor } = usePricing();
 
   // 3. Синхронизация audience с URL
   useEffect(() => {
@@ -1425,37 +1435,40 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {AUDIENCE_PRICING_MAP[audience].map((plan, idx) => (
-              <div 
-                key={plan.id}
-                className={`flex flex-col p-6 min-[375px]:p-8 md:p-12 text-center transition-all duration-300 ${idx === 1 ? 'bg-primary-container lg:scale-105 shadow-2xl relative z-10' : 'bg-surface-container border-t-8 border-primary-container lg:hover:-translate-y-2'}`}
-              >
-                {idx === 1 && <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-on-surface text-background px-4 py-1 font-bold uppercase text-[10px] tracking-widest">Популярный</div>}
-                <h3 className={`font-display text-2xl uppercase font-black italic mb-4 md:mb-8 ${idx === 1 ? 'text-white' : 'text-on-surface'}`}>{plan.name}</h3>
-                <div className="mb-4 md:mb-8 flex flex-col items-center">
-                  <div className="flex items-baseline gap-2">
-                    <span className={`font-black italic ${idx === 1 ? 'text-white' : 'text-primary'} ${plan.price.length > 5 ? 'text-4xl' : 'text-5xl sm:text-6xl'}`}>{plan.price}</span>
-                    {plan.price !== 'Бесплатно' && plan.price !== 'Скидка' && (
-                      <span className={`uppercase font-bold text-sm ${idx === 1 ? 'text-white/80' : 'text-on-surface-variant'}`}>руб.</span>
-                    )}
-                  </div>
-                  <span className={`text-[10px] uppercase font-bold tracking-[0.2em] mt-2 ${idx === 1 ? 'text-white/70' : 'text-primary'}`}>{plan.period}</span>
-                </div>
-                <ul className={`space-y-4 mb-6 md:mb-12 flex-grow ${idx === 1 ? 'text-white/90' : 'text-on-surface-variant'}`}>
-                  {plan.items.map((item, i) => (
-                    <li key={i} className="flex items-center justify-center gap-2">
-                       <Check size={16} /> {item}
-                    </li>
-                  ))}
-                </ul>
-                <button 
-                  onClick={() => openRegistration()}
-                  className={`py-4 font-display font-bold uppercase transition-all ${idx === 1 ? 'bg-white text-primary-container hover:bg-on-primary-container' : 'border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white'}`}
+            {(() => {
+              const currentPricing = getPricingFor(audience).length > 0 ? getPricingFor(audience) : AUDIENCE_PRICING_MAP[audience];
+              return currentPricing.map((plan, idx) => (
+                <div 
+                  key={plan.id}
+                  className={`flex flex-col p-6 min-[375px]:p-8 md:p-12 text-center transition-all duration-300 ${idx === 1 ? 'bg-primary-container lg:scale-105 shadow-2xl relative z-10' : 'bg-surface-container border-t-8 border-primary-container lg:hover:-translate-y-2'}`}
                 >
-                  Записаться
-                </button>
-              </div>
-            ))}
+                  {idx === 1 && <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-on-surface text-background px-4 py-1 font-bold uppercase text-[10px] tracking-widest">Популярный</div>}
+                  <h3 className={`font-display text-2xl uppercase font-black italic mb-4 md:mb-8 ${idx === 1 ? 'text-white' : 'text-on-surface'}`}>{plan.name}</h3>
+                  <div className="mb-4 md:mb-8 flex flex-col items-center">
+                    <div className="flex items-baseline gap-2">
+                      <span className={`font-black italic ${idx === 1 ? 'text-white' : 'text-primary'} ${plan.price.length > 5 ? 'text-4xl' : 'text-5xl sm:text-6xl'}`}>{plan.price}</span>
+                      {plan.price !== 'Бесплатно' && plan.price !== 'Скидка' && (
+                        <span className={`uppercase font-bold text-sm ${idx === 1 ? 'text-white/80' : 'text-on-surface-variant'}`}>руб.</span>
+                      )}
+                    </div>
+                    <span className={`text-[10px] uppercase font-bold tracking-[0.2em] mt-2 ${idx === 1 ? 'text-white/70' : 'text-primary'}`}>{plan.period}</span>
+                  </div>
+                  <ul className={`space-y-4 mb-6 md:mb-12 flex-grow ${idx === 1 ? 'text-white/90' : 'text-on-surface-variant'}`}>
+                    {plan.items.map((item, i) => (
+                      <li key={i} className="flex items-center justify-center gap-2">
+                         <Check size={16} /> {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <button 
+                    onClick={() => openRegistration()}
+                    className={`py-4 font-display font-bold uppercase transition-all ${idx === 1 ? 'bg-white text-primary-container hover:bg-on-primary-container' : 'border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white'}`}
+                  >
+                    Записаться
+                  </button>
+                </div>
+              ));
+            })()}
           </div>
 
           {/* --- Family Discount Promo Banner (Parents Only) --- */}
@@ -1511,21 +1524,36 @@ export default function App() {
           <h2 className="section-title">Как нас найти</h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
-            <div className="card-dark overflow-hidden">
-              <div className="w-full aspect-[4/3] relative overflow-hidden">
-                <iframe
-                  src="https://yandex.ru/map-widget/v1/org/everest/107137209858/?ll=84.972859%2C56.523316&z=18.8"
-                  title="Филиал Радужный"
-                  width="100%"
-                  height="100%"
-                  frameBorder={0}
-                  allowFullScreen
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700"
-                  style={{ position: "absolute", inset: 0 }}
-                />
-              </div>
-
+            <div className="card-dark group">
+              <div
+                className="h-[400px] overflow-hidden relative"
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    <div style="position:relative;overflow:hidden;width:100%;height:100%;">
+                      <a href="https://yandex.ru/maps/org/everest/107137209858/?utm_medium=mapframe&utm_source=maps"
+                        style="color:#eee;font-size:12px;position:absolute;top:0px;left:0px;z-index:2;">
+                        Эверест
+                      </a>
+                      <a href="https://yandex.ru/maps/67/tomsk/category/sports_club/184107297/?utm_medium=mapframe&utm_source=maps"
+                        style="color:#eee;font-size:12px;position:absolute;top:14px;left:0px;z-index:2;">
+                        Спортивный клуб, секция в Томске
+                      </a>
+                      <a href="https://yandex.ru/maps/67/tomsk/category/sports_school/184107305/?utm_medium=mapframe&utm_source=maps"
+                        style="color:#eee;font-size:12px;position:absolute;top:28px;left:0px;z-index:2;">
+                        Спортивная школа в Томске
+                      </a>
+                      <iframe
+                        src="https://yandex.ru/map-widget/v1/org/everest/107137209858/?ll=84.972859%2C56.523316&z=18.8"
+                        width="100%"
+                        height="400"
+                        frameborder="1"
+                        allowfullscreen="true"
+                        style="position:relative;width:100%;height:400px;display:block;border:0;"
+                      ></iframe>
+                    </div>
+                  `,
+                }}
+              />
               <div className="p-6 md:p-8">
                 <h3 className="font-display text-2xl uppercase font-black italic mb-2">
                   Филиал Радужный
@@ -1539,21 +1567,36 @@ export default function App() {
               </div>
             </div>
 
-            <div className="card-dark overflow-hidden">
-              <div className="w-full aspect-[4/3] relative overflow-hidden">
-                <iframe
-                  src="https://yandex.ru/map-widget/v1/org/everest/224174291896/?ll=85.024178%2C56.440091&z=18.8"
-                  title="Филиал Южные Ворота"
-                  width="100%"
-                  height="100%"
-                  frameBorder={0}
-                  allowFullScreen
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700"
-                  style={{ position: "absolute", inset: 0 }}
-                />
-              </div>
-
+            <div className="card-dark group">
+              <div
+                className="h-[400px] overflow-hidden relative"
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    <div style="position:relative;overflow:hidden;width:100%;height:100%;">
+                      <a href="https://yandex.ru/maps/org/everest/224174291896/?utm_medium=mapframe&utm_source=maps"
+                        style="color:#eee;font-size:12px;position:absolute;top:0px;left:0px;z-index:2;">
+                        Эверест
+                      </a>
+                      <a href="https://yandex.ru/maps/11353/tomsk-district/category/sports_club/184107297/?utm_medium=mapframe&utm_source=maps"
+                        style="color:#eee;font-size:12px;position:absolute;top:14px;left:0px;z-index:2;">
+                        Спортивный клуб, секция в Томской области
+                      </a>
+                      <a href="https://yandex.ru/maps/11353/tomsk-district/category/sports_association/184107303/?utm_medium=mapframe&utm_source=maps"
+                        style="color:#eee;font-size:12px;position:absolute;top:28px;left:0px;z-index:2;">
+                        Спортивное объединение в Томской области
+                      </a>
+                      <iframe
+                        src="https://yandex.ru/map-widget/v1/org/everest/224174291896/?ll=85.024178%2C56.440091&z=18.8"
+                        width="100%"
+                        height="400"
+                        frameborder="1"
+                        allowfullscreen="true"
+                        style="position:relative;width:100%;height:400px;display:block;border:0;"
+                      ></iframe>
+                    </div>
+                  `,
+                }}
+              />
               <div className="p-6 md:p-8">
                 <h3 className="font-display text-2xl uppercase font-black italic mb-2">
                   Филиал Южные Ворота
