@@ -1522,19 +1522,40 @@ export default function App() {
               },
             ].map((loc, i) => (
               <div key={i} className="card-dark group">
-                <div className="h-64 sm:h-80 overflow-hidden relative">
-                  <div style={{ position: 'relative', overflow: 'hidden', width: '100%', height: '100%' }}>
-                    <iframe 
-                      src="https://api-maps.yandex.ru/services/constructor/1.0/frame/?um=constructor%3A73ea5bf12ac12fe26f51c382a3e6241260fa405da1db9612fc5e6f8680b0c6c3&amp;width=100%25&amp;height=100%25&amp;lang=ru_RU&amp;scroll=true" 
-                      width="100%" 
-                      height="100%" 
-                      frameBorder="0" 
-                      allowFullScreen={true} 
-                      style={{ position: 'relative' }} 
-                      className="border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700"
-                      loading="lazy"
-                    ></iframe>
-                  </div>
+                <div className="h-[400px] overflow-hidden relative">
+                  {i === 0 ? (
+                    <div style={{ position: 'relative', overflow: 'hidden', width: '100%', height: '100%' }}>
+                      <a href="https://yandex.ru/maps/org/everest/107137209858/?utm_medium=mapframe&amp;utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '0px' }}>Эверест</a>
+                      <a href="https://yandex.ru/maps/67/tomsk/category/sports_club/184107297/?utm_medium=mapframe&amp;utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '14px' }}>Спортивный клуб, секция в Томске</a>
+                      <a href="https://yandex.ru/maps/67/tomsk/category/sports_school/184107305/?utm_medium=mapframe&amp;utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '28px' }}>Спортивная школа в Томске</a>
+                      <iframe 
+                        src="https://yandex.ru/map-widget/v1/org/everest/107137209858/?ll=84.972859%2C56.523316&amp;z=18.8" 
+                        width="100%" 
+                        height="400" 
+                        frameBorder="1" 
+                        allowFullScreen={true} 
+                        style={{ position: 'relative' }}
+                        className="border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700"
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                  ) : (
+                    <div style={{ position: 'relative', overflow: 'hidden', width: '100%', height: '100%' }}>
+                      <a href="https://yandex.ru/maps/org/everest/224174291896/?utm_medium=mapframe&amp;utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '0px' }}>Эверест</a>
+                      <a href="https://yandex.ru/maps/11353/tomsk-district/category/sports_club/184107297/?utm_medium=mapframe&amp;utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '14px' }}>Спортивный клуб, секция в Томской области</a>
+                      <a href="https://yandex.ru/maps/11353/tomsk-district/category/sports_association/184107303/?utm_medium=mapframe&amp;utm_source=maps" style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '28px' }}>Спортивное объединение в Томской области</a>
+                      <iframe 
+                        src="https://yandex.ru/map-widget/v1/org/everest/224174291896/?ll=85.024178%2C56.440091&amp;z=18.8" 
+                        width="100%" 
+                        height="400" 
+                        frameBorder="1" 
+                        allowFullScreen={true} 
+                        style={{ position: 'relative' }}
+                        className="border-0 grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-700"
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                  )}
                 </div>
                 <div className="p-6 md:p-8">
                   <h3 className="font-display text-2xl uppercase font-black italic mb-2">{loc.name}</h3>
